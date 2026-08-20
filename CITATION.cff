@@ -1,5 +1,9 @@
 cff-version: 1.2.0
 message: "If you use this artefact, please cite the paper it accompanies."
+doi: 10.5281/zenodo.22032258
+repository-code: "https://github.com/AIRCentre/network-centric-eo-data-access-paper"
+version: v1.0.0
+date-released: 2026-08-20
 title: >-
   Benchmark data and analysis for "Design and Empirical Evaluation of a
   Network-Centric, On-Premises Architecture for Earth Observation Data Access"

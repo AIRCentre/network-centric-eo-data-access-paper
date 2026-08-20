@@ -1,5 +1,7 @@
 # Network-centric on-premises EO data access — paper artefact
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22032257.svg)](https://doi.org/10.5281/zenodo.22032257)
+
 Benchmark data, analysis code and derived results for:
 
 > Design and Empirical Evaluation of a Network-Centric, On-Premises
@@ -93,3 +95,13 @@ Cloud names, which neither licence grants any rights in.
 `PROVENANCE.md` at the repository root names the two private repositories
 this content was copied from and the exact commits it was drawn from. No git
 history was imported — the SHAs are what make the artefact auditable.
+
+## Citing this artefact
+
+Cite the paper. If you need to cite the artefact itself, use the version DOI
+for the exact snapshot the paper's numbers were computed from:
+
+    10.5281/zenodo.22032258   (v1.0.0, the state at submission)
+
+The badge above carries the concept DOI, `10.5281/zenodo.22032257`, which
+always resolves to the most recent version.
