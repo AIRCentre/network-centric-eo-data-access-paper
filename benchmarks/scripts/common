@@ -1,0 +1,177 @@
+#!/bin/bash
+
+if [ -z "$SCRIPT_DIR" ]; then
+    SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+fi
+if [ -z "$REPO_ROOT" ]; then
+    REPO_ROOT="$(git -C "$SCRIPT_DIR" rev-parse --show-toplevel)"
+fi
+if [ -f "$REPO_ROOT/.env" ]; then
+    set -a; source "$REPO_ROOT/.env"; set +a
+fi
+
+RED=$'\033[31m'
+GREEN=$'\033[32m'
+YELLOW=$'\033[33m'
+RESET=$'\033[0m'
+
+validate_ansible() {
+    if [ -z "$ANSIBLE_CONFIG" ]; then
+        echo "ANSIBLE_CONFIG ${RED}✗${RESET} not set"
+        echo "  Set ANSIBLE_CONFIG=/path/to/ansible.cfg or add to .env"
+        return 1
+    fi
+
+    if [ ! -f "$ANSIBLE_CONFIG" ]; then
+        echo "ANSIBLE_CONFIG ${RED}✗${RESET} file not found: $ANSIBLE_CONFIG"
+        return 1
+    fi
+
+    inventory_check=$(ansible-inventory --list 2>/dev/null | jq '.storage_servers, .app_servers' | grep -c "null")
+    if [ "$inventory_check" -gt 0 ]; then
+        echo "Inventory ${RED}✗${RESET} missing required groups: storage_servers, app_servers"
+        echo "  Check ANSIBLE_CONFIG points to valid inventory"
+        return 1
+    fi
+
+    return 0
+}
+
+check_storage_servers() {
+    if ! ansible storage_servers --list 2>/dev/null | grep -q "hosts"; then
+        echo "Storage servers group not found in inventory"
+        return 1
+    fi
+    return 0
+}
+
+check_app_servers() {
+    if ! ansible app_servers --list 2>/dev/null | grep -q "hosts"; then
+        echo "App servers group not found in inventory"
+        return 1
+    fi
+    return 0
+}
+
+check_srv_nodes() {
+    if ! ansible srv_nodes --list 2>/dev/null | grep -q "hosts"; then
+        echo "srv_nodes group not found in inventory"
+        return 1
+    fi
+    return 0
+}
+
+# Strip ansible status header line (e.g. "hostname | SUCCESS | rc=0 >>")
+strip_ansible_header() {
+    grep -Ev '^\S+ \| (SUCCESS|CHANGED|FAILED|UNREACHABLE)'
+}
+
+run_ansible() {
+    local target="$1"
+    local module="$2"
+    local args="$3"
+    local result status
+
+    # Resolve short name to full ansible inventory hostname if available
+    local ansible_target="${ANSIBLE_HOSTS[$target]:-$target}"
+
+    # Disable errexit temporarily so one failed host doesn't exit the script
+    set +e
+    result=$(ansible "$ansible_target" -m "$module" -a "$args" 2>&1 | sed 's/\x1b\[[0-9;]*[a-zA-Z]//g')
+    status=$?
+    set -e
+
+    if [ $status -ne 0 ]; then
+        # Don't report errors for idempotent commands that may return non-zero legitimately
+        if [[ "$args" != *"pkill"* ]] && [[ "$args" != *"kill"* ]]; then
+            echo "Error: ansible $target $module failed (exit code $status)" >&2
+        fi
+    fi
+
+    echo "$result"
+    return $status
+}
+
+run_ansible_become() {
+    local target="${ANSIBLE_HOSTS[$1]:-$1}"
+    local module="$2"
+    local args="$3"
+    ansible "$target" -b -m "$module" -a "$args" 2>&1 | \
+        sed 's/\x1b\[[0-9;]*[a-zA-Z]//g'
+    return "${PIPESTATUS[0]}"
+}
+
+get_host_count() {
+    local group="$1"
+    ansible-inventory --list 2>/dev/null | jq ".$group.hosts | length"
+}
+
+get_storage_hosts() {
+    echo "st01"
+    echo "st02"
+    echo "st03"
+    echo "st04"
+    echo "st05"
+    echo "st06"
+    echo "st07"
+    echo "st08"
+}
+
+# Global associative arrays for static mappings (available after sourcing common)
+declare -A STORAGE_IPS
+STORAGE_IPS[st01]="192.168.11.21"
+STORAGE_IPS[st02]="192.168.11.22"
+STORAGE_IPS[st03]="192.168.11.23"
+STORAGE_IPS[st04]="192.168.11.24"
+STORAGE_IPS[st05]="192.168.11.25"
+STORAGE_IPS[st06]="192.168.11.26"
+STORAGE_IPS[st07]="192.168.11.27"
+STORAGE_IPS[st08]="192.168.11.28"
+
+declare -A APP_IPS
+APP_IPS[srv01]="192.168.11.31"
+APP_IPS[srv02]="192.168.11.32"
+APP_IPS[srv03]="192.168.11.33"
+
+declare -A APP_PORTS
+APP_PORTS[srv01]=5201
+APP_PORTS[srv02]=5202
+APP_PORTS[srv03]=5203
+
+get_storage_ips() {
+    for host in st01 st02 st03 st04 st05 st06 st07 st08; do
+        echo "$host=${STORAGE_IPS[$host]}"
+    done
+}
+
+get_app_ports() {
+    for host in srv01 srv02 srv03; do
+        echo "$host=${APP_PORTS[$host]}"
+    done
+}
+
+get_app_hosts() {
+    echo "srv01"
+    echo "srv02"
+    echo "srv03"
+}
+
+# Get warp client nodes (srv02, srv03 - non-coordinator nodes)
+get_srv_nodes() {
+    echo "srv02"
+    echo "srv03"
+}
+
+# Mapping from short name to full ansible inventory hostname
+declare -A ANSIBLE_HOSTS
+ANSIBLE_HOSTS[srv01]="r02-srv01"
+ANSIBLE_HOSTS[srv02]="r02-srv02"
+ANSIBLE_HOSTS[srv03]="r04-srv03"
+ANSIBLE_HOSTS[st01]="r02-st01"
+ANSIBLE_HOSTS[st02]="r02-st02"
+ANSIBLE_HOSTS[st03]="r02-st03"
+ANSIBLE_HOSTS[st04]="r02-st04"
+ANSIBLE_HOSTS[st05]="r04-st05"
+ANSIBLE_HOSTS[st06]="r04-st06"
+ANSIBLE_HOSTS[st07]="r04-st07"
+ANSIBLE_HOSTS[st08]="r04-st08"

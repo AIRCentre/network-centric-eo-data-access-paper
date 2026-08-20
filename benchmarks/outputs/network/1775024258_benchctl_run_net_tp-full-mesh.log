@@ -1,0 +1,190 @@
+=== Throughput Benchmark (Section 1.1) ===
+Duration: 120s per run
+Parallel streams: 8
+Repetitions: 3
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/full-mesh
+
+App servers: srv01
+srv02
+srv03
+Storage targets: st01
+st02
+st03
+st04
+st05
+st06
+st07
+st08
+
+Source range: srv01-srv03
+Target range: st01-st08
+
+  st01 -> 192.168.11.21
+  st02 -> 192.168.11.22
+  st03 -> 192.168.11.23
+  st04 -> 192.168.11.24
+  st05 -> 192.168.11.25
+  st06 -> 192.168.11.26
+  st07 -> 192.168.11.27
+  st08 -> 192.168.11.28
+
+=== Launching full-mesh throughput tests ===
+
+=== Repetition 1/3 ===
+=== Initialization ===
+Rep: 1
+Meta: srv01-srv03_st01-st08
+Metric: tp
+Qualifier: full-mesh
+Epoch: 1775024258
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/full-mesh
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/full-mesh/1775024258_tp_full-mesh_rep1_srv01-srv03_st01-st08_snapshot.csv
+Done.
+  Launched: srv01 -> st01
+  Launched: srv01 -> st02
+  Launched: srv01 -> st03
+  Launched: srv01 -> st04
+  Launched: srv01 -> st05
+  Launched: srv01 -> st06
+  Launched: srv01 -> st07
+  Launched: srv01 -> st08
+  Launched: srv02 -> st01
+  Launched: srv02 -> st02
+  Launched: srv02 -> st03
+  Launched: srv02 -> st04
+  Launched: srv02 -> st05
+  Launched: srv02 -> st06
+  Launched: srv02 -> st07
+  Launched: srv02 -> st08
+  Launched: srv03 -> st01
+  Launched: srv03 -> st02
+  Launched: srv03 -> st03
+  Launched: srv03 -> st04
+  Launched: srv03 -> st05
+  Launched: srv03 -> st06
+  Launched: srv03 -> st07
+  Launched: srv03 -> st08
+  Waiting for repetition 1 to complete...
+
+=== Repetition 2/3 ===
+=== Initialization ===
+Rep: 2
+Meta: srv01-srv03_st01-st08
+Metric: tp
+Qualifier: full-mesh
+Epoch: 1775024444
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/full-mesh
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/full-mesh/1775024444_tp_full-mesh_rep2_srv01-srv03_st01-st08_snapshot.csv
+Done.
+  Launched: srv01 -> st01
+  Launched: srv01 -> st02
+  Launched: srv01 -> st03
+  Launched: srv01 -> st04
+  Launched: srv01 -> st05
+  Launched: srv01 -> st06
+  Launched: srv01 -> st07
+  Launched: srv01 -> st08
+  Launched: srv02 -> st01
+  Launched: srv02 -> st02
+  Launched: srv02 -> st03
+  Launched: srv02 -> st04
+  Launched: srv02 -> st05
+  Launched: srv02 -> st06
+  Launched: srv02 -> st07
+  Launched: srv02 -> st08
+  Launched: srv03 -> st01
+  Launched: srv03 -> st02
+  Launched: srv03 -> st03
+  Launched: srv03 -> st04
+  Launched: srv03 -> st05
+  Launched: srv03 -> st06
+  Launched: srv03 -> st07
+  Launched: srv03 -> st08
+  Waiting for repetition 2 to complete...
+
+=== Repetition 3/3 ===
+=== Initialization ===
+Rep: 3
+Meta: srv01-srv03_st01-st08
+Metric: tp
+Qualifier: full-mesh
+Epoch: 1775024631
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/full-mesh
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/full-mesh/1775024631_tp_full-mesh_rep3_srv01-srv03_st01-st08_snapshot.csv
+Done.
+  Launched: srv01 -> st01
+  Launched: srv01 -> st02
+  Launched: srv01 -> st03
+  Launched: srv01 -> st04
+  Launched: srv01 -> st05
+  Launched: srv01 -> st06
+  Launched: srv01 -> st07
+  Launched: srv01 -> st08
+  Launched: srv02 -> st01
+  Launched: srv02 -> st02
+  Launched: srv02 -> st03
+  Launched: srv02 -> st04
+  Launched: srv02 -> st05
+  Launched: srv02 -> st06
+  Launched: srv02 -> st07
+  Launched: srv02 -> st08
+  Launched: srv03 -> st01
+  Launched: srv03 -> st02
+  Launched: srv03 -> st03
+  Launched: srv03 -> st04
+  Launched: srv03 -> st05
+  Launched: srv03 -> st06
+  Launched: srv03 -> st07
+  Launched: srv03 -> st08
+  Waiting for repetition 3 to complete...
+
+=== Throughput Complete ===
+Results saved to: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/full-mesh

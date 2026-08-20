@@ -1,0 +1,747 @@
+=== Throughput Benchmark - RDS03 to Storage Per-Pair (issue #19) ===
+Source: r05-rds03 (192.168.11.43)
+Port: 5201
+Duration: 120s per run
+Parallel streams: 8
+Repetitions: 3
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/rds03-to-st-per-pair
+
+Storage targets: st01
+st02
+st03
+st04
+st05
+st06
+st07
+st08
+
+=== Running rds03-to-st-per-pair sequential throughput tests ===
+
+=== Target 1/8: r05-rds03 -> st01 ===
+  Repetition 1/3
+=== Initialization ===
+Rep: 1
+Meta: rds03_st01
+Metric: tp
+Qualifier: rds03-to-st-per-pair
+Epoch: 1779120440
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/rds03-to-st-per-pair
+RDS host: r05-rds03
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+  Collecting from: r05-rds03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/rds03-to-st-per-pair/1779120440_tp_rds03-to-st-per-pair_rep1_rds03_st01_snapshot.csv
+Done.
+    Saved: 1779120440_tp_rds03-to-st-per-pair_rep1_st01.json
+  Repetition 2/3
+=== Initialization ===
+Rep: 2
+Meta: rds03_st01
+Metric: tp
+Qualifier: rds03-to-st-per-pair
+Epoch: 1779120624
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/rds03-to-st-per-pair
+RDS host: r05-rds03
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+  Collecting from: r05-rds03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/rds03-to-st-per-pair/1779120624_tp_rds03-to-st-per-pair_rep2_rds03_st01_snapshot.csv
+Done.
+    Saved: 1779120624_tp_rds03-to-st-per-pair_rep2_st01.json
+  Repetition 3/3
+=== Initialization ===
+Rep: 3
+Meta: rds03_st01
+Metric: tp
+Qualifier: rds03-to-st-per-pair
+Epoch: 1779120809
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/rds03-to-st-per-pair
+RDS host: r05-rds03
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+  Collecting from: r05-rds03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/rds03-to-st-per-pair/1779120809_tp_rds03-to-st-per-pair_rep3_rds03_st01_snapshot.csv
+Done.
+    Saved: 1779120809_tp_rds03-to-st-per-pair_rep3_st01.json
+
+=== Target 2/8: r05-rds03 -> st02 ===
+  Repetition 1/3
+=== Initialization ===
+Rep: 1
+Meta: rds03_st02
+Metric: tp
+Qualifier: rds03-to-st-per-pair
+Epoch: 1779120993
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/rds03-to-st-per-pair
+RDS host: r05-rds03
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+  Collecting from: r05-rds03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/rds03-to-st-per-pair/1779120993_tp_rds03-to-st-per-pair_rep1_rds03_st02_snapshot.csv
+Done.
+Error: ansible r05-rds03 shell failed (exit code 2)
+Warning: iperf3 failed for r05-rds03 -> st02 rep 1
+    Saved: 1779120993_tp_rds03-to-st-per-pair_rep1_st02.json
+  Repetition 2/3
+=== Initialization ===
+Rep: 2
+Meta: rds03_st02
+Metric: tp
+Qualifier: rds03-to-st-per-pair
+Epoch: 1779121059
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/rds03-to-st-per-pair
+RDS host: r05-rds03
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+  Collecting from: r05-rds03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/rds03-to-st-per-pair/1779121059_tp_rds03-to-st-per-pair_rep2_rds03_st02_snapshot.csv
+Done.
+    Saved: 1779121059_tp_rds03-to-st-per-pair_rep2_st02.json
+  Repetition 3/3
+=== Initialization ===
+Rep: 3
+Meta: rds03_st02
+Metric: tp
+Qualifier: rds03-to-st-per-pair
+Epoch: 1779121243
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/rds03-to-st-per-pair
+RDS host: r05-rds03
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+  Collecting from: r05-rds03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/rds03-to-st-per-pair/1779121243_tp_rds03-to-st-per-pair_rep3_rds03_st02_snapshot.csv
+Done.
+    Saved: 1779121243_tp_rds03-to-st-per-pair_rep3_st02.json
+
+=== Target 3/8: r05-rds03 -> st03 ===
+  Repetition 1/3
+=== Initialization ===
+Rep: 1
+Meta: rds03_st03
+Metric: tp
+Qualifier: rds03-to-st-per-pair
+Epoch: 1779121428
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/rds03-to-st-per-pair
+RDS host: r05-rds03
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+  Collecting from: r05-rds03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/rds03-to-st-per-pair/1779121428_tp_rds03-to-st-per-pair_rep1_rds03_st03_snapshot.csv
+Done.
+Error: ansible r05-rds03 shell failed (exit code 2)
+Warning: iperf3 failed for r05-rds03 -> st03 rep 1
+    Saved: 1779121428_tp_rds03-to-st-per-pair_rep1_st03.json
+  Repetition 2/3
+=== Initialization ===
+Rep: 2
+Meta: rds03_st03
+Metric: tp
+Qualifier: rds03-to-st-per-pair
+Epoch: 1779121493
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/rds03-to-st-per-pair
+RDS host: r05-rds03
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+  Collecting from: r05-rds03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/rds03-to-st-per-pair/1779121493_tp_rds03-to-st-per-pair_rep2_rds03_st03_snapshot.csv
+Done.
+    Saved: 1779121493_tp_rds03-to-st-per-pair_rep2_st03.json
+  Repetition 3/3
+=== Initialization ===
+Rep: 3
+Meta: rds03_st03
+Metric: tp
+Qualifier: rds03-to-st-per-pair
+Epoch: 1779121678
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/rds03-to-st-per-pair
+RDS host: r05-rds03
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+  Collecting from: r05-rds03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/rds03-to-st-per-pair/1779121678_tp_rds03-to-st-per-pair_rep3_rds03_st03_snapshot.csv
+Done.
+    Saved: 1779121678_tp_rds03-to-st-per-pair_rep3_st03.json
+
+=== Target 4/8: r05-rds03 -> st04 ===
+  Repetition 1/3
+=== Initialization ===
+Rep: 1
+Meta: rds03_st04
+Metric: tp
+Qualifier: rds03-to-st-per-pair
+Epoch: 1779121862
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/rds03-to-st-per-pair
+RDS host: r05-rds03
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+  Collecting from: r05-rds03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/rds03-to-st-per-pair/1779121862_tp_rds03-to-st-per-pair_rep1_rds03_st04_snapshot.csv
+Done.
+Error: ansible r05-rds03 shell failed (exit code 2)
+Warning: iperf3 failed for r05-rds03 -> st04 rep 1
+    Saved: 1779121862_tp_rds03-to-st-per-pair_rep1_st04.json
+  Repetition 2/3
+=== Initialization ===
+Rep: 2
+Meta: rds03_st04
+Metric: tp
+Qualifier: rds03-to-st-per-pair
+Epoch: 1779121928
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/rds03-to-st-per-pair
+RDS host: r05-rds03
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+  Collecting from: r05-rds03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/rds03-to-st-per-pair/1779121928_tp_rds03-to-st-per-pair_rep2_rds03_st04_snapshot.csv
+Done.
+    Saved: 1779121928_tp_rds03-to-st-per-pair_rep2_st04.json
+  Repetition 3/3
+=== Initialization ===
+Rep: 3
+Meta: rds03_st04
+Metric: tp
+Qualifier: rds03-to-st-per-pair
+Epoch: 1779122112
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/rds03-to-st-per-pair
+RDS host: r05-rds03
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+  Collecting from: r05-rds03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/rds03-to-st-per-pair/1779122112_tp_rds03-to-st-per-pair_rep3_rds03_st04_snapshot.csv
+Done.
+    Saved: 1779122112_tp_rds03-to-st-per-pair_rep3_st04.json
+
+=== Target 5/8: r05-rds03 -> st05 ===
+  Repetition 1/3
+=== Initialization ===
+Rep: 1
+Meta: rds03_st05
+Metric: tp
+Qualifier: rds03-to-st-per-pair
+Epoch: 1779122296
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/rds03-to-st-per-pair
+RDS host: r05-rds03
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+  Collecting from: r05-rds03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/rds03-to-st-per-pair/1779122296_tp_rds03-to-st-per-pair_rep1_rds03_st05_snapshot.csv
+Done.
+Error: ansible r05-rds03 shell failed (exit code 2)
+Warning: iperf3 failed for r05-rds03 -> st05 rep 1
+    Saved: 1779122296_tp_rds03-to-st-per-pair_rep1_st05.json
+  Repetition 2/3
+=== Initialization ===
+Rep: 2
+Meta: rds03_st05
+Metric: tp
+Qualifier: rds03-to-st-per-pair
+Epoch: 1779122362
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/rds03-to-st-per-pair
+RDS host: r05-rds03
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+  Collecting from: r05-rds03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/rds03-to-st-per-pair/1779122362_tp_rds03-to-st-per-pair_rep2_rds03_st05_snapshot.csv
+Done.
+    Saved: 1779122362_tp_rds03-to-st-per-pair_rep2_st05.json
+  Repetition 3/3
+=== Initialization ===
+Rep: 3
+Meta: rds03_st05
+Metric: tp
+Qualifier: rds03-to-st-per-pair
+Epoch: 1779122546
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/rds03-to-st-per-pair
+RDS host: r05-rds03
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+  Collecting from: r05-rds03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/rds03-to-st-per-pair/1779122546_tp_rds03-to-st-per-pair_rep3_rds03_st05_snapshot.csv
+Done.
+    Saved: 1779122546_tp_rds03-to-st-per-pair_rep3_st05.json
+
+=== Target 6/8: r05-rds03 -> st06 ===
+  Repetition 1/3
+=== Initialization ===
+Rep: 1
+Meta: rds03_st06
+Metric: tp
+Qualifier: rds03-to-st-per-pair
+Epoch: 1779122731
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/rds03-to-st-per-pair
+RDS host: r05-rds03
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+  Collecting from: r05-rds03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/rds03-to-st-per-pair/1779122731_tp_rds03-to-st-per-pair_rep1_rds03_st06_snapshot.csv
+Done.
+Error: ansible r05-rds03 shell failed (exit code 2)
+Warning: iperf3 failed for r05-rds03 -> st06 rep 1
+    Saved: 1779122731_tp_rds03-to-st-per-pair_rep1_st06.json
+  Repetition 2/3
+=== Initialization ===
+Rep: 2
+Meta: rds03_st06
+Metric: tp
+Qualifier: rds03-to-st-per-pair
+Epoch: 1779122797
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/rds03-to-st-per-pair
+RDS host: r05-rds03
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+  Collecting from: r05-rds03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/rds03-to-st-per-pair/1779122797_tp_rds03-to-st-per-pair_rep2_rds03_st06_snapshot.csv
+Done.
+    Saved: 1779122797_tp_rds03-to-st-per-pair_rep2_st06.json
+  Repetition 3/3
+=== Initialization ===
+Rep: 3
+Meta: rds03_st06
+Metric: tp
+Qualifier: rds03-to-st-per-pair
+Epoch: 1779122981
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/rds03-to-st-per-pair
+RDS host: r05-rds03
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+  Collecting from: r05-rds03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/rds03-to-st-per-pair/1779122981_tp_rds03-to-st-per-pair_rep3_rds03_st06_snapshot.csv
+Done.
+    Saved: 1779122981_tp_rds03-to-st-per-pair_rep3_st06.json
+
+=== Target 7/8: r05-rds03 -> st07 ===
+  Repetition 1/3
+=== Initialization ===
+Rep: 1
+Meta: rds03_st07
+Metric: tp
+Qualifier: rds03-to-st-per-pair
+Epoch: 1779123165
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/rds03-to-st-per-pair
+RDS host: r05-rds03
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+  Collecting from: r05-rds03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/rds03-to-st-per-pair/1779123165_tp_rds03-to-st-per-pair_rep1_rds03_st07_snapshot.csv
+Done.
+Error: ansible r05-rds03 shell failed (exit code 2)
+Warning: iperf3 failed for r05-rds03 -> st07 rep 1
+    Saved: 1779123165_tp_rds03-to-st-per-pair_rep1_st07.json
+  Repetition 2/3
+=== Initialization ===
+Rep: 2
+Meta: rds03_st07
+Metric: tp
+Qualifier: rds03-to-st-per-pair
+Epoch: 1779123231
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/rds03-to-st-per-pair
+RDS host: r05-rds03
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+  Collecting from: r05-rds03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/rds03-to-st-per-pair/1779123231_tp_rds03-to-st-per-pair_rep2_rds03_st07_snapshot.csv
+Done.
+    Saved: 1779123231_tp_rds03-to-st-per-pair_rep2_st07.json
+  Repetition 3/3
+=== Initialization ===
+Rep: 3
+Meta: rds03_st07
+Metric: tp
+Qualifier: rds03-to-st-per-pair
+Epoch: 1779123415
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/rds03-to-st-per-pair
+RDS host: r05-rds03
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+  Collecting from: r05-rds03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/rds03-to-st-per-pair/1779123415_tp_rds03-to-st-per-pair_rep3_rds03_st07_snapshot.csv
+Done.
+    Saved: 1779123415_tp_rds03-to-st-per-pair_rep3_st07.json
+
+=== Target 8/8: r05-rds03 -> st08 ===
+  Repetition 1/3
+=== Initialization ===
+Rep: 1
+Meta: rds03_st08
+Metric: tp
+Qualifier: rds03-to-st-per-pair
+Epoch: 1779123599
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/rds03-to-st-per-pair
+RDS host: r05-rds03
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+  Collecting from: r05-rds03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/rds03-to-st-per-pair/1779123599_tp_rds03-to-st-per-pair_rep1_rds03_st08_snapshot.csv
+Done.
+Error: ansible r05-rds03 shell failed (exit code 2)
+Warning: iperf3 failed for r05-rds03 -> st08 rep 1
+    Saved: 1779123599_tp_rds03-to-st-per-pair_rep1_st08.json
+  Repetition 2/3
+=== Initialization ===
+Rep: 2
+Meta: rds03_st08
+Metric: tp
+Qualifier: rds03-to-st-per-pair
+Epoch: 1779123665
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/rds03-to-st-per-pair
+RDS host: r05-rds03
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+  Collecting from: r05-rds03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/rds03-to-st-per-pair/1779123665_tp_rds03-to-st-per-pair_rep2_rds03_st08_snapshot.csv
+Done.
+    Saved: 1779123665_tp_rds03-to-st-per-pair_rep2_st08.json
+  Repetition 3/3
+=== Initialization ===
+Rep: 3
+Meta: rds03_st08
+Metric: tp
+Qualifier: rds03-to-st-per-pair
+Epoch: 1779123849
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/rds03-to-st-per-pair
+RDS host: r05-rds03
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+  Collecting from: r05-rds03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/rds03-to-st-per-pair/1779123849_tp_rds03-to-st-per-pair_rep3_rds03_st08_snapshot.csv
+Done.
+    Saved: 1779123849_tp_rds03-to-st-per-pair_rep3_st08.json
+
+=== RDS03-to-Storage Per-Pair Throughput Complete ===
+Results saved to: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/rds03-to-st-per-pair

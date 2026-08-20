@@ -1,0 +1,23 @@
+{
+    "test": "network_baseline",
+    "timestamp_utc": "2026-05-22T22:08:02Z",
+    "epoch": 1779487617,
+    "target": "eo-catalog.ac-az1.aircentre.org",
+    "ping": {
+        "count": 20,
+        "timeout_s": 5,
+        "rtt_min_ms": 159.869,
+        "rtt_avg_ms": 160.764,
+        "rtt_max_ms": 169.272,
+        "rtt_stddev_ms": 2.167,
+        "packet_loss": "10%"
+    },
+    "traceroute": {
+        "hops": 34,
+        "raw": " 1?: [LOCALHOST]                      pmtu 1500\n 1:  v111-mc-rt-3015.nsx.uwaterloo.ca                      1.127ms asymm  2 \n 1:  v111-mc-rt-3015.nsx.uwaterloo.ca                      1.032ms asymm  2 \n 2:  po66-1500-10-dist-rt.ns.uwaterloo.ca                  0.541ms \n 3:  po30-cn-rt.ns.uwaterloo.ca                            1.027ms \n 4:  po100-cn-rt.ns.uwaterloo.ca                           1.672ms \n 5:  hu-0-0-0-8-ext-rt-rac.ns.uwaterloo.ca                 2.661ms \n 6:  72.15.57.69                                           3.125ms \n 7:  24.156.146.189                                        5.540ms \n 8:  9044-cgw01.wlfdle.rmgt.net.rogers.com                 6.097ms \n 9:  hu0-6-0-5.ccr32.yyz02.atlas.cogentco.com              5.478ms asymm 10 \n10:  port-channel2994.ccr92.cle04.atlas.cogentco.com       9.137ms asymm 11 \n11:  port-channel9259.ccr92.dca04.atlas.cogentco.com      20.900ms \n12:  be2320.ccr32.bio02.atlas.cogentco.com                91.810ms \n13:  fccn-ias-geant-gw.rt1.por.pt.geant.net              134.186ms asymm 17 \n14:  fccn-ias-fccn.rt1.por.pt.geant.net                  134.447ms asymm 21 \n15:  Router40.Porto.fccn.pt                              138.016ms asymm 25 \n16:  Router60.Lisboa.fccn.pt                             138.025ms asymm 24 \n17:  fccn-ap1-ias-gw.rt0.lis.pt.geant.net                116.401ms \n18:  fccn-ias-ap1-gw.rt0.lis.pt.geant.net                117.069ms asymm 21 \n19:  Router60.Lisboa.fccn.pt                             117.005ms asymm 24 \n20:  Router63.Lisboa.fccn.pt                             116.958ms asymm 23 \n21:  no reply\n22:  no reply\n23:  no reply\n24:  no reply\n25:  no reply\n26:  no reply\n27:  no reply\n28:  no reply\n29:  no reply\n30:  no reply\n     Too many hops: pmtu 1500\n     Resume: pmtu 1500 \n"
+    },
+    "bandwidth_probe": {
+        "url": "https://eo-catalog.ac-az1.aircentre.org/api/v1",
+        "samples": [{"rep":1,"dns_s":0.001224,"connect_s":0.161852,"ttfb_s":0.521260,"total_s":0.521566,"speed_bytes_s":1482,"size_bytes":773},{"rep":2,"dns_s":0.001894,"connect_s":0.140933,"ttfb_s":0.441872,"total_s":0.441914,"speed_bytes_s":1749,"size_bytes":773},{"rep":3,"dns_s":0.001039,"connect_s":0.166647,"ttfb_s":0.505874,"total_s":0.506082,"speed_bytes_s":1527,"size_bytes":773},{"rep":4,"dns_s":0.002124,"connect_s":0.149187,"ttfb_s":0.446331,"total_s":0.446503,"speed_bytes_s":1731,"size_bytes":773},{"rep":5,"dns_s":0.001058,"connect_s":0.182418,"ttfb_s":0.526894,"total_s":0.526951,"speed_bytes_s":1466,"size_bytes":773}]
+    }
+}

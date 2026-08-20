@@ -1,0 +1,175 @@
+#!/bin/bash
+set -eo pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "$SCRIPT_DIR/common"
+
+PG_URI="${PG_URI:?PG_URI not set}"
+
+# Defaults
+SCALE="${SCALE:-all}"
+OUTPUT_DIR="${OUTPUT_DIR:-$REPO_ROOT/benchmarks/outputs/database/ingestion/postgis}"
+REP="${REP:-1}"
+EPOCH="${EPOCH:-$(date +%s)}"
+DATA_DIR="${DATA_DIR:-$REPO_ROOT/data}"
+
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        --scale)      SCALE="$2";      shift 2 ;;
+        --output-dir) OUTPUT_DIR="$2"; shift 2 ;;
+        --rep)        REP="$2";        shift 2 ;;
+        --epoch)      EPOCH="$2";      shift 2 ;;
+        --data-dir)   DATA_DIR="$2";   shift 2 ;;
+        --help|-h)
+            echo "Usage: db_ingest_postgis [--scale 1M|10M|50M|100M|all]"
+            echo ""
+            echo "Options:"
+            echo "  --scale <1M|10M|50M|100M|all>  Scale level (default: all)"
+            echo "  --output-dir <dir>              Timing output dir"
+            echo "  --data-dir <dir>                Data file dir on DB host (default: /data)"
+            echo "  --rep <n>                       Repetition number (default: 1)"
+            echo "  --epoch <ts>                    Epoch timestamp (default: now)"
+            exit 0
+            ;;
+        *) echo "Error: Unknown option: $1" >&2; exit 1 ;;
+    esac
+done
+
+# Resolve scale list
+case "$SCALE" in
+    1M)   SCALES=(1000000) ;  LABELS=(1M) ;;
+    10M)  SCALES=(10000000) ; LABELS=(10M) ;;
+    50M)  SCALES=(50000000) ; LABELS=(50M) ;;
+    100M) SCALES=(100000000); LABELS=(100M) ;;
+    all)  SCALES=(1000000 10000000 50000000 100000000); LABELS=(1M 10M 50M 100M) ;;
+    *)    echo "Error: Unknown scale: $SCALE" >&2; exit 1 ;;
+esac
+
+mkdir -p "$OUTPUT_DIR"
+
+# Cleanup trap: drop staging table on unexpected exit
+cleanup() {
+    psql "$PG_URI" -c "DROP TABLE IF EXISTS eo_metadata_staging" 2>/dev/null || true
+}
+trap cleanup EXIT
+trap 'cleanup; exit 1' INT TERM
+
+echo "=== Track 3.1: PostGIS Ingestion ==="
+echo "Scales: ${LABELS[*]}"
+echo ""
+
+for idx in "${!SCALES[@]}"; do
+    n="${SCALES[$idx]}"
+    label="${LABELS[$idx]}"
+    EPOCH=$(date +%s)
+
+    echo "=== Ingesting $label ($n records) ==="
+
+    csv_file="$DATA_DIR/${label}_postgis.csv"
+
+    # Drop existing tables
+    psql "$PG_URI" -c "DROP TABLE IF EXISTS eo_metadata CASCADE"
+    psql "$PG_URI" -c "DROP TABLE IF EXISTS eo_metadata_staging CASCADE"
+
+    # Create staging table (footprint as TEXT for WKT)
+    psql "$PG_URI" -c "
+        CREATE UNLOGGED TABLE eo_metadata_staging (
+            id BIGINT,
+            mission TEXT,
+            sensor TEXT,
+            product_level TEXT,
+            timestamp TIMESTAMPTZ,
+            footprint_wkt TEXT
+        )
+    "
+
+    # COPY CSV into staging table
+    echo "  COPY from $csv_file..."
+    t0=$(date +%s.%N)
+    psql "$PG_URI" -c "\\copy eo_metadata_staging FROM '$csv_file' CSV HEADER"
+    t1=$(date +%s.%N)
+    copy_s=$(awk "BEGIN {printf \"%.1f\", $t1 - $t0}")
+    echo "  COPY: ${copy_s}s"
+
+    # Create final table with geometry column
+    psql "$PG_URI" -c "
+        CREATE TABLE eo_metadata (
+            id BIGINT PRIMARY KEY,
+            mission TEXT,
+            sensor TEXT,
+            product_level TEXT,
+            timestamp TIMESTAMPTZ,
+            footprint GEOMETRY(POLYGON, 4326)
+        )
+    "
+
+    # Insert with geometry conversion
+    echo "  Converting WKT to geometry..."
+    t0=$(date +%s.%N)
+    psql "$PG_URI" -c "
+        INSERT INTO eo_metadata
+        SELECT id, mission, sensor, product_level, timestamp,
+            ST_GeomFromText(footprint_wkt, 4326)
+        FROM eo_metadata_staging
+    "
+    t1=$(date +%s.%N)
+    geom_s=$(awk "BEGIN {printf \"%.1f\", $t1 - $t0}")
+    echo "  Geometry insert: ${geom_s}s"
+
+    # Drop staging table
+    psql "$PG_URI" -c "DROP TABLE eo_metadata_staging"
+
+    # Create GiST spatial index
+    echo "  Creating GiST index..."
+    t0=$(date +%s.%N)
+    psql "$PG_URI" -c "CREATE INDEX idx_footprint ON eo_metadata USING GIST (footprint)"
+    t1=$(date +%s.%N)
+    gist_s=$(awk "BEGIN {printf \"%.1f\", $t1 - $t0}")
+    echo "  GiST index: ${gist_s}s"
+
+    # Create timestamp index
+    echo "  Creating timestamp index..."
+    t0=$(date +%s.%N)
+    psql "$PG_URI" -c "CREATE INDEX idx_timestamp ON eo_metadata (timestamp)"
+    t1=$(date +%s.%N)
+    ts_idx_s=$(awk "BEGIN {printf \"%.1f\", $t1 - $t0}")
+    echo "  Timestamp index: ${ts_idx_s}s"
+
+    # ANALYZE
+    echo "  Running ANALYZE..."
+    t0=$(date +%s.%N)
+    psql "$PG_URI" -c "ANALYZE eo_metadata"
+    t1=$(date +%s.%N)
+    analyze_s=$(awk "BEGIN {printf \"%.1f\", $t1 - $t0}")
+    echo "  ANALYZE: ${analyze_s}s"
+
+    total_s=$(awk "BEGIN {printf \"%.1f\", $copy_s + $geom_s + $gist_s + $ts_idx_s + $analyze_s}")
+
+    # Verify row count
+    count=$(psql "$PG_URI" -t -A -c "SELECT count(*) FROM eo_metadata")
+    echo "  Row count: $count (expected: $n)"
+
+    # Write timing JSON
+    cat > "$OUTPUT_DIR/${EPOCH}_ingest_${label}_rep${REP}_postgis.json" <<EOF
+{
+  "database": "postgis",
+  "scale": "$label",
+  "records": $n,
+  "actual_count": $count,
+  "epoch": $EPOCH,
+  "rep": $REP,
+  "timings": {
+    "copy_s": $copy_s,
+    "geom_insert_s": $geom_s,
+    "index_gist_s": $gist_s,
+    "index_timestamp_s": $ts_idx_s,
+    "analyze_s": $analyze_s,
+    "total_s": $total_s
+  }
+}
+EOF
+    echo "  → $OUTPUT_DIR/${EPOCH}_ingest_${label}_rep${REP}_postgis.json"
+    echo ""
+done
+
+echo "=== PostGIS Ingestion Complete ==="

@@ -1,0 +1,12 @@
+{
+  "host": "st08",
+  "repetition": 2,
+  "timestamp_epoch": 1774111035,
+  "rx_errors_delta": 0,
+  "tx_errors_delta": 0,
+  "rx_drops_delta": 0,
+  "tx_drops_delta": 0,
+  "rx_packets": 229285323,
+  "tx_packets": 53527982,
+  "loss_pct": 0
+}

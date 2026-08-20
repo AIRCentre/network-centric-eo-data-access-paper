@@ -1,0 +1,200 @@
+#!/bin/bash
+set -eo pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "$SCRIPT_DIR/common"
+
+OUTPUT_DIR="${OUTPUT_DIR:-$REPO_ROOT/benchmarks/outputs/network/packet_loss}"
+DURATION="${DURATION:-5}"
+REPETITIONS="${REPETITIONS:-1}"
+IDLE_WAIT="${IDLE_WAIT:-2}"
+# -P 16 per track1 spec section 1.3 (stress NIC buffers beyond throughput baseline)
+PARALLEL_STREAMS=16
+
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        --duration)
+            DURATION="$2"
+            shift 2
+            ;;
+        --repetitions)
+            REPETITIONS="$2"
+            shift 2
+            ;;
+        --output-dir)
+            OUTPUT_DIR="$2"
+            shift 2
+            ;;
+        --idle-wait)
+            IDLE_WAIT="$2"
+            shift 2
+            ;;
+        --help|-h)
+            echo "Usage: $0 [options]"
+            echo ""
+            echo "Options:"
+            echo "  --duration <seconds>   Load duration per rep (default: 5)"
+            echo "  --repetitions <n>      Number of repetitions (default: 1)"
+            echo "  --output-dir <dir>     Output directory"
+            echo "  --idle-wait <seconds>  Idle wait before snapshot (default: 2)"
+            exit 0
+            ;;
+        *)
+            echo "Error: Unknown option: $1"
+            echo "Use --help for usage"
+            exit 1
+            ;;
+    esac
+done
+
+echo "=== Packet Loss Benchmark (Section 1.3) ==="
+echo "Duration: ${DURATION}s per rep"
+echo "Parallel streams: $PARALLEL_STREAMS"
+echo "Repetitions: $REPETITIONS"
+echo "Idle wait: ${IDLE_WAIT}s"
+echo "Output: $OUTPUT_DIR"
+echo ""
+
+mkdir -p "$OUTPUT_DIR"
+
+storage_hosts=$(get_storage_hosts)
+app_hosts=$(get_app_hosts)
+
+if [ -z "$storage_hosts" ]; then
+    echo "Error: No storage servers found"
+    exit 1
+fi
+
+if [ -z "$app_hosts" ]; then
+    echo "Error: No app servers found"
+    exit 1
+fi
+
+echo "App servers: $app_hosts"
+echo "Storage targets: $storage_hosts"
+echo ""
+
+first_app=$(echo "$app_hosts" | head -1)
+last_app=$(echo "$app_hosts" | tail -1)
+source_range="${first_app}-${last_app}"
+
+first_st=$(echo "$storage_hosts" | head -1)
+last_st=$(echo "$storage_hosts" | tail -1)
+target_range="${first_st}-${last_st}"
+
+# Parse 'ip -s link show bond0' output into: rx_pkt rx_err rx_drop tx_pkt tx_err tx_drop
+parse_ip_link() {
+    local file="$1"
+    awk '
+        /^[[:space:]]+RX:/ { rx_next=1; next }
+        rx_next { rx_packets=$2; rx_errors=$3; rx_dropped=$4; rx_next=0; next }
+        /^[[:space:]]+TX:/ { tx_next=1; next }
+        tx_next { tx_packets=$2; tx_errors=$3; tx_dropped=$4; tx_next=0; next }
+        END { print rx_packets+0, rx_errors+0, rx_dropped+0, tx_packets+0, tx_errors+0, tx_dropped+0 }
+    ' "$file"
+}
+
+for rep in $(seq 1 $REPETITIONS); do
+    echo "=== Repetition $rep/$REPETITIONS ==="
+
+    TIMESTAMP=$(date +%s)
+
+    "$SCRIPT_DIR/system_snapshot" --rep "$rep" --meta "${source_range}_${target_range}" --metric errors --qualifier full-mesh --epoch "$TIMESTAMP" --output-dir "$OUTPUT_DIR" --idle-wait "$IDLE_WAIT" || echo "Warning: system_snapshot failed, continuing..."
+
+    # Capture baseline NIC counters from all hosts in parallel
+    echo "  Capturing baseline counters..."
+    PIDS=""
+    for host in $app_hosts $storage_hosts; do
+        (
+            run_ansible "$host" "shell" "ip -s link show bond0" \
+                | strip_ansible_header \
+                > "${OUTPUT_DIR}/${TIMESTAMP}_errors_baseline_rep${rep}_${host}.txt"
+        ) &
+        PIDS="$PIDS $!"
+    done
+    wait $PIDS || echo "Warning: some baseline counter captures failed"
+
+    # Launch full-mesh iperf3 load (all apps -> all storage, parallel)
+    echo "  Launching full-mesh load (${DURATION}s)..."
+    PIDS=""
+    for app in $app_hosts; do
+        for target in $storage_hosts; do
+            target_ip=${STORAGE_IPS[$target]}
+            (
+                run_ansible "$app" "shell" "
+                    iperf3 -c $target_ip -p ${APP_PORTS[$app]} -P $PARALLEL_STREAMS -t $DURATION -Z -w 256k -l 64k &>/dev/null
+                " > /dev/null
+            ) &
+            PIDS="$PIDS $!"
+            echo "    Launched: $app -> $target"
+        done
+    done
+
+    echo "  Waiting for load to complete..."
+    wait $PIDS || echo "Warning: some iperf3 load jobs failed"
+
+    # Capture loaded NIC counters from all hosts in parallel
+    echo "  Capturing loaded counters..."
+    PIDS=""
+    for host in $app_hosts $storage_hosts; do
+        (
+            run_ansible "$host" "shell" "ip -s link show bond0" \
+                | strip_ansible_header \
+                > "${OUTPUT_DIR}/${TIMESTAMP}_errors_loaded_rep${rep}_${host}.txt"
+        ) &
+        PIDS="$PIDS $!"
+    done
+    wait $PIDS || echo "Warning: some loaded counter captures failed"
+
+    # Compute deltas per host
+    echo "  Computing deltas..."
+    for host in $app_hosts $storage_hosts; do
+        baseline_file="${OUTPUT_DIR}/${TIMESTAMP}_errors_baseline_rep${rep}_${host}.txt"
+        loaded_file="${OUTPUT_DIR}/${TIMESTAMP}_errors_loaded_rep${rep}_${host}.txt"
+        delta_file="${OUTPUT_DIR}/${TIMESTAMP}_errors_delta_rep${rep}_${host}.json"
+
+        if [ ! -f "$baseline_file" ] || [ ! -f "$loaded_file" ]; then
+            echo "    Warning: missing counter files for $host, skipping delta"
+            continue
+        fi
+
+        read -r b_rx_pkt b_rx_err b_rx_drop b_tx_pkt b_tx_err b_tx_drop <<< "$(parse_ip_link "$baseline_file")"
+        read -r l_rx_pkt l_rx_err l_rx_drop l_tx_pkt l_tx_err l_tx_drop <<< "$(parse_ip_link "$loaded_file")"
+
+        rx_errors_delta=$(( l_rx_err - b_rx_err ))
+        tx_errors_delta=$(( l_tx_err - b_tx_err ))
+        rx_drops_delta=$(( l_rx_drop - b_rx_drop ))
+        tx_drops_delta=$(( l_tx_drop - b_tx_drop ))
+        rx_packets=$(( l_rx_pkt - b_rx_pkt ))
+        tx_packets=$(( l_tx_pkt - b_tx_pkt ))
+
+        jq -n \
+            --arg host "$host" \
+            --argjson rep "$rep" \
+            --argjson ts "$TIMESTAMP" \
+            --argjson rx_errors_delta "$rx_errors_delta" \
+            --argjson tx_errors_delta "$tx_errors_delta" \
+            --argjson rx_drops_delta "$rx_drops_delta" \
+            --argjson tx_drops_delta "$tx_drops_delta" \
+            --argjson rx_packets "$rx_packets" \
+            --argjson tx_packets "$tx_packets" \
+            '{
+  host: $host,
+  repetition: $rep,
+  timestamp_epoch: $ts,
+  rx_errors_delta: $rx_errors_delta,
+  tx_errors_delta: $tx_errors_delta,
+  rx_drops_delta: $rx_drops_delta,
+  tx_drops_delta: $tx_drops_delta,
+  rx_packets: $rx_packets,
+  tx_packets: $tx_packets,
+  loss_pct: (if $rx_packets > 0 then ($rx_drops_delta / $rx_packets * 100) else 0 end)
+}' > "$delta_file"
+        echo "    Delta $host: $(jq -c '{rx_errors_delta,rx_drops_delta,loss_pct}' "$delta_file")"
+    done
+
+    echo ""
+done
+
+echo "=== Packet Loss Complete ==="
+echo "Results saved to: $OUTPUT_DIR"

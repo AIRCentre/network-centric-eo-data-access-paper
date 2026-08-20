@@ -1,0 +1,145 @@
+#!/bin/bash
+set -eo pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "$SCRIPT_DIR/common"
+
+ACTION="$1"
+
+# Default warp client port
+WARP_CLIENT_PORT="${WARP_PORT:-7761}"
+
+# Warp client nodes (non-coordinator: srv02, srv03)
+WARP_CLIENT_NODES=(srv02 srv03)
+coordinator="srv01"
+
+if [ "$ACTION" != "start" ] && [ "$ACTION" != "stop" ] && [ "$ACTION" != "status" ]; then
+    echo "Usage: benchctl warp [start|stop|status]" >&2
+    exit 1
+fi
+
+# Skip group check - use direct host lookups via ANSIBLE_HOSTS
+
+if [ "$ACTION" = "start" ]; then
+    echo "Opening firewall port $WARP_CLIENT_PORT on srv nodes..."
+    for node in "${WARP_CLIENT_NODES[@]}"; do
+        run_ansible "$node" shell "firewall-cmd --add-port=${WARP_CLIENT_PORT}/tcp 2>/dev/null" > /dev/null || true
+    done
+
+    echo "Starting warp client listeners on ${WARP_CLIENT_NODES[*]} (port $WARP_CLIENT_PORT)..."
+
+    # Kill stale warp clients first (idempotent)
+    for node in "${WARP_CLIENT_NODES[@]}"; do
+        run_ansible "$node" shell "pkill -f 'warp client' 2>/dev/null || true" > /dev/null || true
+    done
+    sleep 1
+
+    # Start warp client on each node
+    for node in "${WARP_CLIENT_NODES[@]}"; do
+        run_ansible "$node" shell \
+            "nohup warp client 0.0.0.0:${WARP_CLIENT_PORT} </dev/null >/tmp/warp_client_${node}.log 2>&1 &" \
+            || { echo "Failed to start warp client on $node"; exit 1; }
+    done
+
+    # Wait for clients to bind
+    echo "Waiting for clients to bind port $WARP_CLIENT_PORT..."
+    for node in "${WARP_CLIENT_NODES[@]}"; do
+        attempts=0
+        while [[ $attempts -lt 10 ]]; do
+            if run_ansible "$node" shell "ss -tlnp 2>/dev/null | grep -q ':${WARP_CLIENT_PORT}'" > /dev/null 2>&1; then
+                echo "  → $node: port ${WARP_CLIENT_PORT} ready"
+                break
+            fi
+            attempts=$((attempts + 1))
+            sleep 1
+        done
+        if [[ $attempts -eq 10 ]]; then
+            echo "Warning: $node port ${WARP_CLIENT_PORT} not listening after 10s"
+        fi
+    done
+
+    echo "Done. Run 'benchctl warp status' to verify."
+
+elif [ "$ACTION" = "stop" ]; then
+    echo "Stopping warp clients on srv nodes..."
+    for node in "${WARP_CLIENT_NODES[@]}"; do
+        run_ansible "$node" shell "pkill -f 'warp client' 2>/dev/null || true" > /dev/null || true
+    done
+
+    echo "Closing firewall port $WARP_CLIENT_PORT on srv nodes..."
+    for node in "${WARP_CLIENT_NODES[@]}"; do
+        run_ansible "$node" shell "firewall-cmd --remove-port=${WARP_CLIENT_PORT}/tcp 2>/dev/null" > /dev/null || true
+    done
+
+    echo "Done."
+
+elif [ "$ACTION" = "status" ]; then
+    echo "=== warp client status ==="
+    echo ""
+
+    echo "warp client nodes (${WARP_CLIENT_NODES[*]}):"
+    set +e
+    for node in "${WARP_CLIENT_NODES[@]}"; do
+        ansible_host="${ANSIBLE_HOSTS[$node]}"
+        node_reachable=$(ansible "$ansible_host" -m ping 2>/dev/null | grep -c "SUCCESS")
+        if [ -n "$node_reachable" ] && [ "$node_reachable" -gt 0 ]; then
+            echo "  $node: ${GREEN}reachable${RESET}"
+
+            # Check warp installation
+            warp_check=$(run_ansible "$node" shell "command -v warp 2>/dev/null" | strip_ansible_header | grep "warp" >/dev/null && echo 1 || echo 0)
+            if [ "$warp_check" = "1" ]; then
+                echo "    warp: ${GREEN}installed${RESET}"
+
+                # Get version
+                version=$(run_ansible "$node" shell "warp --version 2>&1 | head -1" 2>/dev/null | strip_ansible_header | grep -v "^$" | grep -v "CHANGED\|FAILED\|ERROR" | head -1)
+                [ -n "$version" ] && echo "    version: ${GREEN}$version${RESET}"
+            else
+                echo "    warp: ${RED}not installed${RESET}"
+            fi
+
+            # Check if warp client running
+            running_check=$(run_ansible "$node" shell "pgrep -f 'warp client'" 2>&1 | strip_ansible_header)
+            if echo "$running_check" | grep -qE "^[[:digit:]]+$"; then
+                running=1
+            else
+                running=0
+            fi
+
+            # Check firewall
+            fw_result=$(run_ansible "$node" shell "firewall-cmd --query-port=${WARP_CLIENT_PORT}/tcp" 2>/dev/null | grep -E "^yes$|^no$")
+            [ "$fw_result" = "yes" ] && fw=yes || fw=no
+
+            running_icon=$([ "$running" = "1" ] && echo "${GREEN}✓${RESET}" || echo "${RED}✗${RESET}")
+            fw_icon=$([ "$fw" = "yes" ] && echo "${GREEN}✓${RESET}" || echo "${RED}✗${RESET}")
+            echo "    client running on port ${WARP_CLIENT_PORT} $running_icon"
+            echo "    port open on firewall $fw_icon"
+        else
+            echo "  $node: ${RED}unreachable${RESET}"
+        fi
+    done
+    set -e
+
+    echo ""
+    echo "coordinator ($coordinator):"
+    ansible_coordinator="${ANSIBLE_HOSTS[$coordinator]}"
+    coordinator_reachable=$(ansible "$ansible_coordinator" -m ping 2>/dev/null | grep -c "SUCCESS")
+    if [ -n "$coordinator_reachable" ] && [ "$coordinator_reachable" -gt 0 ]; then
+        echo "  $coordinator: ${GREEN}reachable${RESET}"
+
+        # Check warp installation on coordinator
+        set +e
+        coord_warp_check=$(run_ansible "$coordinator" shell "command -v warp 2>/dev/null" | strip_ansible_header | grep "warp" >/dev/null && echo 1 || echo 0)
+        set -e
+        if [ "$coord_warp_check" = "1" ]; then
+            echo "    warp: ${GREEN}installed${RESET}"
+
+            # Get version
+            coord_version=$(run_ansible "$coordinator" shell "warp --version 2>&1 | head -1" 2>/dev/null | strip_ansible_header | grep -v "^$" | grep -v "CHANGED\|FAILED\|ERROR" | head -1)
+            [ -n "$coord_version" ] && echo "    version: ${GREEN}$coord_version${RESET}"
+        else
+            echo "    warp: ${RED}not installed${RESET}"
+        fi
+    else
+        echo "  $coordinator: ${RED}unreachable${RESET}"
+    fi
+fi

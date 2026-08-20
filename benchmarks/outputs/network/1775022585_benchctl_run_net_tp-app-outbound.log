@@ -1,0 +1,353 @@
+=== Throughput Benchmark - App-Outbound (8 parallel per app) ===
+Duration: 120s per run
+Parallel streams: 8
+Repetitions: 3
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/app-outbound
+
+App servers: srv01
+srv02
+srv03
+Storage targets: st01
+st02
+st03
+st04
+st05
+st06
+st07
+st08
+
+  st01 -> 192.168.11.21
+  st02 -> 192.168.11.22
+  st03 -> 192.168.11.23
+  st04 -> 192.168.11.24
+  st05 -> 192.168.11.25
+  st06 -> 192.168.11.26
+  st07 -> 192.168.11.27
+  st08 -> 192.168.11.28
+
+=== Running app-outbound throughput tests ===
+Each app runs 8 parallel iperf3 tests to ALL storage nodes
+
+=== Repetition 1/3 ===
+=== Initialization ===
+Rep: 1
+Meta: srv01_st01-st08
+Metric: tp
+Qualifier: app-outbound
+Epoch: 1775022585
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/app-outbound
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/app-outbound/1775022585_tp_app-outbound_rep1_srv01_st01-st08_snapshot.csv
+Done.
+  Launched: srv01 -> st01
+  Launched: srv01 -> st02
+  Launched: srv01 -> st03
+  Launched: srv01 -> st04
+  Launched: srv01 -> st05
+  Launched: srv01 -> st06
+  Launched: srv01 -> st07
+  Launched: srv01 -> st08
+  Waiting for app srv01 to complete...
+
+=== Initialization ===
+Rep: 1
+Meta: srv02_st01-st08
+Metric: tp
+Qualifier: app-outbound
+Epoch: 1775022771
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/app-outbound
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/app-outbound/1775022771_tp_app-outbound_rep1_srv02_st01-st08_snapshot.csv
+Done.
+  Launched: srv02 -> st01
+  Launched: srv02 -> st02
+  Launched: srv02 -> st03
+  Launched: srv02 -> st04
+  Launched: srv02 -> st05
+  Launched: srv02 -> st06
+  Launched: srv02 -> st07
+  Launched: srv02 -> st08
+  Waiting for app srv02 to complete...
+
+=== Initialization ===
+Rep: 1
+Meta: srv03_st01-st08
+Metric: tp
+Qualifier: app-outbound
+Epoch: 1775022957
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/app-outbound
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/app-outbound/1775022957_tp_app-outbound_rep1_srv03_st01-st08_snapshot.csv
+Done.
+  Launched: srv03 -> st01
+  Launched: srv03 -> st02
+  Launched: srv03 -> st03
+  Launched: srv03 -> st04
+  Launched: srv03 -> st05
+  Launched: srv03 -> st06
+  Launched: srv03 -> st07
+  Launched: srv03 -> st08
+  Waiting for app srv03 to complete...
+
+  Repetition 1 complete
+=== Repetition 2/3 ===
+=== Initialization ===
+Rep: 2
+Meta: srv01_st01-st08
+Metric: tp
+Qualifier: app-outbound
+Epoch: 1775023142
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/app-outbound
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/app-outbound/1775023142_tp_app-outbound_rep2_srv01_st01-st08_snapshot.csv
+Done.
+  Launched: srv01 -> st01
+  Launched: srv01 -> st02
+  Launched: srv01 -> st03
+  Launched: srv01 -> st04
+  Launched: srv01 -> st05
+  Launched: srv01 -> st06
+  Launched: srv01 -> st07
+  Launched: srv01 -> st08
+  Waiting for app srv01 to complete...
+
+=== Initialization ===
+Rep: 2
+Meta: srv02_st01-st08
+Metric: tp
+Qualifier: app-outbound
+Epoch: 1775023328
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/app-outbound
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/app-outbound/1775023328_tp_app-outbound_rep2_srv02_st01-st08_snapshot.csv
+Done.
+  Launched: srv02 -> st01
+  Launched: srv02 -> st02
+  Launched: srv02 -> st03
+  Launched: srv02 -> st04
+  Launched: srv02 -> st05
+  Launched: srv02 -> st06
+  Launched: srv02 -> st07
+  Launched: srv02 -> st08
+  Waiting for app srv02 to complete...
+
+=== Initialization ===
+Rep: 2
+Meta: srv03_st01-st08
+Metric: tp
+Qualifier: app-outbound
+Epoch: 1775023514
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/app-outbound
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/app-outbound/1775023514_tp_app-outbound_rep2_srv03_st01-st08_snapshot.csv
+Done.
+  Launched: srv03 -> st01
+  Launched: srv03 -> st02
+  Launched: srv03 -> st03
+  Launched: srv03 -> st04
+  Launched: srv03 -> st05
+  Launched: srv03 -> st06
+  Launched: srv03 -> st07
+  Launched: srv03 -> st08
+  Waiting for app srv03 to complete...
+
+  Repetition 2 complete
+=== Repetition 3/3 ===
+=== Initialization ===
+Rep: 3
+Meta: srv01_st01-st08
+Metric: tp
+Qualifier: app-outbound
+Epoch: 1775023700
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/app-outbound
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/app-outbound/1775023700_tp_app-outbound_rep3_srv01_st01-st08_snapshot.csv
+Done.
+  Launched: srv01 -> st01
+  Launched: srv01 -> st02
+  Launched: srv01 -> st03
+  Launched: srv01 -> st04
+  Launched: srv01 -> st05
+  Launched: srv01 -> st06
+  Launched: srv01 -> st07
+  Launched: srv01 -> st08
+  Waiting for app srv01 to complete...
+
+=== Initialization ===
+Rep: 3
+Meta: srv02_st01-st08
+Metric: tp
+Qualifier: app-outbound
+Epoch: 1775023886
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/app-outbound
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/app-outbound/1775023886_tp_app-outbound_rep3_srv02_st01-st08_snapshot.csv
+Done.
+  Launched: srv02 -> st01
+  Launched: srv02 -> st02
+  Launched: srv02 -> st03
+  Launched: srv02 -> st04
+  Launched: srv02 -> st05
+  Launched: srv02 -> st06
+  Launched: srv02 -> st07
+  Launched: srv02 -> st08
+  Waiting for app srv02 to complete...
+
+=== Initialization ===
+Rep: 3
+Meta: srv03_st01-st08
+Metric: tp
+Qualifier: app-outbound
+Epoch: 1775024072
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/app-outbound
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/app-outbound/1775024072_tp_app-outbound_rep3_srv03_st01-st08_snapshot.csv
+Done.
+  Launched: srv03 -> st01
+  Launched: srv03 -> st02
+  Launched: srv03 -> st03
+  Launched: srv03 -> st04
+  Launched: srv03 -> st05
+  Launched: srv03 -> st06
+  Launched: srv03 -> st07
+  Launched: srv03 -> st08
+  Waiting for app srv03 to complete...
+
+  Repetition 3 complete
+=== App-Outbound Throughput Complete ===
+Results saved to: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/app-outbound

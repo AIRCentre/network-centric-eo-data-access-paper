@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "description": "Per-rep exclusions applied by analysis/processing/track2_throughput.jl before summary statistics are computed. Each exclusion must cite a reason, the source raw JSON file, who excluded it, and when. If an exclusion matches zero rows in the master table, the script errors out (silent mismatch is a bug).",
+  "match_keys": [
+    "experiment",
+    "operation",
+    "rate",
+    "size_str",
+    "rep"
+  ],
+  "exclusions": []
+}

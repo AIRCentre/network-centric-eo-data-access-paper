@@ -1,0 +1,12 @@
+{
+    "test": "cross_site_replication",
+    "timestamp_utc": "2026-04-24T15:39:21Z",
+    "epoch": 1777044244,
+    "local_alias": "local",
+    "remote_alias": "airdc",
+    "bucket": "atlantic-cloud-replication-test",
+    "repetitions": 3,
+    "poll_interval_s": 2,
+    "poll_timeout_s": 600,
+    "objects": [{"size":"4MiB","size_bytes":4194304,"eo_type":"Zarr chunk","reps":[{"rep":1,"upload_ms":134,"replication_ms":44911,"replicated":true,"integrity":"verified","src_md5":"c168fdbe6556a75a2fabc83085951e9e"},{"rep":2,"upload_ms":197,"replication_ms":3342,"replicated":true,"integrity":"verified","src_md5":"9dad4d0a2588689d3e48f3a8118bebe5"},{"rep":3,"upload_ms":199,"replication_ms":3391,"replicated":true,"integrity":"verified","src_md5":"b5024d3c33609283d27bef7386effe53"}]},{"size":"64MiB","size_bytes":67108864,"eo_type":"COG tile","reps":[{"rep":1,"upload_ms":1555,"replication_ms":24211,"replicated":true,"integrity":"verified","src_md5":"278d6355f72590fe48e94d278c28f80d"},{"rep":2,"upload_ms":1102,"replication_ms":17870,"replicated":true,"integrity":"verified","src_md5":"9ae6c6fddb56981086bdb7f67519a627"},{"rep":3,"upload_ms":1965,"replication_ms":17720,"replicated":true,"integrity":"verified","src_md5":"61a1a222fc87c7126ad5248e96e55516"}]},{"size":"512MiB","size_bytes":536870912,"eo_type":"Sentinel-2 granule","reps":[{"rep":1,"upload_ms":9566,"replication_ms":138187,"replicated":true,"integrity":"verified","src_md5":"251b44112393e96e54e86cbdf8f7680f"},{"rep":2,"upload_ms":8574,"replication_ms":158117,"replicated":true,"integrity":"verified","src_md5":"4824ea5a2d1f24163122c6b0280f5379"},{"rep":3,"upload_ms":9186,"replication_ms":134635,"replicated":true,"integrity":"verified","src_md5":"0ce24fac3207136445bda7cd0bab47d6"}]}]
+}

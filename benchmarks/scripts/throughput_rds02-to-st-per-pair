@@ -1,0 +1,102 @@
+#!/bin/bash
+set -eo pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "$SCRIPT_DIR/common"
+
+OUTPUT_DIR="${OUTPUT_DIR:-$REPO_ROOT/benchmarks/outputs/network/throughput/rds02-to-st-per-pair}"
+REPETITIONS="${REPETITIONS:-1}"
+DURATION="${DURATION:-5}"
+IDLE_WAIT="${IDLE_WAIT:-2}"
+PARALLEL_STREAMS=8
+
+RDS02_HOST="r04-rds02"
+RDS02_IP="192.168.11.42"
+RDS02_PORT=5201
+
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        --duration)
+            DURATION="$2"
+            shift 2
+            ;;
+        --repetitions)
+            REPETITIONS="$2"
+            shift 2
+            ;;
+        --output-dir)
+            OUTPUT_DIR="$2"
+            shift 2
+            ;;
+        --idle-wait)
+            IDLE_WAIT="$2"
+            shift 2
+            ;;
+        --help|-h)
+            echo "Usage: $0 [options]"
+            echo ""
+            echo "Options:"
+            echo "  --duration <seconds>   Duration per test (default: 5)"
+            echo "  --repetitions <n>      Number of repetitions (default: 1)"
+            echo "  --output-dir <dir>      Output directory (default: rds02-to-st-per-pair)"
+            echo "  --idle-wait <seconds>  Idle wait before collection (default: 2)"
+            exit 0
+            ;;
+        *)
+            echo "Error: Unknown option: $1"
+            echo "Use --help for usage"
+            exit 1
+            ;;
+    esac
+done
+
+echo "=== Throughput Benchmark - RDS02 to Storage Per-Pair (track 1.1.7) ==="
+echo "Source: $RDS02_HOST ($RDS02_IP)"
+echo "Port: $RDS02_PORT"
+echo "Duration: ${DURATION}s per run"
+echo "Parallel streams: $PARALLEL_STREAMS"
+echo "Repetitions: $REPETITIONS"
+echo "Output: $OUTPUT_DIR"
+echo ""
+
+mkdir -p "$OUTPUT_DIR"
+
+storage_hosts=$(get_storage_hosts)
+
+if [ -z "$storage_hosts" ]; then
+    echo "Error: No storage servers found in inventory"
+    exit 1
+fi
+
+echo "Storage targets: $storage_hosts"
+echo ""
+echo "=== Running rds02-to-st-per-pair sequential throughput tests ==="
+echo ""
+
+target_count=8
+target_idx=0
+for target in $storage_hosts; do
+    target_ip=${STORAGE_IPS[$target]}
+
+    target_idx=$((target_idx + 1))
+    echo "=== Target $target_idx/$target_count: $RDS02_HOST -> $target ==="
+
+    for rep in $(seq 1 $REPETITIONS); do
+        echo "  Repetition $rep/$REPETITIONS"
+
+        pair_timestamp=$(date +%s)
+        "$SCRIPT_DIR/system_snapshot" --rep "$rep" --meta "rds02_${target}" --metric tp --qualifier rds02-to-st-per-pair --epoch "$pair_timestamp" --output-dir "$OUTPUT_DIR" --idle-wait "$IDLE_WAIT" --rds-host "$RDS02_HOST" || echo "Warning: system_snapshot failed, continuing..."
+
+        run_ansible "$RDS02_HOST" "shell" "
+            iperf3 -c $target_ip -p $RDS02_PORT -P $PARALLEL_STREAMS -t $DURATION -Z -w 256k -l 64k --json 2>/dev/null
+        " | strip_ansible_header > "${OUTPUT_DIR}/${pair_timestamp}_tp_rds02-to-st-per-pair_rep${rep}_${target}.json" \
+            || echo "Warning: iperf3 failed for $RDS02_HOST -> $target rep $rep"
+
+        echo "    Saved: ${pair_timestamp}_tp_rds02-to-st-per-pair_rep${rep}_${target}.json"
+    done
+
+    echo ""
+done
+
+echo "=== RDS02-to-Storage Per-Pair Throughput Complete ==="
+echo "Results saved to: $OUTPUT_DIR"

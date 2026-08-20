@@ -1,0 +1,13 @@
+{
+    "hostname": "hpcstats-test02.tacc.utexas.edu",
+    "os": "Linux",
+    "os_version": "5.14.0-503.15.1.el9_5.x86_64",
+    "arch": "x86_64",
+    "date_utc": "2026-06-01T12:54:31Z",
+    "timezone": "CDT",
+    "curl_version": "curl 7.76.1 (x86_64-redhat-linux-gnu) libcurl/7.76.1 OpenSSL/3.2.2 zlib/1.2.11 brotli/1.0.9 libidn2/2.3.0 libpsl/0.21.1 (+libidn2/2.3.0) libssh/0.10.4/openssl/zlib nghttp2/1.43.0",
+    "site": "tacc-vm",
+    "location": "Austin, Texas",
+    "isp": "Unavilable",
+    "connection_type": "fibre"
+}

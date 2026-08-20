@@ -1,0 +1,23 @@
+{
+    "test": "network_baseline",
+    "timestamp_utc": "2026-04-17T19:25:32Z",
+    "epoch": 1776453836,
+    "target": "eo-catalog.ac-az1.aircentre.org",
+    "ping": {
+        "count": 20,
+        "timeout_s": 5,
+        "rtt_min_ms": 260.120,
+        "rtt_avg_ms": 262.049,
+        "rtt_max_ms": 264.887,
+        "rtt_stddev_ms": 1.733,
+        "packet_loss": "0%"
+    },
+    "traceroute": {
+        "hops": 35,
+        "raw": " 1?: [LOCALHOST]                      pmtu 1500\n 1:  _gateway                                              1.092ms \n 1:  _gateway                                              4.076ms \n 2:  _gateway                                              0.804ms pmtu 1480\n 2:  143-137-48-1.imatelecom.com.br                        2.171ms \n 3:  10.30.2.2                                             1.781ms \n 4:  10.30.2.5                                             2.305ms \n 5:  10.200.144.81                                         1.978ms \n 6:  ae1-3041.edge-gig-cr1.fortetelecom.com.br             5.515ms \n 7:  8.243.32.61                                           5.860ms asymm  9 \n 8:  no reply\n 9:  no reply\n10:  fccn-ias-geant-gw.rt1.por.pt.geant.net              236.689ms asymm 11 \n11:  fccn-ias-fccn.rt1.por.pt.geant.net                  237.186ms asymm 26 \n12:  Router40.Porto.fccn.pt                              242.128ms asymm 26 \n13:  Router60.Lisboa.fccn.pt                             240.707ms asymm 26 \n14:  Router63.Lisboa.fccn.pt                             242.071ms asymm 26 \n15:  no reply\n16:  no reply\n17:  no reply\n18:  no reply\n19:  no reply\n20:  no reply\n21:  no reply\n22:  no reply\n23:  no reply\n24:  no reply\n25:  no reply\n26:  no reply\n27:  no reply\n28:  no reply\n29:  no reply\n30:  no reply\n     Too many hops: pmtu 1480\n     Resume: pmtu 1480 \n"
+    },
+    "bandwidth_probe": {
+        "url": "https://eo-catalog.ac-az1.aircentre.org/api/v1",
+        "samples": [{"rep":1,"dns_s":0.011632,"connect_s":0.272025,"ttfb_s":0.810564,"total_s":0.810633,"speed_bytes_s":953,"size_bytes":773},{"rep":2,"dns_s":0.010746,"connect_s":0.271197,"ttfb_s":0.806232,"total_s":0.806299,"speed_bytes_s":958,"size_bytes":773},{"rep":3,"dns_s":0.006561,"connect_s":0.266936,"ttfb_s":0.801308,"total_s":0.801361,"speed_bytes_s":964,"size_bytes":773},{"rep":4,"dns_s":0.011575,"connect_s":0.272492,"ttfb_s":0.808341,"total_s":0.808411,"speed_bytes_s":956,"size_bytes":773},{"rep":5,"dns_s":0.010070,"connect_s":0.270759,"ttfb_s":0.805911,"total_s":0.805981,"speed_bytes_s":959,"size_bytes":773}]
+    }
+}

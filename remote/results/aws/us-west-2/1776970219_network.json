@@ -1,0 +1,23 @@
+{
+    "test": "network_baseline",
+    "timestamp_utc": "2026-04-23T18:50:47Z",
+    "epoch": 1776970219,
+    "target": "eo-catalog.ac-az1.aircentre.org",
+    "ping": {
+        "count": 20,
+        "timeout_s": 5,
+        "rtt_min_ms": 196.193,
+        "rtt_avg_ms": 196.397,
+        "rtt_max_ms": 196.852,
+        "rtt_stddev_ms": 0.150,
+        "packet_loss": "0%"
+    },
+    "traceroute": {
+        "hops": 9,
+        "raw": "traceroute to eo-catalog.ac-az1.aircentre.org (194.210.4.227), 15 hops max, 60 byte packets\n 1  242.6.132.5 (242.6.132.5)  5.338 ms 242.6.133.7 (242.6.133.7)  5.102 ms 242.6.133.5 (242.6.133.5)  5.360 ms\n 2  gi0-0-0-14.1503.nr11.b006468-1.pdx01.atlas.cogentco.com (38.104.105.61)  5.300 ms  5.722 ms  6.212 ms\n 3  * * *\n 4  be2550.ccr22.sea02.atlas.cogentco.com (154.54.83.246)  7.678 ms be2671.ccr21.sea02.atlas.cogentco.com (154.54.31.77)  7.521 ms  7.581 ms\n 5  be9341.ccr81.sea08.atlas.cogentco.com (154.54.160.161)  8.354 ms be9343.ccr82.sea08.atlas.cogentco.com (154.54.160.241)  9.449 ms be9341.ccr81.sea08.atlas.cogentco.com (154.54.160.161)  8.483 ms\n 6  be2053.ccr81.slc03.atlas.cogentco.com (154.54.47.170)  32.822 ms be2054.ccr82.slc03.atlas.cogentco.com (154.54.163.230)  92.449 ms be2053.ccr81.slc03.atlas.cogentco.com (154.54.47.170)  33.845 ms\n 7  * be9563.ccr82.den01.atlas.cogentco.com (154.54.163.205)  43.388 ms be2353.ccr81.den01.atlas.cogentco.com (154.54.5.101)  85.199 ms\n 8  be6904.ccr31.oma02.atlas.cogentco.com (154.54.95.98)  51.961 ms  51.892 ms  51.885 ms\n 9  be5068.ccr42.ord01.atlas.cogentco.com (154.54.166.74)  60.197 ms be5214.ccr41.ord01.atlas.cogentco.com (154.54.165.134)  60.316 ms  60.251 ms\n10  port-channel2718.ccr92.cle04.atlas.cogentco.com (154.54.7.130)  66.702 ms port-channel2717.ccr91.cle04.atlas.cogentco.com (154.54.6.222)  66.642 ms  66.719 ms\n11  be8023.ccr22.alb02.atlas.cogentco.com (154.54.169.198)  159.811 ms be8022.ccr21.alb02.atlas.cogentco.com (154.54.169.186)  164.498 ms be8023.ccr22.alb02.atlas.cogentco.com (154.54.169.198)  159.873 ms\n12  be8030.ccr32.bos01.atlas.cogentco.com (154.54.169.225)  164.849 ms  169.460 ms  169.422 ms\n13  port-channel3467.ccr92.lhr01.atlas.cogentco.com (154.54.94.46)  139.565 ms port-channel8668.ccr91.lhr01.atlas.cogentco.com (154.54.167.30)  143.178 ms  143.102 ms\n14  be2732.ccr42.par01.atlas.cogentco.com (154.54.75.137)  159.729 ms  206.467 ms be8670.ccr41.par01.atlas.cogentco.com (154.54.75.41)  165.176 ms\n15  be2318.ccr32.bio02.atlas.cogentco.com (154.54.61.117)  164.157 ms  160.569 ms be2315.ccr31.bio02.atlas.cogentco.com (154.54.61.113)  165.166 ms\n"
+    },
+    "bandwidth_probe": {
+        "url": "https://eo-catalog.ac-az1.aircentre.org/api/v1",
+        "samples": [{"rep":1,"dns_s":0.000657,"connect_s":0.192733,"ttfb_s":0.588362,"total_s":0.588432,"speed_bytes_s":1313,"size_bytes":773},{"rep":2,"dns_s":0.000604,"connect_s":0.198048,"ttfb_s":0.604637,"total_s":0.604742,"speed_bytes_s":1278,"size_bytes":773},{"rep":3,"dns_s":0.000727,"connect_s":0.197869,"ttfb_s":0.604237,"total_s":0.604362,"speed_bytes_s":1279,"size_bytes":773},{"rep":4,"dns_s":0.000660,"connect_s":0.197977,"ttfb_s":0.606566,"total_s":0.606702,"speed_bytes_s":1274,"size_bytes":773},{"rep":5,"dns_s":0.001318,"connect_s":0.197765,"ttfb_s":0.602518,"total_s":0.602678,"speed_bytes_s":1282,"size_bytes":773}]
+    }
+}

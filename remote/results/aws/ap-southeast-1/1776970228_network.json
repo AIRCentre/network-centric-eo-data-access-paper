@@ -1,0 +1,23 @@
+{
+    "test": "network_baseline",
+    "timestamp_utc": "2026-04-23T18:50:57Z",
+    "epoch": 1776970228,
+    "target": "eo-catalog.ac-az1.aircentre.org",
+    "ping": {
+        "count": 20,
+        "timeout_s": 5,
+        "rtt_min_ms": 187.182,
+        "rtt_avg_ms": 187.252,
+        "rtt_max_ms": 187.665,
+        "rtt_stddev_ms": 0.098,
+        "packet_loss": "0%"
+    },
+    "traceroute": {
+        "hops": 9,
+        "raw": "traceroute to eo-catalog.ac-az1.aircentre.org (194.210.4.227), 15 hops max, 60 byte packets\n 1  242.4.84.1 (242.4.84.1)  1.367 ms 242.4.85.5 (242.4.85.5)  0.533 ms 242.4.84.3 (242.4.84.3)  1.205 ms\n 2  154.18.40.31 (154.18.40.31)  1.466 ms  1.976 ms *\n 3  * * *\n 4  be3529.ccr81.sin01.atlas.cogentco.com (154.54.92.70)  2.908 ms  38.942 ms  3.168 ms\n 5  be9043.ccr31.mrs02.atlas.cogentco.com (154.54.92.93)  139.072 ms be9042.ccr32.mrs02.atlas.cogentco.com (154.54.90.73)  139.300 ms be9043.ccr31.mrs02.atlas.cogentco.com (154.54.92.93)  138.990 ms\n 6  be3077.ccr31.bio02.atlas.cogentco.com (154.54.39.225)  149.726 ms be3353.ccr32.vlc02.atlas.cogentco.com (130.117.49.74)  150.581 ms be2775.ccr31.vlc02.atlas.cogentco.com (154.54.72.65)  150.763 ms\n 7  be3355.ccr31.mad05.atlas.cogentco.com (154.54.57.229)  155.380 ms be2325.ccr32.mad05.atlas.cogentco.com (154.54.61.134)  154.668 ms be3366.ccr32.mad05.atlas.cogentco.com (130.117.49.189)  154.566 ms\n 8  be9697.rcr81.b015537-1.mad05.atlas.cogentco.com (154.54.36.170)  155.623 ms  155.606 ms be5120.rcr81.b015537-1.mad05.atlas.cogentco.com (154.54.36.82)  155.402 ms\n 9  be2028.nr61.b015537-1.mad05.atlas.cogentco.com (154.25.14.126)  155.737 ms  157.416 ms  156.565 ms\n10  * * *\n11  fccn-ap1-ias-gw.rt0.lis.pt.geant.net (83.97.88.209)  163.068 ms  163.920 ms  163.663 ms\n12  fccn-ias-ap1-gw.rt0.lis.pt.geant.net (83.97.88.210)  162.947 ms  164.197 ms  163.499 ms\n13  Router30.Lisboa.fccn.pt (194.210.6.102)  164.060 ms Router60.Lisboa.fccn.pt (194.210.6.202)  164.562 ms  163.914 ms\n14  Router63.Lisboa.fccn.pt (194.210.6.213)  164.806 ms Router63.Lisboa.fccn.pt (194.210.6.113)  164.733 ms Router33.Lisboa.fccn.pt (194.210.6.111)  164.359 ms\n15  * * *\n"
+    },
+    "bandwidth_probe": {
+        "url": "https://eo-catalog.ac-az1.aircentre.org/api/v1",
+        "samples": [{"rep":1,"dns_s":0.000549,"connect_s":0.187610,"ttfb_s":0.573567,"total_s":0.573695,"speed_bytes_s":1347,"size_bytes":773},{"rep":2,"dns_s":0.000616,"connect_s":0.187347,"ttfb_s":0.573274,"total_s":0.573360,"speed_bytes_s":1348,"size_bytes":773},{"rep":3,"dns_s":0.001043,"connect_s":0.187582,"ttfb_s":0.572308,"total_s":0.572396,"speed_bytes_s":1350,"size_bytes":773},{"rep":4,"dns_s":0.000538,"connect_s":0.189228,"ttfb_s":0.578268,"total_s":0.578348,"speed_bytes_s":1336,"size_bytes":773},{"rep":5,"dns_s":0.002426,"connect_s":0.188991,"ttfb_s":0.580527,"total_s":0.580620,"speed_bytes_s":1331,"size_bytes":773}]
+    }
+}

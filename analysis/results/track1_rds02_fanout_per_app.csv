@@ -1,0 +1,2 @@
+client,mean_total_gbps,std_total_gbps,mean_retransmits,mean_host_cpu,n_reps
+rds02,377.8238123258825,5.934933138100793,3.3333333333333335,263.5366891892668,3

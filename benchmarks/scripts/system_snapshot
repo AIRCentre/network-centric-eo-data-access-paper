@@ -1,0 +1,256 @@
+#!/bin/bash
+set -eo pipefail
+
+# system_snapshot - Capture dynamic system load metrics from all benchmark servers
+# Outputs to CSV format: hostname,cpu_load_avg_1min,mem_used_pct,disk_io_mbps,net_rx_mbps,net_tx_mbps,timestamp
+# Can be sourced by other scripts for reusable functions
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+source "$SCRIPT_DIR/common"
+
+# Default values
+DEFAULT_TRACK="0"
+DEFAULT_SUBEXP="system-snapshot"
+DEFAULT_IDLE_WAIT=2
+
+usage() {
+    cat <<EOF
+Usage: $0 --rep <rep> --meta <meta> [options]
+
+Options:
+    --rep <rep>          Repetition number (required)
+    --meta <meta>        Server/target info (required, e.g., srv01_st01, srv01-srv03_st01-st08)
+    --metric <metric>    Metric prefix (e.g., tp, lat)
+    --qualifier <qual>   Qualifier (e.g., full-mesh, st-inbound)
+    --epoch <epoch>      Epoch timestamp (auto-generated if not provided)
+    --output-dir <dir>   Output directory (default: outputs)
+    --idle-wait <sec>    Idle wait before collection (default: 2)
+    --rds-host <host>   Optional RDS host to include (e.g., r04-rds02)
+    --help               Show this help message
+
+Description:
+    Captures dynamic system load metrics from all benchmark servers
+    (storage_servers, app_servers) via Ansible and outputs to CSV.
+
+Metrics collected (after idle-wait settle):
+    - cpu_load_avg: CPU load average (1min)
+    - mem_used_pct: Memory used percentage
+    - disk_io_mbps: Disk I/O throughput in MiB/s (whole disks only)
+    - net_rx_mbps: Network receive rate in MiB/s (bond0 only)
+    - net_tx_mbps: Network transmit rate in MiB/s (bond0 only)
+
+Output format: hostname,cpu_load_avg_1min,mem_used_pct,disk_io_mbps,net_rx_mbps,net_tx_mbps,timestamp
+Output file: {epoch}_{metric}_{qualifier}_rep{rep}_{meta}_snapshot.csv
+
+Example:
+    $0 --rep 1 --meta srv01_st01 --metric tp --qualifier full-mesh
+    Output: 1773802478_tp_full-mesh_rep1_srv01_st01_snapshot.csv
+EOF
+}
+
+# Generate epoch timestamp
+generate_epoch() {
+    date +%s
+}
+
+# Collect all metrics from a single host in one SSH call
+collect_host_metrics() {
+    local host="$1"
+    local timestamp="$2"
+    local result cpu_load tm um b_disk rb tb a_disk ra ta
+    local mem_used disk_io net_rx net_tx
+
+    # Single ansible call: read before-values, sleep 2s, read after-values, echo all 9 fields
+    result=$(run_ansible "$host" shell \
+        'cpu=$(awk "{print \$1}" /proc/loadavg); \
+         tm=$(free | awk "/Mem:/{print \$2}"); \
+         um=$(free | awk "/Mem:/{print \$3}"); \
+         b_disk=$(awk "\$3~/^(nvme[0-9]+n[0-9]+|sd[a-z])$/{sum+=\$6+\$10} END {print sum+0}" /proc/diskstats); \
+         rb=$(awk "/bond0/{sum+=\$2} END {print sum+0}" /proc/net/dev); \
+         tb=$(awk "/bond0/{sum+=\$10} END {print sum+0}" /proc/net/dev); \
+         sleep 2; \
+         a_disk=$(awk "\$3~/^(nvme[0-9]+n[0-9]+|sd[a-z])$/{sum+=\$6+\$10} END {print sum+0}" /proc/diskstats); \
+         ra=$(awk "/bond0/{sum+=\$2} END {print sum+0}" /proc/net/dev); \
+         ta=$(awk "/bond0/{sum+=\$10} END {print sum+0}" /proc/net/dev); \
+         echo "$cpu $tm $um $b_disk $rb $tb $a_disk $ra $ta"' \
+        | strip_ansible_header | tail -1) || true
+
+    cpu_load=$(echo "$result" | awk '{print $1+0}')
+    tm=$(echo "$result" | awk '{print $2+0}')
+    um=$(echo "$result" | awk '{print $3+0}')
+    b_disk=$(echo "$result" | awk '{print $4+0}')
+    rb=$(echo "$result" | awk '{print $5+0}')
+    tb=$(echo "$result" | awk '{print $6+0}')
+    a_disk=$(echo "$result" | awk '{print $7+0}')
+    ra=$(echo "$result" | awk '{print $8+0}')
+    ta=$(echo "$result" | awk '{print $9+0}')
+
+    mem_used=$(awk "BEGIN{printf \"%.2f\", ($tm > 0 ? $um / $tm * 100 : 0)}")
+    disk_io=$(awk "BEGIN{printf \"%.2f\", ($a_disk - $b_disk) * 512 / 1024 / 1024 / 2}")
+    net_rx=$(awk "BEGIN{printf \"%.2f\", ($ra - $rb) / 1024 / 1024 / 2}")
+    net_tx=$(awk "BEGIN{printf \"%.2f\", ($ta - $tb) / 1024 / 1024 / 2}")
+
+    echo "${host},${cpu_load:-0.00},${mem_used:-0.00},${disk_io:-0.00},${net_rx:-0.00},${net_tx:-0.00},${timestamp}"
+}
+
+# Main collection function
+collect_all_metrics() {
+    local rep="$1"
+    local meta="$2"
+    local epoch="$3"
+    local output_dir="$4"
+    local idle_wait="$5"
+    local metric="$6"
+    local qualifier="$7"
+    local rds_host="${8:-}"
+    local output_file
+
+    # Create output directory
+    mkdir -p "$output_dir"
+
+    if [ -n "$metric" ] && [ -n "$qualifier" ]; then
+        output_file="$output_dir/${epoch}_${metric}_${qualifier}_rep${rep}_${meta}_snapshot.csv"
+    else
+        output_file="$output_dir/${epoch}_tp_unknown_rep${rep}_${meta}_snapshot.csv"
+    fi
+    
+    # Write CSV header
+    echo "hostname,cpu_load_avg_1min,mem_used_pct,disk_io_mbps,net_rx_mbps,net_tx_mbps,timestamp" > "$output_file"
+    
+    echo "=== Data Collection ==="
+    echo "Waiting ${idle_wait} seconds for system to settle..."
+    sleep "$idle_wait"
+    
+    # Use the epoch passed from main() - do NOT generate new timestamp
+    timestamp="$epoch"
+    
+    echo "Collecting system metrics from all servers (parallel)..."
+    local PIDS=""
+    for host in $(get_storage_hosts) $(get_app_hosts); do
+        echo "  Collecting from: $host"
+        collect_host_metrics "$host" "$timestamp" >> "$output_file" &
+        PIDS="$PIDS $!"
+    done
+
+    if [ -n "$rds_host" ]; then
+        echo "  Collecting from: $rds_host"
+        collect_host_metrics "$rds_host" "$timestamp" >> "$output_file" &
+        PIDS="$PIDS $!"
+    fi
+
+    # Wait for all parallel collections to complete
+    echo "Waiting for all metric collections to complete..."
+    wait $PIDS || echo "Warning: some metric collections failed"
+    
+    echo "=== Complete ==="
+    echo "Output: $output_file"
+    echo "Done."
+}
+
+# Main execution
+main() {
+    # Parse arguments with getopts
+    local rep=""
+    local meta=""
+    local metric=""
+    local qualifier=""
+    local epoch=""
+    local output_dir="outputs"
+    local idle_wait="$DEFAULT_IDLE_WAIT"
+    local rds_host=""
+    
+    # Show help if no arguments or --help
+    if [ $# -eq 0 ] || [ "$1" = "--help" ]; then
+        usage
+        exit 0
+    fi
+    
+    # getopts parsing
+    while [[ $# -gt 0 ]]; do
+        case "$1" in
+            --rep)
+                rep="$2"
+                shift 2
+                ;;
+            --meta)
+                meta="$2"
+                shift 2
+                ;;
+            --metric)
+                metric="$2"
+                shift 2
+                ;;
+            --qualifier)
+                qualifier="$2"
+                shift 2
+                ;;
+            --epoch)
+                epoch="$2"
+                shift 2
+                ;;
+            --output-dir)
+                output_dir="$2"
+                shift 2
+                ;;
+            --idle-wait)
+                idle_wait="$2"
+                shift 2
+                ;;
+            --rds-host)
+                rds_host="$2"
+                shift 2
+                ;;
+            *)
+                echo "Error: Unknown option: $1"
+                usage
+                exit 1
+                ;;
+        esac
+    done
+    
+    # Validate required --rep argument
+    if [ -z "$rep" ]; then
+        echo "Error: Missing required --rep argument"
+        usage
+        exit 1
+    fi
+
+    # Validate required --meta argument
+    if [ -z "$meta" ]; then
+        echo "Error: Missing required --meta argument"
+        usage
+        exit 1
+    fi
+
+    # Validate rep is a number
+    if ! [[ "$rep" =~ ^[0-9]+$ ]]; then
+        echo "Error: rep must be a number"
+        usage
+        exit 1
+    fi
+    
+    # Auto-generate epoch if not provided
+    if [ -z "$epoch" ]; then
+        epoch=$(generate_epoch)
+    fi
+    
+    # Validate ansible is available
+    validate_ansible || exit 1
+    
+    echo "=== Initialization ==="
+    echo "Rep: $rep"
+    echo "Meta: $meta"
+    echo "Metric: ${metric:-none}"
+    echo "Qualifier: ${qualifier:-none}"
+    echo "Epoch: $epoch"
+    echo "Output directory: $output_dir"
+    echo "RDS host: ${rds_host:-none}"
+
+    collect_all_metrics "$rep" "$meta" "$epoch" "$output_dir" "$idle_wait" "$metric" "$qualifier" "$rds_host"
+}
+
+# Run main if script is executed directly (not sourced)
+if [ "${BASH_SOURCE[0]}" == "${0}" ]; then
+    main "$@"
+fi

@@ -1,0 +1,2025 @@
+=== Throughput Benchmark - Per-Pair Sequential (track1.md) ===
+Duration: 120s per run
+Parallel streams: 8
+Repetitions: 3
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair
+
+App servers: srv01
+srv02
+srv03
+Storage targets: st01
+st02
+st03
+st04
+st05
+st06
+st07
+st08
+
+  st01 -> 192.168.11.21
+  st02 -> 192.168.11.22
+  st03 -> 192.168.11.23
+  st04 -> 192.168.11.24
+  st05 -> 192.168.11.25
+  st06 -> 192.168.11.26
+  st07 -> 192.168.11.27
+  st08 -> 192.168.11.28
+
+=== Running per-pair sequential throughput tests ===
+
+Total pairs: 24
+
+=== Pair 1/24: srv01 -> st01 ===
+  Repetition 1/3
+=== Initialization ===
+Rep: 1
+Meta: srv01_st01
+Metric: tp
+Qualifier: per-pair
+Epoch: 1775004207
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair/1775004207_tp_per-pair_rep1_srv01_st01_snapshot.csv
+Done.
+    Saved: 1775004207_tp_per-pair_rep1_srv01_st01.json
+  Repetition 2/3
+=== Initialization ===
+Rep: 2
+Meta: srv01_st01
+Metric: tp
+Qualifier: per-pair
+Epoch: 1775004392
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair/1775004392_tp_per-pair_rep2_srv01_st01_snapshot.csv
+Done.
+    Saved: 1775004392_tp_per-pair_rep2_srv01_st01.json
+  Repetition 3/3
+=== Initialization ===
+Rep: 3
+Meta: srv01_st01
+Metric: tp
+Qualifier: per-pair
+Epoch: 1775004578
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair/1775004578_tp_per-pair_rep3_srv01_st01_snapshot.csv
+Done.
+    Saved: 1775004578_tp_per-pair_rep3_srv01_st01.json
+
+=== Pair 2/24: srv01 -> st02 ===
+  Repetition 1/3
+=== Initialization ===
+Rep: 1
+Meta: srv01_st02
+Metric: tp
+Qualifier: per-pair
+Epoch: 1775004764
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair/1775004764_tp_per-pair_rep1_srv01_st02_snapshot.csv
+Done.
+    Saved: 1775004764_tp_per-pair_rep1_srv01_st02.json
+  Repetition 2/3
+=== Initialization ===
+Rep: 2
+Meta: srv01_st02
+Metric: tp
+Qualifier: per-pair
+Epoch: 1775004949
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair/1775004949_tp_per-pair_rep2_srv01_st02_snapshot.csv
+Done.
+    Saved: 1775004949_tp_per-pair_rep2_srv01_st02.json
+  Repetition 3/3
+=== Initialization ===
+Rep: 3
+Meta: srv01_st02
+Metric: tp
+Qualifier: per-pair
+Epoch: 1775005134
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair/1775005134_tp_per-pair_rep3_srv01_st02_snapshot.csv
+Done.
+    Saved: 1775005134_tp_per-pair_rep3_srv01_st02.json
+
+=== Pair 3/24: srv01 -> st03 ===
+  Repetition 1/3
+=== Initialization ===
+Rep: 1
+Meta: srv01_st03
+Metric: tp
+Qualifier: per-pair
+Epoch: 1775005320
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair/1775005320_tp_per-pair_rep1_srv01_st03_snapshot.csv
+Done.
+    Saved: 1775005320_tp_per-pair_rep1_srv01_st03.json
+  Repetition 2/3
+=== Initialization ===
+Rep: 2
+Meta: srv01_st03
+Metric: tp
+Qualifier: per-pair
+Epoch: 1775005505
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair/1775005505_tp_per-pair_rep2_srv01_st03_snapshot.csv
+Done.
+    Saved: 1775005505_tp_per-pair_rep2_srv01_st03.json
+  Repetition 3/3
+=== Initialization ===
+Rep: 3
+Meta: srv01_st03
+Metric: tp
+Qualifier: per-pair
+Epoch: 1775005690
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair/1775005690_tp_per-pair_rep3_srv01_st03_snapshot.csv
+Done.
+    Saved: 1775005690_tp_per-pair_rep3_srv01_st03.json
+
+=== Pair 4/24: srv01 -> st04 ===
+  Repetition 1/3
+=== Initialization ===
+Rep: 1
+Meta: srv01_st04
+Metric: tp
+Qualifier: per-pair
+Epoch: 1775005876
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair/1775005876_tp_per-pair_rep1_srv01_st04_snapshot.csv
+Done.
+    Saved: 1775005876_tp_per-pair_rep1_srv01_st04.json
+  Repetition 2/3
+=== Initialization ===
+Rep: 2
+Meta: srv01_st04
+Metric: tp
+Qualifier: per-pair
+Epoch: 1775006061
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair/1775006061_tp_per-pair_rep2_srv01_st04_snapshot.csv
+Done.
+    Saved: 1775006061_tp_per-pair_rep2_srv01_st04.json
+  Repetition 3/3
+=== Initialization ===
+Rep: 3
+Meta: srv01_st04
+Metric: tp
+Qualifier: per-pair
+Epoch: 1775006247
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair/1775006247_tp_per-pair_rep3_srv01_st04_snapshot.csv
+Done.
+    Saved: 1775006247_tp_per-pair_rep3_srv01_st04.json
+
+=== Pair 5/24: srv01 -> st05 ===
+  Repetition 1/3
+=== Initialization ===
+Rep: 1
+Meta: srv01_st05
+Metric: tp
+Qualifier: per-pair
+Epoch: 1775006432
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair/1775006432_tp_per-pair_rep1_srv01_st05_snapshot.csv
+Done.
+    Saved: 1775006432_tp_per-pair_rep1_srv01_st05.json
+  Repetition 2/3
+=== Initialization ===
+Rep: 2
+Meta: srv01_st05
+Metric: tp
+Qualifier: per-pair
+Epoch: 1775006618
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair/1775006618_tp_per-pair_rep2_srv01_st05_snapshot.csv
+Done.
+    Saved: 1775006618_tp_per-pair_rep2_srv01_st05.json
+  Repetition 3/3
+=== Initialization ===
+Rep: 3
+Meta: srv01_st05
+Metric: tp
+Qualifier: per-pair
+Epoch: 1775006804
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair/1775006804_tp_per-pair_rep3_srv01_st05_snapshot.csv
+Done.
+    Saved: 1775006804_tp_per-pair_rep3_srv01_st05.json
+
+=== Pair 6/24: srv01 -> st06 ===
+  Repetition 1/3
+=== Initialization ===
+Rep: 1
+Meta: srv01_st06
+Metric: tp
+Qualifier: per-pair
+Epoch: 1775006989
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair/1775006989_tp_per-pair_rep1_srv01_st06_snapshot.csv
+Done.
+    Saved: 1775006989_tp_per-pair_rep1_srv01_st06.json
+  Repetition 2/3
+=== Initialization ===
+Rep: 2
+Meta: srv01_st06
+Metric: tp
+Qualifier: per-pair
+Epoch: 1775007174
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair/1775007174_tp_per-pair_rep2_srv01_st06_snapshot.csv
+Done.
+    Saved: 1775007174_tp_per-pair_rep2_srv01_st06.json
+  Repetition 3/3
+=== Initialization ===
+Rep: 3
+Meta: srv01_st06
+Metric: tp
+Qualifier: per-pair
+Epoch: 1775007359
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair/1775007359_tp_per-pair_rep3_srv01_st06_snapshot.csv
+Done.
+    Saved: 1775007359_tp_per-pair_rep3_srv01_st06.json
+
+=== Pair 7/24: srv01 -> st07 ===
+  Repetition 1/3
+=== Initialization ===
+Rep: 1
+Meta: srv01_st07
+Metric: tp
+Qualifier: per-pair
+Epoch: 1775007545
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair/1775007545_tp_per-pair_rep1_srv01_st07_snapshot.csv
+Done.
+    Saved: 1775007545_tp_per-pair_rep1_srv01_st07.json
+  Repetition 2/3
+=== Initialization ===
+Rep: 2
+Meta: srv01_st07
+Metric: tp
+Qualifier: per-pair
+Epoch: 1775007730
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair/1775007730_tp_per-pair_rep2_srv01_st07_snapshot.csv
+Done.
+    Saved: 1775007730_tp_per-pair_rep2_srv01_st07.json
+  Repetition 3/3
+=== Initialization ===
+Rep: 3
+Meta: srv01_st07
+Metric: tp
+Qualifier: per-pair
+Epoch: 1775007916
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair/1775007916_tp_per-pair_rep3_srv01_st07_snapshot.csv
+Done.
+    Saved: 1775007916_tp_per-pair_rep3_srv01_st07.json
+
+=== Pair 8/24: srv01 -> st08 ===
+  Repetition 1/3
+=== Initialization ===
+Rep: 1
+Meta: srv01_st08
+Metric: tp
+Qualifier: per-pair
+Epoch: 1775008101
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair/1775008101_tp_per-pair_rep1_srv01_st08_snapshot.csv
+Done.
+    Saved: 1775008101_tp_per-pair_rep1_srv01_st08.json
+  Repetition 2/3
+=== Initialization ===
+Rep: 2
+Meta: srv01_st08
+Metric: tp
+Qualifier: per-pair
+Epoch: 1775008287
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair/1775008287_tp_per-pair_rep2_srv01_st08_snapshot.csv
+Done.
+    Saved: 1775008287_tp_per-pair_rep2_srv01_st08.json
+  Repetition 3/3
+=== Initialization ===
+Rep: 3
+Meta: srv01_st08
+Metric: tp
+Qualifier: per-pair
+Epoch: 1775008472
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair/1775008472_tp_per-pair_rep3_srv01_st08_snapshot.csv
+Done.
+    Saved: 1775008472_tp_per-pair_rep3_srv01_st08.json
+
+=== Pair 9/24: srv02 -> st01 ===
+  Repetition 1/3
+=== Initialization ===
+Rep: 1
+Meta: srv02_st01
+Metric: tp
+Qualifier: per-pair
+Epoch: 1775008658
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair/1775008658_tp_per-pair_rep1_srv02_st01_snapshot.csv
+Done.
+    Saved: 1775008658_tp_per-pair_rep1_srv02_st01.json
+  Repetition 2/3
+=== Initialization ===
+Rep: 2
+Meta: srv02_st01
+Metric: tp
+Qualifier: per-pair
+Epoch: 1775008843
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair/1775008843_tp_per-pair_rep2_srv02_st01_snapshot.csv
+Done.
+    Saved: 1775008843_tp_per-pair_rep2_srv02_st01.json
+  Repetition 3/3
+=== Initialization ===
+Rep: 3
+Meta: srv02_st01
+Metric: tp
+Qualifier: per-pair
+Epoch: 1775009029
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair/1775009029_tp_per-pair_rep3_srv02_st01_snapshot.csv
+Done.
+    Saved: 1775009029_tp_per-pair_rep3_srv02_st01.json
+
+=== Pair 10/24: srv02 -> st02 ===
+  Repetition 1/3
+=== Initialization ===
+Rep: 1
+Meta: srv02_st02
+Metric: tp
+Qualifier: per-pair
+Epoch: 1775009214
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair/1775009214_tp_per-pair_rep1_srv02_st02_snapshot.csv
+Done.
+    Saved: 1775009214_tp_per-pair_rep1_srv02_st02.json
+  Repetition 2/3
+=== Initialization ===
+Rep: 2
+Meta: srv02_st02
+Metric: tp
+Qualifier: per-pair
+Epoch: 1775009400
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair/1775009400_tp_per-pair_rep2_srv02_st02_snapshot.csv
+Done.
+    Saved: 1775009400_tp_per-pair_rep2_srv02_st02.json
+  Repetition 3/3
+=== Initialization ===
+Rep: 3
+Meta: srv02_st02
+Metric: tp
+Qualifier: per-pair
+Epoch: 1775009585
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair/1775009585_tp_per-pair_rep3_srv02_st02_snapshot.csv
+Done.
+    Saved: 1775009585_tp_per-pair_rep3_srv02_st02.json
+
+=== Pair 11/24: srv02 -> st03 ===
+  Repetition 1/3
+=== Initialization ===
+Rep: 1
+Meta: srv02_st03
+Metric: tp
+Qualifier: per-pair
+Epoch: 1775009770
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair/1775009770_tp_per-pair_rep1_srv02_st03_snapshot.csv
+Done.
+    Saved: 1775009770_tp_per-pair_rep1_srv02_st03.json
+  Repetition 2/3
+=== Initialization ===
+Rep: 2
+Meta: srv02_st03
+Metric: tp
+Qualifier: per-pair
+Epoch: 1775009956
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair/1775009956_tp_per-pair_rep2_srv02_st03_snapshot.csv
+Done.
+    Saved: 1775009956_tp_per-pair_rep2_srv02_st03.json
+  Repetition 3/3
+=== Initialization ===
+Rep: 3
+Meta: srv02_st03
+Metric: tp
+Qualifier: per-pair
+Epoch: 1775010141
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair/1775010141_tp_per-pair_rep3_srv02_st03_snapshot.csv
+Done.
+    Saved: 1775010141_tp_per-pair_rep3_srv02_st03.json
+
+=== Pair 12/24: srv02 -> st04 ===
+  Repetition 1/3
+=== Initialization ===
+Rep: 1
+Meta: srv02_st04
+Metric: tp
+Qualifier: per-pair
+Epoch: 1775010327
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair/1775010327_tp_per-pair_rep1_srv02_st04_snapshot.csv
+Done.
+    Saved: 1775010327_tp_per-pair_rep1_srv02_st04.json
+  Repetition 2/3
+=== Initialization ===
+Rep: 2
+Meta: srv02_st04
+Metric: tp
+Qualifier: per-pair
+Epoch: 1775010512
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair/1775010512_tp_per-pair_rep2_srv02_st04_snapshot.csv
+Done.
+    Saved: 1775010512_tp_per-pair_rep2_srv02_st04.json
+  Repetition 3/3
+=== Initialization ===
+Rep: 3
+Meta: srv02_st04
+Metric: tp
+Qualifier: per-pair
+Epoch: 1775010697
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair/1775010697_tp_per-pair_rep3_srv02_st04_snapshot.csv
+Done.
+    Saved: 1775010697_tp_per-pair_rep3_srv02_st04.json
+
+=== Pair 13/24: srv02 -> st05 ===
+  Repetition 1/3
+=== Initialization ===
+Rep: 1
+Meta: srv02_st05
+Metric: tp
+Qualifier: per-pair
+Epoch: 1775010883
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair/1775010883_tp_per-pair_rep1_srv02_st05_snapshot.csv
+Done.
+    Saved: 1775010883_tp_per-pair_rep1_srv02_st05.json
+  Repetition 2/3
+=== Initialization ===
+Rep: 2
+Meta: srv02_st05
+Metric: tp
+Qualifier: per-pair
+Epoch: 1775011068
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair/1775011068_tp_per-pair_rep2_srv02_st05_snapshot.csv
+Done.
+    Saved: 1775011068_tp_per-pair_rep2_srv02_st05.json
+  Repetition 3/3
+=== Initialization ===
+Rep: 3
+Meta: srv02_st05
+Metric: tp
+Qualifier: per-pair
+Epoch: 1775011254
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair/1775011254_tp_per-pair_rep3_srv02_st05_snapshot.csv
+Done.
+    Saved: 1775011254_tp_per-pair_rep3_srv02_st05.json
+
+=== Pair 14/24: srv02 -> st06 ===
+  Repetition 1/3
+=== Initialization ===
+Rep: 1
+Meta: srv02_st06
+Metric: tp
+Qualifier: per-pair
+Epoch: 1775011439
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair/1775011439_tp_per-pair_rep1_srv02_st06_snapshot.csv
+Done.
+    Saved: 1775011439_tp_per-pair_rep1_srv02_st06.json
+  Repetition 2/3
+=== Initialization ===
+Rep: 2
+Meta: srv02_st06
+Metric: tp
+Qualifier: per-pair
+Epoch: 1775011625
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair/1775011625_tp_per-pair_rep2_srv02_st06_snapshot.csv
+Done.
+    Saved: 1775011625_tp_per-pair_rep2_srv02_st06.json
+  Repetition 3/3
+=== Initialization ===
+Rep: 3
+Meta: srv02_st06
+Metric: tp
+Qualifier: per-pair
+Epoch: 1775011810
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair/1775011810_tp_per-pair_rep3_srv02_st06_snapshot.csv
+Done.
+    Saved: 1775011810_tp_per-pair_rep3_srv02_st06.json
+
+=== Pair 15/24: srv02 -> st07 ===
+  Repetition 1/3
+=== Initialization ===
+Rep: 1
+Meta: srv02_st07
+Metric: tp
+Qualifier: per-pair
+Epoch: 1775011996
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair/1775011996_tp_per-pair_rep1_srv02_st07_snapshot.csv
+Done.
+    Saved: 1775011996_tp_per-pair_rep1_srv02_st07.json
+  Repetition 2/3
+=== Initialization ===
+Rep: 2
+Meta: srv02_st07
+Metric: tp
+Qualifier: per-pair
+Epoch: 1775012181
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair/1775012181_tp_per-pair_rep2_srv02_st07_snapshot.csv
+Done.
+    Saved: 1775012181_tp_per-pair_rep2_srv02_st07.json
+  Repetition 3/3
+=== Initialization ===
+Rep: 3
+Meta: srv02_st07
+Metric: tp
+Qualifier: per-pair
+Epoch: 1775012367
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair/1775012367_tp_per-pair_rep3_srv02_st07_snapshot.csv
+Done.
+    Saved: 1775012367_tp_per-pair_rep3_srv02_st07.json
+
+=== Pair 16/24: srv02 -> st08 ===
+  Repetition 1/3
+=== Initialization ===
+Rep: 1
+Meta: srv02_st08
+Metric: tp
+Qualifier: per-pair
+Epoch: 1775012552
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair/1775012552_tp_per-pair_rep1_srv02_st08_snapshot.csv
+Done.
+    Saved: 1775012552_tp_per-pair_rep1_srv02_st08.json
+  Repetition 2/3
+=== Initialization ===
+Rep: 2
+Meta: srv02_st08
+Metric: tp
+Qualifier: per-pair
+Epoch: 1775012738
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair/1775012738_tp_per-pair_rep2_srv02_st08_snapshot.csv
+Done.
+    Saved: 1775012738_tp_per-pair_rep2_srv02_st08.json
+  Repetition 3/3
+=== Initialization ===
+Rep: 3
+Meta: srv02_st08
+Metric: tp
+Qualifier: per-pair
+Epoch: 1775012923
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair/1775012923_tp_per-pair_rep3_srv02_st08_snapshot.csv
+Done.
+    Saved: 1775012923_tp_per-pair_rep3_srv02_st08.json
+
+=== Pair 17/24: srv03 -> st01 ===
+  Repetition 1/3
+=== Initialization ===
+Rep: 1
+Meta: srv03_st01
+Metric: tp
+Qualifier: per-pair
+Epoch: 1775013108
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair/1775013108_tp_per-pair_rep1_srv03_st01_snapshot.csv
+Done.
+    Saved: 1775013108_tp_per-pair_rep1_srv03_st01.json
+  Repetition 2/3
+=== Initialization ===
+Rep: 2
+Meta: srv03_st01
+Metric: tp
+Qualifier: per-pair
+Epoch: 1775013294
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair/1775013294_tp_per-pair_rep2_srv03_st01_snapshot.csv
+Done.
+    Saved: 1775013294_tp_per-pair_rep2_srv03_st01.json
+  Repetition 3/3
+=== Initialization ===
+Rep: 3
+Meta: srv03_st01
+Metric: tp
+Qualifier: per-pair
+Epoch: 1775013479
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair/1775013479_tp_per-pair_rep3_srv03_st01_snapshot.csv
+Done.
+    Saved: 1775013479_tp_per-pair_rep3_srv03_st01.json
+
+=== Pair 18/24: srv03 -> st02 ===
+  Repetition 1/3
+=== Initialization ===
+Rep: 1
+Meta: srv03_st02
+Metric: tp
+Qualifier: per-pair
+Epoch: 1775013665
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair/1775013665_tp_per-pair_rep1_srv03_st02_snapshot.csv
+Done.
+    Saved: 1775013665_tp_per-pair_rep1_srv03_st02.json
+  Repetition 2/3
+=== Initialization ===
+Rep: 2
+Meta: srv03_st02
+Metric: tp
+Qualifier: per-pair
+Epoch: 1775013850
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair/1775013850_tp_per-pair_rep2_srv03_st02_snapshot.csv
+Done.
+    Saved: 1775013850_tp_per-pair_rep2_srv03_st02.json
+  Repetition 3/3
+=== Initialization ===
+Rep: 3
+Meta: srv03_st02
+Metric: tp
+Qualifier: per-pair
+Epoch: 1775014036
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair/1775014036_tp_per-pair_rep3_srv03_st02_snapshot.csv
+Done.
+    Saved: 1775014036_tp_per-pair_rep3_srv03_st02.json
+
+=== Pair 19/24: srv03 -> st03 ===
+  Repetition 1/3
+=== Initialization ===
+Rep: 1
+Meta: srv03_st03
+Metric: tp
+Qualifier: per-pair
+Epoch: 1775014221
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair/1775014221_tp_per-pair_rep1_srv03_st03_snapshot.csv
+Done.
+    Saved: 1775014221_tp_per-pair_rep1_srv03_st03.json
+  Repetition 2/3
+=== Initialization ===
+Rep: 2
+Meta: srv03_st03
+Metric: tp
+Qualifier: per-pair
+Epoch: 1775014407
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair/1775014407_tp_per-pair_rep2_srv03_st03_snapshot.csv
+Done.
+    Saved: 1775014407_tp_per-pair_rep2_srv03_st03.json
+  Repetition 3/3
+=== Initialization ===
+Rep: 3
+Meta: srv03_st03
+Metric: tp
+Qualifier: per-pair
+Epoch: 1775014592
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair/1775014592_tp_per-pair_rep3_srv03_st03_snapshot.csv
+Done.
+    Saved: 1775014592_tp_per-pair_rep3_srv03_st03.json
+
+=== Pair 20/24: srv03 -> st04 ===
+  Repetition 1/3
+=== Initialization ===
+Rep: 1
+Meta: srv03_st04
+Metric: tp
+Qualifier: per-pair
+Epoch: 1775014777
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair/1775014777_tp_per-pair_rep1_srv03_st04_snapshot.csv
+Done.
+    Saved: 1775014777_tp_per-pair_rep1_srv03_st04.json
+  Repetition 2/3
+=== Initialization ===
+Rep: 2
+Meta: srv03_st04
+Metric: tp
+Qualifier: per-pair
+Epoch: 1775014963
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair/1775014963_tp_per-pair_rep2_srv03_st04_snapshot.csv
+Done.
+    Saved: 1775014963_tp_per-pair_rep2_srv03_st04.json
+  Repetition 3/3
+=== Initialization ===
+Rep: 3
+Meta: srv03_st04
+Metric: tp
+Qualifier: per-pair
+Epoch: 1775015148
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair/1775015148_tp_per-pair_rep3_srv03_st04_snapshot.csv
+Done.
+    Saved: 1775015148_tp_per-pair_rep3_srv03_st04.json
+
+=== Pair 21/24: srv03 -> st05 ===
+  Repetition 1/3
+=== Initialization ===
+Rep: 1
+Meta: srv03_st05
+Metric: tp
+Qualifier: per-pair
+Epoch: 1775015334
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair/1775015334_tp_per-pair_rep1_srv03_st05_snapshot.csv
+Done.
+    Saved: 1775015334_tp_per-pair_rep1_srv03_st05.json
+  Repetition 2/3
+=== Initialization ===
+Rep: 2
+Meta: srv03_st05
+Metric: tp
+Qualifier: per-pair
+Epoch: 1775015519
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair/1775015519_tp_per-pair_rep2_srv03_st05_snapshot.csv
+Done.
+    Saved: 1775015519_tp_per-pair_rep2_srv03_st05.json
+  Repetition 3/3
+=== Initialization ===
+Rep: 3
+Meta: srv03_st05
+Metric: tp
+Qualifier: per-pair
+Epoch: 1775015722
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair/1775015722_tp_per-pair_rep3_srv03_st05_snapshot.csv
+Done.
+    Saved: 1775015722_tp_per-pair_rep3_srv03_st05.json
+
+=== Pair 22/24: srv03 -> st06 ===
+  Repetition 1/3
+=== Initialization ===
+Rep: 1
+Meta: srv03_st06
+Metric: tp
+Qualifier: per-pair
+Epoch: 1775015907
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair/1775015907_tp_per-pair_rep1_srv03_st06_snapshot.csv
+Done.
+    Saved: 1775015907_tp_per-pair_rep1_srv03_st06.json
+  Repetition 2/3
+=== Initialization ===
+Rep: 2
+Meta: srv03_st06
+Metric: tp
+Qualifier: per-pair
+Epoch: 1775016092
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair/1775016092_tp_per-pair_rep2_srv03_st06_snapshot.csv
+Done.
+    Saved: 1775016092_tp_per-pair_rep2_srv03_st06.json
+  Repetition 3/3
+=== Initialization ===
+Rep: 3
+Meta: srv03_st06
+Metric: tp
+Qualifier: per-pair
+Epoch: 1775016278
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair/1775016278_tp_per-pair_rep3_srv03_st06_snapshot.csv
+Done.
+    Saved: 1775016278_tp_per-pair_rep3_srv03_st06.json
+
+=== Pair 23/24: srv03 -> st07 ===
+  Repetition 1/3
+=== Initialization ===
+Rep: 1
+Meta: srv03_st07
+Metric: tp
+Qualifier: per-pair
+Epoch: 1775016463
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair/1775016463_tp_per-pair_rep1_srv03_st07_snapshot.csv
+Done.
+    Saved: 1775016463_tp_per-pair_rep1_srv03_st07.json
+  Repetition 2/3
+=== Initialization ===
+Rep: 2
+Meta: srv03_st07
+Metric: tp
+Qualifier: per-pair
+Epoch: 1775016649
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair/1775016649_tp_per-pair_rep2_srv03_st07_snapshot.csv
+Done.
+    Saved: 1775016649_tp_per-pair_rep2_srv03_st07.json
+  Repetition 3/3
+=== Initialization ===
+Rep: 3
+Meta: srv03_st07
+Metric: tp
+Qualifier: per-pair
+Epoch: 1775016834
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair/1775016834_tp_per-pair_rep3_srv03_st07_snapshot.csv
+Done.
+    Saved: 1775016834_tp_per-pair_rep3_srv03_st07.json
+
+=== Pair 24/24: srv03 -> st08 ===
+  Repetition 1/3
+=== Initialization ===
+Rep: 1
+Meta: srv03_st08
+Metric: tp
+Qualifier: per-pair
+Epoch: 1775017020
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair/1775017020_tp_per-pair_rep1_srv03_st08_snapshot.csv
+Done.
+    Saved: 1775017020_tp_per-pair_rep1_srv03_st08.json
+  Repetition 2/3
+=== Initialization ===
+Rep: 2
+Meta: srv03_st08
+Metric: tp
+Qualifier: per-pair
+Epoch: 1775017205
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair/1775017205_tp_per-pair_rep2_srv03_st08_snapshot.csv
+Done.
+    Saved: 1775017205_tp_per-pair_rep2_srv03_st08.json
+  Repetition 3/3
+=== Initialization ===
+Rep: 3
+Meta: srv03_st08
+Metric: tp
+Qualifier: per-pair
+Epoch: 1775017391
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair/1775017391_tp_per-pair_rep3_srv03_st08_snapshot.csv
+Done.
+    Saved: 1775017391_tp_per-pair_rep3_srv03_st08.json
+
+=== Per-Pair Throughput Complete ===
+Results saved to: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/per-pair

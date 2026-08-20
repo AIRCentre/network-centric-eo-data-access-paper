@@ -1,0 +1,121 @@
+#!/bin/bash
+set -eo pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "$SCRIPT_DIR/common"
+
+PG_URI="${PG_URI:?PG_URI not set}"
+
+# Defaults
+EPOCH="${EPOCH:-$(date +%s)}"
+REP="${REP:-1}"
+SCALE=""
+OUTPUT_DIR="${OUTPUT_DIR:-$REPO_ROOT/benchmarks/outputs/database/postgis}"
+
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        --epoch)      EPOCH="$2";      shift 2 ;;
+        --rep)        REP="$2";        shift 2 ;;
+        --scale)      SCALE="$2";      shift 2 ;;
+        --output-dir) OUTPUT_DIR="$2"; shift 2 ;;
+        --help|-h)
+            echo "Usage: db_query_postgis --scale <1M|10M|50M|100M> [options]"
+            echo ""
+            echo "Options:"
+            echo "  --scale <scale>        Dataset scale (required, single value)"
+            echo "  --epoch <ts>           Epoch timestamp (default: now)"
+            echo "  --rep <n>              Repetition number (default: 1)"
+            echo "  --output-dir <dir>     Output directory"
+            exit 0
+            ;;
+        *) echo "Error: Unknown option: $1" >&2; exit 1 ;;
+    esac
+done
+
+if [[ -z "$SCALE" ]]; then
+    echo "Error: --scale is required (1M|10M|50M|100M)" >&2
+    exit 1
+fi
+
+if [[ "$SCALE" == "all" ]]; then
+    echo "Error: --scale all not supported for query scripts (only one scale loaded at a time)" >&2
+    exit 1
+fi
+
+run_query() {
+    local query_name="$1"
+    local query_subdir="$2"
+    local sql="$3"
+
+    local out_dir="$OUTPUT_DIR/$query_subdir"
+    mkdir -p "$out_dir"
+
+    local QUERY_EPOCH
+    QUERY_EPOCH=$(date +%s)
+
+    local result result_count latency_ms
+
+    result=$(psql "$PG_URI" -t -A -c "$sql") \
+        || { echo "Warning: $query_name query failed"; return 0; }
+
+    result_count=$(echo "$result" | cut -d'|' -f1)
+    latency_ms=$(echo "$result" | cut -d'|' -f2)
+
+    cat > "$out_dir/${QUERY_EPOCH}_${query_name}_${SCALE}_rep${REP}_postgis.json" <<EOF
+{
+  "database": "postgis",
+  "query": "$query_name",
+  "scale": "$SCALE",
+  "epoch": $QUERY_EPOCH,
+  "rep": $REP,
+  "latency_ms": $latency_ms,
+  "result_count": $result_count
+}
+EOF
+
+    echo "  $query_name: ${latency_ms}ms (${result_count} results)"
+
+    "$SCRIPT_DIR/db_snapshot_postgis" \
+        --metric "$query_name" --qualifier "$SCALE" \
+        --rep "$REP" --epoch "$QUERY_EPOCH" \
+        --output-dir "$out_dir" \
+        || echo "Warning: snapshot failed for $query_name"
+}
+
+echo "=== PostGIS Query Benchmark: scale=$SCALE rep=$REP ==="
+
+# Q1 — Point-in-Polygon (Spatial + Temporal Filter)
+run_query "q1-point" "q1_point" "
+SELECT cnt || '|' || round((extract(epoch FROM clock_timestamp() - t0) * 1000)::numeric, 2)
+FROM (SELECT clock_timestamp() AS t0) _t,
+LATERAL (
+    SELECT count(*) AS cnt FROM eo_metadata
+    WHERE ST_Contains(footprint, ST_SetSRID(ST_MakePoint(-25.0, 37.7), 4326))
+    AND timestamp BETWEEN '2020-01-01' AND '2022-12-31'
+) _q;
+"
+
+# Q2 — Bounding-Box Intersection (AOI Query)
+run_query "q2-bbox" "q2_bbox" "
+SELECT cnt || '|' || round((extract(epoch FROM clock_timestamp() - t0) * 1000)::numeric, 2)
+FROM (SELECT clock_timestamp() AS t0) _t,
+LATERAL (
+    SELECT count(*) AS cnt FROM eo_metadata
+    WHERE ST_Intersects(footprint, ST_MakeEnvelope(-32.0, 36.5, -24.5, 40.0, 4326))
+) _q;
+"
+
+# Q3 — K-Nearest Neighbour
+run_query "q3-knn" "q3_knn" "
+SELECT cnt || '|' || round((extract(epoch FROM clock_timestamp() - t0) * 1000)::numeric, 2)
+FROM (SELECT clock_timestamp() AS t0) _t,
+LATERAL (
+    SELECT count(*) AS cnt FROM (
+        SELECT id FROM eo_metadata
+        ORDER BY footprint <-> ST_SetSRID(ST_MakePoint(-25.0, 37.7), 4326)
+        LIMIT 10
+    ) sub
+) _q;
+"
+
+echo "=== PostGIS Query Benchmark Complete ==="

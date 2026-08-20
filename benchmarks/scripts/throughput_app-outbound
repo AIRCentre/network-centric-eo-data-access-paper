@@ -1,0 +1,113 @@
+#!/bin/bash
+set -eo pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "$SCRIPT_DIR/common"
+
+OUTPUT_DIR="${OUTPUT_DIR:-$REPO_ROOT/benchmarks/outputs/network/throughput/app-outbound}"
+REPETITIONS="${REPETITIONS:-1}"
+DURATION="${DURATION:-5}"
+IDLE_WAIT="${IDLE_WAIT:-2}"
+PARALLEL_STREAMS=8
+
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        --duration)
+            DURATION="$2"
+            shift 2
+            ;;
+        --repetitions)
+            REPETITIONS="$2"
+            shift 2
+            ;;
+        --output-dir)
+            OUTPUT_DIR="$2"
+            shift 2
+            ;;
+        --idle-wait)
+            IDLE_WAIT="$2"
+            shift 2
+            ;;
+        --help|-h)
+            echo "Usage: $0 [options]"
+            echo ""
+            echo "Options:"
+            echo "  --duration <seconds>   Duration per test (default: 5)"
+            echo "  --repetitions <n>      Number of repetitions (default: 1)"
+            echo "  --output-dir <dir>      Output directory (default: app-outbound)"
+            echo "  --idle-wait <seconds>  Idle wait before collection (default: 2)"
+            exit 0
+            ;;
+        *)
+            echo "Error: Unknown option: $1"
+            echo "Use --help for usage"
+            exit 1
+            ;;
+    esac
+done
+
+echo "=== Throughput Benchmark - App-Outbound (8 parallel per app) ==="
+echo "Duration: ${DURATION}s per run"
+echo "Parallel streams: $PARALLEL_STREAMS"
+echo "Repetitions: $REPETITIONS"
+echo "Output: $OUTPUT_DIR"
+echo ""
+
+mkdir -p "$OUTPUT_DIR"
+
+storage_hosts=$(get_storage_hosts)
+app_hosts=$(get_app_hosts)
+
+storage_first=$(echo "$storage_hosts" | head -1)
+storage_last=$(echo "$storage_hosts" | tail -1)
+storage_range="${storage_first}-${storage_last}"
+
+if [ -z "$storage_hosts" ]; then
+    echo "Error: No storage servers found in inventory"
+    exit 1
+fi
+
+if [ -z "$app_hosts" ]; then
+    echo "Error: No app servers found in inventory"
+    exit 1
+fi
+
+echo "App servers: $app_hosts"
+echo "Storage targets: $storage_hosts"
+echo ""
+echo "=== Running app-outbound throughput tests ==="
+echo "Each app runs 8 parallel iperf3 tests to ALL storage nodes"
+echo ""
+
+for rep in $(seq 1 $REPETITIONS); do
+    echo "=== Repetition $rep/$REPETITIONS ==="
+    
+    for app in $app_hosts; do
+        # Capture snapshot before this app's parallel tests
+        app_timestamp=$(date +%s)
+        "$SCRIPT_DIR/system_snapshot" --rep "$rep" --meta "${app##*-}_${storage_range}" --metric tp --qualifier "app-outbound" --epoch "$app_timestamp" --output-dir "$OUTPUT_DIR" --idle-wait "$IDLE_WAIT" || echo "Warning: system_snapshot failed, continuing..."
+        
+        # Run iperf3 in parallel to ALL storage nodes from this app
+        PIDS=""
+        TIMESTAMP=$app_timestamp
+        for target in $storage_hosts; do
+            target_ip=${STORAGE_IPS[$target]}
+            (
+                run_ansible "$app" "shell" "
+                    iperf3 -c $target_ip -p ${APP_PORTS[$app]} -P $PARALLEL_STREAMS -t $DURATION -Z -w 256k -l 64k --json 2>/dev/null
+                " | strip_ansible_header > "${OUTPUT_DIR}/${TIMESTAMP}_tp_app-outbound_rep${rep}_${app##*-}_${target##*-}.json"
+            ) &
+            PIDS="$PIDS $!"
+            echo "  Launched: $app -> $target"
+        done
+        
+        echo "  Waiting for app $app to complete..."
+        wait $PIDS || echo "Warning: one or more iperf3 jobs failed for $app"
+        echo ""
+    done
+    
+    echo "  Repetition $rep complete"
+done
+
+echo "=== App-Outbound Throughput Complete ==="
+echo "Results saved to: $OUTPUT_DIR"

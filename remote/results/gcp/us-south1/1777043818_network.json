@@ -1,0 +1,23 @@
+{
+    "test": "network_baseline",
+    "timestamp_utc": "2026-04-24T15:17:28Z",
+    "epoch": 1777043818,
+    "target": "eo-catalog.ac-az1.aircentre.org",
+    "ping": {
+        "count": 20,
+        "timeout_s": 5,
+        "rtt_min_ms": 170.969,
+        "rtt_avg_ms": 171.114,
+        "rtt_max_ms": 171.574,
+        "rtt_stddev_ms": 0.120,
+        "packet_loss": "0%"
+    },
+    "traceroute": {
+        "hops": 9,
+        "raw": "traceroute to eo-catalog.ac-az1.aircentre.org (194.210.4.227), 15 hops max, 60 byte packets\n 1  66.249.95.7 (66.249.95.7)  109.563 ms 142.251.51.160 (142.251.51.160)  109.821 ms  109.495 ms\n 2  * * *\n 3  fccn-ias-geant-gw.rt1.por.pt.geant.net (83.97.88.44)  145.178 ms  143.825 ms  144.267 ms\n 4  fccn-ias-fccn.rt1.por.pt.geant.net (83.97.88.45)  144.845 ms  144.309 ms  144.426 ms\n 5  Router40.Porto.fccn.pt (194.210.7.202)  147.788 ms  147.090 ms  147.714 ms\n 6  Router60.Lisboa.fccn.pt (193.136.1.10)  147.839 ms  147.226 ms  147.724 ms\n 7  Router63.Lisboa.fccn.pt (194.210.6.213)  149.507 ms  147.680 ms  148.024 ms\n 8  * * *\n 9  * * *\n10  * * *\n11  * * *\n12  * * *\n13  * * *\n14  * * *\n15  * * *\n"
+    },
+    "bandwidth_probe": {
+        "url": "https://eo-catalog.ac-az1.aircentre.org/api/v1",
+        "samples": [{"rep":1,"dns_s":0.001496,"connect_s":0.171701,"ttfb_s":0.522982,"total_s":0.523087,"speed_bytes_s":1477,"size_bytes":773},{"rep":2,"dns_s":0.001565,"connect_s":0.170706,"ttfb_s":0.521432,"total_s":0.521546,"speed_bytes_s":1482,"size_bytes":773},{"rep":3,"dns_s":0.001464,"connect_s":0.172094,"ttfb_s":0.524845,"total_s":0.524947,"speed_bytes_s":1472,"size_bytes":773},{"rep":4,"dns_s":0.001446,"connect_s":0.172261,"ttfb_s":0.527774,"total_s":0.527886,"speed_bytes_s":1464,"size_bytes":773},{"rep":5,"dns_s":0.001530,"connect_s":1.182741,"ttfb_s":1.536228,"total_s":1.536349,"speed_bytes_s":503,"size_bytes":773}]
+    }
+}

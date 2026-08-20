@@ -1,0 +1,106 @@
+#!/bin/bash
+set -eo pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "$SCRIPT_DIR/common"
+
+OUTPUT_DIR="${OUTPUT_DIR:-$REPO_ROOT/benchmarks/outputs/network/throughput/rds02-fanout}"
+REPETITIONS="${REPETITIONS:-1}"
+DURATION="${DURATION:-5}"
+IDLE_WAIT="${IDLE_WAIT:-2}"
+PARALLEL_STREAMS=8
+
+RDS02_HOST="r04-rds02"
+RDS02_IP="192.168.11.42"
+RDS02_PORT=5201
+
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        --duration)
+            DURATION="$2"
+            shift 2
+            ;;
+        --repetitions)
+            REPETITIONS="$2"
+            shift 2
+            ;;
+        --output-dir)
+            OUTPUT_DIR="$2"
+            shift 2
+            ;;
+        --idle-wait)
+            IDLE_WAIT="$2"
+            shift 2
+            ;;
+        --help|-h)
+            echo "Usage: $0 [options]"
+            echo ""
+            echo "Options:"
+            echo "  --duration <seconds>   Duration per test (default: 5)"
+            echo "  --repetitions <n>      Number of repetitions (default: 1)"
+            echo "  --output-dir <dir>     Output directory (default: rds02-fanout)"
+            echo "  --idle-wait <seconds>  Idle wait before collection (default: 2)"
+            exit 0
+            ;;
+        *)
+            echo "Error: Unknown option: $1"
+            echo "Use --help for usage"
+            exit 1
+            ;;
+    esac
+done
+
+echo "=== Throughput Benchmark - RDS02 Fan-Out (1 source -> 8 storage, parallel) ==="
+echo "Source: $RDS02_HOST ($RDS02_IP)"
+echo "Port: $RDS02_PORT"
+echo "Duration: ${DURATION}s per run"
+echo "Parallel streams per target: $PARALLEL_STREAMS"
+echo "Repetitions: $REPETITIONS"
+echo "Output: $OUTPUT_DIR"
+echo ""
+
+mkdir -p "$OUTPUT_DIR"
+
+storage_hosts=$(get_storage_hosts)
+
+if [ -z "$storage_hosts" ]; then
+    echo "Error: No storage servers found in inventory"
+    exit 1
+fi
+
+storage_first=$(echo "$storage_hosts" | head -1)
+storage_last=$(echo "$storage_hosts" | tail -1)
+storage_range="${storage_first}-${storage_last}"
+
+echo "Storage targets: $storage_hosts"
+echo ""
+echo "=== Running rds02-fanout throughput tests ==="
+echo "Single source $RDS02_HOST runs 8 concurrent iperf3 sessions to all storage nodes"
+echo ""
+
+for rep in $(seq 1 $REPETITIONS); do
+    echo "=== Repetition $rep/$REPETITIONS ==="
+
+    rep_timestamp=$(date +%s)
+    "$SCRIPT_DIR/system_snapshot" --rep "$rep" --meta "rds02_${storage_range}" --metric tp --qualifier "rds02-fanout" --epoch "$rep_timestamp" --output-dir "$OUTPUT_DIR" --idle-wait "$IDLE_WAIT" --rds-host "$RDS02_HOST" || echo "Warning: system_snapshot failed, continuing..."
+
+    PIDS=""
+    for target in $storage_hosts; do
+        target_ip=${STORAGE_IPS[$target]}
+        (
+            run_ansible "$RDS02_HOST" "shell" "
+                iperf3 -c $target_ip -p $RDS02_PORT -P $PARALLEL_STREAMS -t $DURATION -Z -w 256k -l 64k --json 2>/dev/null
+            " | strip_ansible_header > "${OUTPUT_DIR}/${rep_timestamp}_tp_rds02-fanout_rep${rep}_rds02_${target##*-}.json"
+        ) &
+        PIDS="$PIDS $!"
+        echo "  Launched: $RDS02_HOST -> $target"
+    done
+
+    echo "  Waiting for repetition $rep to complete..."
+    wait $PIDS || echo "Warning: one or more iperf3 jobs failed for rep $rep"
+    echo "  Repetition $rep complete"
+    echo ""
+done
+
+echo "=== RDS02 Fan-Out Throughput Complete ==="
+echo "Results saved to: $OUTPUT_DIR"

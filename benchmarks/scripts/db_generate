@@ -1,0 +1,162 @@
+#!/bin/bash
+set -eo pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "$SCRIPT_DIR/common"
+
+PG_URI="${PG_URI:?PG_URI not set}"
+
+# Defaults
+SCALE="${SCALE:-all}"
+OUTPUT_DIR="${OUTPUT_DIR:-$REPO_ROOT/benchmarks/outputs/database/generation}"
+REP="${REP:-1}"
+EPOCH="${EPOCH:-$(date +%s)}"
+DATA_DIR="${DATA_DIR:-$REPO_ROOT/data}"
+CHUNK_SIZE=10000000
+
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        --scale)      SCALE="$2";      shift 2 ;;
+        --output-dir) OUTPUT_DIR="$2"; shift 2 ;;
+        --rep)        REP="$2";        shift 2 ;;
+        --epoch)      EPOCH="$2";      shift 2 ;;
+        --data-dir)   DATA_DIR="$2";   shift 2 ;;
+        --help|-h)
+            echo "Usage: db_generate [--scale 1M|10M|50M|100M|all] [--data-dir /data]"
+            echo ""
+            echo "Options:"
+            echo "  --scale <1M|10M|50M|100M|all>  Scale level (default: all)"
+            echo "  --output-dir <dir>              Timing output dir (default: benchmarks/outputs/database/generation)"
+            echo "  --data-dir <dir>                Data file output dir (default: \$REPO_ROOT/data)"
+            echo "  --rep <n>                       Repetition number (default: 1)"
+            echo "  --epoch <ts>                    Epoch timestamp (default: now)"
+            exit 0
+            ;;
+        *) echo "Error: Unknown option: $1" >&2; exit 1 ;;
+    esac
+done
+
+# Resolve scale list
+case "$SCALE" in
+    1M)   SCALES=(1000000) ;  LABELS=(1M) ;;
+    10M)  SCALES=(10000000) ; LABELS=(10M) ;;
+    50M)  SCALES=(50000000) ; LABELS=(50M) ;;
+    100M) SCALES=(100000000); LABELS=(100M) ;;
+    all)  SCALES=(1000000 10000000 50000000 100000000); LABELS=(1M 10M 50M 100M) ;;
+    *)    echo "Error: Unknown scale: $SCALE" >&2; exit 1 ;;
+esac
+
+# SQL for generating data into eo_gen table.
+# Uses setseed(0.42) for reproducibility. Mission/sensor are correlated via midx.
+# Geometry: rotated rectangle built as a PostGIS polygon from random centre,
+# half-width, half-length, and heading.
+GENERATE_SQL='INSERT INTO eo_gen
+SELECT
+    i AS id,
+    (ARRAY['"'"'Sentinel-1'"'"','"'"'Sentinel-2'"'"','"'"'MODIS'"'"','"'"'Landsat-8'"'"'])[midx] AS mission,
+    (ARRAY['"'"'SAR-C'"'"','"'"'MSI'"'"','"'"'MODIS'"'"','"'"'OLI-TIRS'"'"'])[midx] AS sensor,
+    (ARRAY['"'"'L1'"'"','"'"'L2'"'"','"'"'L3'"'"'])[1 + floor(random()*3)::int] AS product_level,
+    '"'"'2015-01-01'"'"'::timestamptz + (random() * 315360000) * interval '"'"'1 second'"'"' AS timestamp,
+    ST_SetSRID(ST_MakePolygon(ST_MakeLine(ARRAY[
+        ST_MakePoint(cx+(-hw)*cos(h)-(-hl)*sin(h), cy+(-hw)*sin(h)+(-hl)*cos(h)),
+        ST_MakePoint(cx+( hw)*cos(h)-(-hl)*sin(h), cy+( hw)*sin(h)+(-hl)*cos(h)),
+        ST_MakePoint(cx+( hw)*cos(h)-( hl)*sin(h), cy+( hw)*sin(h)+( hl)*cos(h)),
+        ST_MakePoint(cx+(-hw)*cos(h)-( hl)*sin(h), cy+(-hw)*sin(h)+( hl)*cos(h)),
+        ST_MakePoint(cx+(-hw)*cos(h)-(-hl)*sin(h), cy+(-hw)*sin(h)+(-hl)*cos(h))
+    ])), 4326) AS footprint
+FROM generate_series(START_ID, END_ID) i,
+LATERAL (SELECT 1 + floor(random()*4 + i*0)::int AS midx) m,
+LATERAL (SELECT random()*338-169 + i*0 AS cx, random()*158-79 AS cy,  -- i*0: force per-row evaluation of random()
+               (random()*2.9+0.1)/2 AS hw, (random()*15+5)/2 AS hl,
+               random()*2*pi() AS h) g;'
+
+# Export CSV via \copy (client-side) — must be single line
+export_csv() {
+    local data_dir="$1" label="$2"
+    psql "$PG_URI" -c "\copy (SELECT id, mission, sensor, product_level, to_char(timestamp, 'YYYY-MM-DD\"T\"HH24:MI:SS\"Z\"') AS timestamp, ST_AsText(footprint) AS footprint FROM eo_gen ORDER BY id) TO '${data_dir}/${label}_postgis.csv' CSV HEADER"
+}
+
+mkdir -p "$OUTPUT_DIR" "$DATA_DIR"
+
+cleanup() {
+    psql "$PG_URI" -c "DROP TABLE IF EXISTS eo_gen" 2>/dev/null || true
+}
+trap cleanup EXIT
+trap 'cleanup; exit 1' INT TERM
+
+echo "=== Track 3.1: Data Generation ==="
+echo "Scales: ${LABELS[*]}"
+echo "Data dir: $DATA_DIR"
+echo ""
+
+for idx in "${!SCALES[@]}"; do
+    n="${SCALES[$idx]}"
+    label="${LABELS[$idx]}"
+    EPOCH=$(date +%s)
+
+    echo "=== Generating $label ($n records) ==="
+
+    # Create generation table
+    psql "$PG_URI" -c "DROP TABLE IF EXISTS eo_gen"
+    psql "$PG_URI" -c "
+        CREATE UNLOGGED TABLE eo_gen (
+            id BIGINT,
+            mission TEXT,
+            sensor TEXT,
+            product_level TEXT,
+            timestamp TIMESTAMPTZ,
+            footprint GEOMETRY(POLYGON, 4326)
+        )
+    "
+
+    # Build all chunks as a single SQL script (setseed is per-session)
+    t0=$(date +%s.%N)
+    chunks=$(( (n + CHUNK_SIZE - 1) / CHUNK_SIZE ))
+    sql_script="SELECT setseed(0.42);"
+    for chunk in $(seq 0 $((chunks - 1))); do
+        start_id=$((chunk * CHUNK_SIZE + 1))
+        end_id=$(( (chunk + 1) * CHUNK_SIZE ))
+        if (( end_id > n )); then end_id=$n; fi
+        echo "  Chunk $((chunk+1))/$chunks: rows $start_id–$end_id"
+        chunk_sql="${GENERATE_SQL//START_ID/$start_id}"
+        chunk_sql="${chunk_sql//END_ID/$end_id}"
+        sql_script+=$'\n'"$chunk_sql"
+    done
+    echo "$sql_script" | psql "$PG_URI"
+    t1=$(date +%s.%N)
+    gen_s=$(awk "BEGIN {printf \"%.1f\", $t1 - $t0}")
+    echo "  Generation: ${gen_s}s"
+
+    # Export CSV
+    echo "  Exporting CSV..."
+    export_t0=$(date +%s.%N)
+    export_csv "$DATA_DIR" "$label"
+    export_t1=$(date +%s.%N)
+    export_s=$(awk "BEGIN {printf \"%.1f\", $export_t1 - $export_t0}")
+    echo "  Export: ${export_s}s"
+
+    # Drop generation table
+    psql "$PG_URI" -c "DROP TABLE IF EXISTS eo_gen"
+
+    total_s=$(awk "BEGIN {printf \"%.1f\", $gen_s + $export_s}")
+
+    # Write timing JSON
+    cat > "$OUTPUT_DIR/${EPOCH}_generate_${label}_rep${REP}_dbhost.json" <<EOF
+{
+  "operation": "generate",
+  "scale": "$label",
+  "records": $n,
+  "epoch": $EPOCH,
+  "rep": $REP,
+  "timings": {
+    "generate_s": $gen_s,
+    "export_s": $export_s,
+    "total_s": $total_s
+  }
+}
+EOF
+    echo "  → $OUTPUT_DIR/${EPOCH}_generate_${label}_rep${REP}_dbhost.json"
+    echo ""
+done
+
+echo "=== Data Generation Complete ==="

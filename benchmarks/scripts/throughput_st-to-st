@@ -1,0 +1,121 @@
+#!/bin/bash
+set -eo pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "$SCRIPT_DIR/common"
+
+OUTPUT_DIR="${OUTPUT_DIR:-$REPO_ROOT/benchmarks/outputs/network/throughput/st-to-st}"
+REPETITIONS="${REPETITIONS:-1}"
+DURATION="${DURATION:-5}"
+IDLE_WAIT="${IDLE_WAIT:-2}"
+PARALLEL_STREAMS=8
+
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        --duration)
+            DURATION="$2"
+            shift 2
+            ;;
+        --repetitions)
+            REPETITIONS="$2"
+            shift 2
+            ;;
+        --output-dir)
+            OUTPUT_DIR="$2"
+            shift 2
+            ;;
+        --idle-wait)
+            IDLE_WAIT="$2"
+            shift 2
+            ;;
+        --help|-h)
+            echo "Usage: $0 [options]"
+            echo ""
+            echo "Options:"
+            echo "  --duration <seconds>   Duration per test (default: 5)"
+            echo "  --repetitions <n>      Number of repetitions (default: 1)"
+            echo "  --output-dir <dir>      Output directory (default: st-to-st)"
+            echo "  --idle-wait <seconds>  Idle wait before collection (default: 2)"
+            exit 0
+            ;;
+        *)
+            echo "Error: Unknown option: $1"
+            echo "Use --help for usage"
+            exit 1
+            ;;
+    esac
+done
+
+echo "=== Throughput Benchmark (Storage-to-Storage) ==="
+echo "Duration: ${DURATION}s per run"
+echo "Parallel streams: $PARALLEL_STREAMS"
+echo "Ports: 5201-5204 (st01->5201, st02->5202, st03->5203, st04->5204)"
+echo "Repetitions: $REPETITIONS"
+echo "Output: $OUTPUT_DIR"
+echo ""
+
+mkdir -p "$OUTPUT_DIR"
+
+# Get all storage hosts (st01-st08)
+storage_hosts=$(get_storage_hosts)
+
+if [ -z "$storage_hosts" ]; then
+    echo "Error: No storage servers found in inventory"
+    exit 1
+fi
+
+# Split into clients (first 4) and servers (last 4)
+clients=$(echo "$storage_hosts" | head -4)
+servers=$(echo "$storage_hosts" | tail -4)
+
+first_client=$(echo "$clients" | head -1 | tr -d ' ')
+last_client=$(echo "$clients" | tail -1 | tr -d ' ')
+first_server=$(echo "$servers" | head -1 | tr -d ' ')
+last_server=$(echo "$servers" | tail -1 | tr -d ' ')
+client_range="${first_client}-${last_client}"
+server_range="${first_server}-${last_server}"
+
+echo "Client nodes (st01-st04): $clients"
+echo "Server nodes (st05-st08): $servers"
+echo "Client range: $client_range"
+echo "Server range: $server_range"
+echo ""
+
+TIMESTAMP=$(date +%s)
+PIDS=""
+
+echo ""
+echo "=== Launching st-to-st throughput tests ==="
+echo ""
+
+for rep in $(seq 1 $REPETITIONS); do
+    echo "=== Repetition $rep/$REPETITIONS ==="
+    
+    TIMESTAMP=$(date +%s)
+    "$SCRIPT_DIR/system_snapshot" --rep "$rep" --meta "${client_range}_${server_range}" --metric tp --qualifier st-to-st --epoch "$TIMESTAMP" --output-dir "$OUTPUT_DIR" --idle-wait "$IDLE_WAIT" || echo "Warning: system_snapshot failed, continuing..."
+    
+    PIDS=""
+    
+    client_idx=1
+    for client in $clients; do
+        port=$((5200 + client_idx))
+        for server in $servers; do
+            server_ip=${STORAGE_IPS[$server]}
+            (
+                run_ansible "$client" "shell" "
+                    iperf3 -c $server_ip -p $port -P $PARALLEL_STREAMS -t $DURATION -Z -w 256k -l 64k --json 2>/dev/null
+                " | strip_ansible_header > "${OUTPUT_DIR}/${TIMESTAMP}_tp_st-to-st_rep${rep}_${client##*-}_${server##*-}.json"
+            ) &
+            PIDS="$PIDS $!"
+            echo "  Launched: $client -> $server (port $port)"
+        done
+        client_idx=$((client_idx + 1))
+    done
+    
+    echo "  Waiting for repetition $rep to complete..."
+    wait $PIDS || echo "Warning: one or more iperf3 jobs failed in rep $rep"
+    echo ""
+done
+
+echo "=== Throughput Complete ==="
+echo "Results saved to: $OUTPUT_DIR"

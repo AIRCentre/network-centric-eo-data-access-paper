@@ -1,0 +1,37 @@
+[
+  {
+    "scenario": 1,
+    "description": "1 link disconnected (one port to one switch)",
+    "interfaces_down": ["ens1f0np0"],
+    "t_down_epoch": 1774112531,
+    "t_up_epoch": 1774112593
+  },
+  {
+    "scenario": 2,
+    "description": "2 links symmetric (1 link per switch)",
+    "interfaces_down": ["ens1f0np0", "ens1f1np1"],
+    "t_down_epoch": 1774112624,
+    "t_up_epoch": 1774112686
+  },
+  {
+    "scenario": 3,
+    "description": "2 links asymmetric (2 links to same switch)",
+    "interfaces_down": ["ens1f0np0", "ens2f0np0"],
+    "t_down_epoch": 1774112794,
+    "t_up_epoch": 1774112856
+  },
+  {
+    "scenario": 4,
+    "description": "3 links disconnected (1 remaining)",
+    "interfaces_down": ["ens1f0np0", "ens2f0np0", "ens1f1np1"],
+    "t_down_epoch": 1774112888,
+    "t_up_epoch": 1774112950
+  },
+  {
+    "scenario": 5,
+    "description": "Full switch disconnect (both Switch B ports)",
+    "interfaces_down": ["ens1f0np0", "ens2f0np0"],
+    "t_down_epoch": 1774113072,
+    "t_up_epoch": 1774113135
+  }
+]

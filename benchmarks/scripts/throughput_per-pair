@@ -1,0 +1,117 @@
+#!/bin/bash
+set -eo pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "$SCRIPT_DIR/common"
+
+# Default values
+OUTPUT_DIR="${OUTPUT_DIR:-$REPO_ROOT/benchmarks/outputs/network/throughput/per-pair}"
+REPETITIONS="${REPETITIONS:-1}"
+DURATION="${DURATION:-5}"
+IDLE_WAIT="${IDLE_WAIT:-2}"
+PARALLEL_STREAMS=8
+
+# Parse command line flags
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        --duration)
+            DURATION="$2"
+            shift 2
+            ;;
+        --repetitions)
+            REPETITIONS="$2"
+            shift 2
+            ;;
+        --output-dir)
+            OUTPUT_DIR="$2"
+            shift 2
+            ;;
+        --idle-wait)
+            IDLE_WAIT="$2"
+            shift 2
+            ;;
+        --help|-h)
+            echo "Usage: $0 [options]"
+            echo ""
+            echo "Options:"
+            echo "  --duration <seconds>   Duration per test (default: 5)"
+            echo "  --repetitions <n>      Number of repetitions (default: 1)"
+            echo "  --output-dir <dir>      Output directory (default: per-pair)"
+            echo "  --idle-wait <seconds>  Idle wait before collection (default: 2)"
+            exit 0
+            ;;
+        *)
+            echo "Error: Unknown option: $1"
+            echo "Use --help for usage"
+            exit 1
+            ;;
+    esac
+done
+
+echo "=== Throughput Benchmark - Per-Pair Sequential (track1.md) ==="
+echo "Duration: ${DURATION}s per run"
+echo "Parallel streams: $PARALLEL_STREAMS"
+echo "Repetitions: $REPETITIONS"
+echo "Output: $OUTPUT_DIR"
+echo ""
+
+mkdir -p "$OUTPUT_DIR"
+
+storage_hosts=$(get_storage_hosts)
+app_hosts=$(get_app_hosts)
+
+if [ -z "$storage_hosts" ]; then
+    echo "Error: No storage servers found in inventory"
+    exit 1
+fi
+
+if [ -z "$app_hosts" ]; then
+    echo "Error: No app servers found in inventory"
+    exit 1
+fi
+
+echo "App servers: $app_hosts"
+echo "Storage targets: $storage_hosts"
+echo ""
+echo "=== Running per-pair sequential throughput tests ==="
+echo ""
+
+pairs=()
+for app in $app_hosts; do
+    for target in $storage_hosts; do
+        pairs+=("$app|$target")
+    done
+done
+
+pair_count=${#pairs[@]}
+echo "Total pairs: $pair_count"
+echo ""
+
+pair_idx=0
+for pair in "${pairs[@]}"; do
+    app="${pair%|*}"
+    target="${pair#*|}"
+    target_ip=${STORAGE_IPS[$target]}
+    
+    pair_idx=$((pair_idx + 1))
+    echo "=== Pair $pair_idx/$pair_count: $app -> $target ==="
+    
+    for rep in $(seq 1 $REPETITIONS); do
+        echo "  Repetition $rep/$REPETITIONS"
+
+        pair_timestamp=$(date +%s)
+        "$SCRIPT_DIR/system_snapshot" --rep "$rep" --meta "${app##*-}_${target##*-}" --metric tp --qualifier per-pair --epoch "$pair_timestamp" --output-dir "$OUTPUT_DIR" --idle-wait "$IDLE_WAIT" || echo "Warning: system_snapshot failed, continuing..."
+
+        run_ansible "$app" "shell" "
+            iperf3 -c $target_ip -p ${APP_PORTS[$app]} -P $PARALLEL_STREAMS -t $DURATION -Z -w 256k -l 64k --json 2>/dev/null
+        " | strip_ansible_header > "${OUTPUT_DIR}/${pair_timestamp}_tp_per-pair_rep${rep}_${app##*-}_${target##*-}.json" \
+            || echo "Warning: iperf3 failed for $app -> $target rep $rep"
+
+        echo "    Saved: ${pair_timestamp}_tp_per-pair_rep${rep}_${app##*-}_${target##*-}.json"
+    done
+    
+    echo ""
+done
+
+echo "=== Per-Pair Throughput Complete ==="
+echo "Results saved to: $OUTPUT_DIR"

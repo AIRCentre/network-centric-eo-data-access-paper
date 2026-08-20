@@ -1,0 +1,139 @@
+=== Throughput Benchmark - RDS02 Fan-Out (1 source -> 8 storage, parallel) ===
+Source: r04-rds02 (192.168.11.42)
+Port: 5201
+Duration: 120s per run
+Parallel streams per target: 8
+Repetitions: 3
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/rds02-fanout
+
+Storage targets: st01
+st02
+st03
+st04
+st05
+st06
+st07
+st08
+
+=== Running rds02-fanout throughput tests ===
+Single source r04-rds02 runs 8 concurrent iperf3 sessions to all storage nodes
+
+=== Repetition 1/3 ===
+=== Initialization ===
+Rep: 1
+Meta: rds02_st01-st08
+Metric: tp
+Qualifier: rds02-fanout
+Epoch: 1779249045
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/rds02-fanout
+RDS host: r04-rds02
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+  Collecting from: r04-rds02
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/rds02-fanout/1779249045_tp_rds02-fanout_rep1_rds02_st01-st08_snapshot.csv
+Done.
+  Launched: r04-rds02 -> st01
+  Launched: r04-rds02 -> st02
+  Launched: r04-rds02 -> st03
+  Launched: r04-rds02 -> st04
+  Launched: r04-rds02 -> st05
+  Launched: r04-rds02 -> st06
+  Launched: r04-rds02 -> st07
+  Launched: r04-rds02 -> st08
+  Waiting for repetition 1 to complete...
+  Repetition 1 complete
+
+=== Repetition 2/3 ===
+=== Initialization ===
+Rep: 2
+Meta: rds02_st01-st08
+Metric: tp
+Qualifier: rds02-fanout
+Epoch: 1779249231
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/rds02-fanout
+RDS host: r04-rds02
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+  Collecting from: r04-rds02
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/rds02-fanout/1779249231_tp_rds02-fanout_rep2_rds02_st01-st08_snapshot.csv
+Done.
+  Launched: r04-rds02 -> st01
+  Launched: r04-rds02 -> st02
+  Launched: r04-rds02 -> st03
+  Launched: r04-rds02 -> st04
+  Launched: r04-rds02 -> st05
+  Launched: r04-rds02 -> st06
+  Launched: r04-rds02 -> st07
+  Launched: r04-rds02 -> st08
+  Waiting for repetition 2 to complete...
+  Repetition 2 complete
+
+=== Repetition 3/3 ===
+=== Initialization ===
+Rep: 3
+Meta: rds02_st01-st08
+Metric: tp
+Qualifier: rds02-fanout
+Epoch: 1779249416
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/rds02-fanout
+RDS host: r04-rds02
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+  Collecting from: r04-rds02
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/rds02-fanout/1779249416_tp_rds02-fanout_rep3_rds02_st01-st08_snapshot.csv
+Done.
+  Launched: r04-rds02 -> st01
+  Launched: r04-rds02 -> st02
+  Launched: r04-rds02 -> st03
+  Launched: r04-rds02 -> st04
+  Launched: r04-rds02 -> st05
+  Launched: r04-rds02 -> st06
+  Launched: r04-rds02 -> st07
+  Launched: r04-rds02 -> st08
+  Waiting for repetition 3 to complete...
+  Repetition 3 complete
+
+=== RDS02 Fan-Out Throughput Complete ===
+Results saved to: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/rds02-fanout

@@ -1,0 +1,11 @@
+{
+  "client": "r02-srv01",
+  "server": "r02-st01",
+  "repetition": 1,
+  "timestamp_epoch": 1773797899,
+  "timestamp_iso": "2026-03-18T01:38:19Z",
+  "sent_gbps": 27.315036964198452,
+  "recv_gbps": 27.31513835844643,
+  "retransmits": 1053,
+  "duration_s": 120.00152
+}

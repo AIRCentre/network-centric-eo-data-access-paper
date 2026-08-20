@@ -1,0 +1,163 @@
+=== Throughput Benchmark (Storage-to-Storage) ===
+Duration: 120s per run
+Parallel streams: 8
+Ports: 5201-5204 (st01->5201, st02->5202, st03->5203, st04->5204)
+Repetitions: 3
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/st-to-st
+
+Client nodes (st01-st04): st01
+st02
+st03
+st04
+Server nodes (st05-st08): st05
+st06
+st07
+st08
+Client range: st01-st04
+Server range: st05-st08
+
+  st01 -> 192.168.11.21
+  st02 -> 192.168.11.22
+  st03 -> 192.168.11.23
+  st04 -> 192.168.11.24
+  st05 -> 192.168.11.25
+  st06 -> 192.168.11.26
+  st07 -> 192.168.11.27
+  st08 -> 192.168.11.28
+
+=== Launching st-to-st throughput tests ===
+
+=== Repetition 1/3 ===
+=== Initialization ===
+Rep: 1
+Meta: st01-st04_st05-st08
+Metric: tp
+Qualifier: st-to-st
+Epoch: 1775017576
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/st-to-st
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/st-to-st/1775017576_tp_st-to-st_rep1_st01-st04_st05-st08_snapshot.csv
+Done.
+  Launched: st01 -> st05 (port 5201)
+  Launched: st01 -> st06 (port 5201)
+  Launched: st01 -> st07 (port 5201)
+  Launched: st01 -> st08 (port 5201)
+  Launched: st02 -> st05 (port 5202)
+  Launched: st02 -> st06 (port 5202)
+  Launched: st02 -> st07 (port 5202)
+  Launched: st02 -> st08 (port 5202)
+  Launched: st03 -> st05 (port 5203)
+  Launched: st03 -> st06 (port 5203)
+  Launched: st03 -> st07 (port 5203)
+  Launched: st03 -> st08 (port 5203)
+  Launched: st04 -> st05 (port 5204)
+  Launched: st04 -> st06 (port 5204)
+  Launched: st04 -> st07 (port 5204)
+  Launched: st04 -> st08 (port 5204)
+  Waiting for repetition 1 to complete...
+
+=== Repetition 2/3 ===
+=== Initialization ===
+Rep: 2
+Meta: st01-st04_st05-st08
+Metric: tp
+Qualifier: st-to-st
+Epoch: 1775017762
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/st-to-st
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/st-to-st/1775017762_tp_st-to-st_rep2_st01-st04_st05-st08_snapshot.csv
+Done.
+  Launched: st01 -> st05 (port 5201)
+  Launched: st01 -> st06 (port 5201)
+  Launched: st01 -> st07 (port 5201)
+  Launched: st01 -> st08 (port 5201)
+  Launched: st02 -> st05 (port 5202)
+  Launched: st02 -> st06 (port 5202)
+  Launched: st02 -> st07 (port 5202)
+  Launched: st02 -> st08 (port 5202)
+  Launched: st03 -> st05 (port 5203)
+  Launched: st03 -> st06 (port 5203)
+  Launched: st03 -> st07 (port 5203)
+  Launched: st03 -> st08 (port 5203)
+  Launched: st04 -> st05 (port 5204)
+  Launched: st04 -> st06 (port 5204)
+  Launched: st04 -> st07 (port 5204)
+  Launched: st04 -> st08 (port 5204)
+  Waiting for repetition 2 to complete...
+
+=== Repetition 3/3 ===
+=== Initialization ===
+Rep: 3
+Meta: st01-st04_st05-st08
+Metric: tp
+Qualifier: st-to-st
+Epoch: 1775017948
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/st-to-st
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/st-to-st/1775017948_tp_st-to-st_rep3_st01-st04_st05-st08_snapshot.csv
+Done.
+  Launched: st01 -> st05 (port 5201)
+  Launched: st01 -> st06 (port 5201)
+  Launched: st01 -> st07 (port 5201)
+  Launched: st01 -> st08 (port 5201)
+  Launched: st02 -> st05 (port 5202)
+  Launched: st02 -> st06 (port 5202)
+  Launched: st02 -> st07 (port 5202)
+  Launched: st02 -> st08 (port 5202)
+  Launched: st03 -> st05 (port 5203)
+  Launched: st03 -> st06 (port 5203)
+  Launched: st03 -> st07 (port 5203)
+  Launched: st03 -> st08 (port 5203)
+  Launched: st04 -> st05 (port 5204)
+  Launched: st04 -> st06 (port 5204)
+  Launched: st04 -> st07 (port 5204)
+  Launched: st04 -> st08 (port 5204)
+  Waiting for repetition 3 to complete...
+
+=== Throughput Complete ===
+Results saved to: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/st-to-st

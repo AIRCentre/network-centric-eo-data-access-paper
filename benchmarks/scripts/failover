@@ -1,0 +1,208 @@
+#!/bin/bash
+set -eo pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "$SCRIPT_DIR/common"
+
+OUTPUT_DIR="${OUTPUT_DIR:-$REPO_ROOT/benchmarks/outputs/network/failover}"
+DURATION="${DURATION:-60}"
+REPETITIONS="${REPETITIONS:-1}"
+IDLE_WAIT="${IDLE_WAIT:-5}"
+SCENARIO_DOWN="${SCENARIO_DOWN:-5}"
+SCENARIO_SETTLE="${SCENARIO_SETTLE:-3}"
+APP_HOST="${APP_HOST:-srv01}"
+
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        --duration) DURATION="$2"; shift 2 ;;
+        --repetitions) REPETITIONS="$2"; shift 2 ;;
+        --output-dir) OUTPUT_DIR="$2"; shift 2 ;;
+        --idle-wait) IDLE_WAIT="$2"; shift 2 ;;
+        --scenario-down) SCENARIO_DOWN="$2"; shift 2 ;;
+        --scenario-settle) SCENARIO_SETTLE="$2"; shift 2 ;;
+        --app) APP_HOST="$2"; shift 2 ;;
+        --help|-h)
+            echo "Usage: $0 [options]"
+            echo ""
+            echo "Options:"
+            echo "  --duration <seconds>    Total iperf3 duration (default: 60; benchctl uses 600)"
+            echo "  --repetitions <n>       Number of repetitions (default: 1; benchctl uses 3)"
+            echo "  --output-dir <dir>      Output directory"
+            echo "  --idle-wait <seconds>   Baseline before first failure (default: 5; benchctl uses 60)"
+            echo "  --scenario-down <s>     Time each scenario stays down (default: 5; benchctl uses 60)"
+            echo "  --scenario-settle <s>   Settle time between scenarios (default: 3; benchctl uses 30)"
+            echo "  --app <host>            App server to run from (default: srv01)"
+            exit 0
+            ;;
+        *) echo "Error: Unknown option: $1"; echo "Use --help for usage"; exit 1 ;;
+    esac
+done
+
+# Interface → switch mapping:
+#   ens1f0np0 → Switch B (bond port 1)
+#   ens1f1np1 → Switch A (bond port 2)
+#   ens2f0np0 → Switch B (bond port 3)
+#   ens2f1np1 → Switch A (bond port 4)
+
+declare -A SCENARIO_IFACES
+SCENARIO_IFACES[1]="ens1f0np0"
+SCENARIO_IFACES[2]="ens1f0np0 ens1f1np1"
+SCENARIO_IFACES[3]="ens1f0np0 ens2f0np0"
+SCENARIO_IFACES[4]="ens1f0np0 ens2f0np0 ens1f1np1"
+SCENARIO_IFACES[5]="ens1f0np0 ens2f0np0"
+
+declare -A SCENARIO_DESC
+SCENARIO_DESC[1]="1 link disconnected (one port to one switch)"
+SCENARIO_DESC[2]="2 links symmetric (1 link per switch)"
+SCENARIO_DESC[3]="2 links asymmetric (2 links to same switch)"
+SCENARIO_DESC[4]="3 links disconnected (1 remaining)"
+SCENARIO_DESC[5]="Full switch disconnect (both Switch B ports)"
+
+ALL_IFACES="ens1f0np0 ens1f1np1 ens2f0np0"
+
+# Set after APP_HOST is confirmed; used by trap
+_ANSIBLE_APP=""
+
+
+restore_interfaces() {
+    if [ -n "$_ANSIBLE_APP" ]; then
+        echo "=== Restoring all interfaces on $_ANSIBLE_APP ==="
+        local cmd=""
+        for iface in $ALL_IFACES; do
+            cmd="${cmd}ip link set $iface up; "
+        done
+        ansible "$_ANSIBLE_APP" -b -m shell -a "$cmd" 2>/dev/null || true
+        echo "Interfaces restored."
+    fi
+}
+trap restore_interfaces EXIT
+trap 'restore_interfaces; exit 1' INT TERM
+
+echo "=== Failover Benchmark ==="
+echo "Duration: ${DURATION}s"
+echo "App: $APP_HOST"
+echo "Repetitions: $REPETITIONS"
+echo "Baseline (idle-wait): ${IDLE_WAIT}s"
+echo "Output: $OUTPUT_DIR"
+echo ""
+
+mkdir -p "$OUTPUT_DIR"
+
+storage_hosts=$(get_storage_hosts)
+if [ -z "$storage_hosts" ]; then
+    echo "Error: No storage servers found"
+    exit 1
+fi
+
+declare -A storage_ips
+for line in $(get_storage_ips); do
+    key="${line%%=*}"
+    value="${line##*=}"
+    storage_ips[$key]=$value
+done
+
+port="${APP_PORTS[$APP_HOST]}"
+_ANSIBLE_APP="${ANSIBLE_HOSTS[$APP_HOST]:-$APP_HOST}"
+
+echo "App server: $APP_HOST ($_ANSIBLE_APP)"
+echo "Storage targets: $storage_hosts"
+echo "iperf3 port: $port"
+echo ""
+
+for rep in $(seq 1 "$REPETITIONS"); do
+    echo "=== Repetition $rep/$REPETITIONS ==="
+
+    EPOCH=$(date +%s)
+    app_short="${APP_HOST##*-}"
+
+    "$SCRIPT_DIR/system_snapshot" \
+        --rep "$rep" \
+        --meta "${app_short}_st01-st08" \
+        --metric failover \
+        --qualifier continuous \
+        --epoch "$EPOCH" \
+        --output-dir "$OUTPUT_DIR" \
+        --idle-wait 0 || echo "Warning: system_snapshot failed, continuing..."
+
+    echo "Starting 8 parallel iperf3 sessions (${DURATION}s)..."
+    PIDS=""
+    for target in $storage_hosts; do
+        target_ip="${storage_ips[$target]}"
+        # Single stream per session: measures per-connection failover behavior (not aggregate throughput)
+        (
+            run_ansible "$APP_HOST" "shell" \
+                "iperf3 -c $target_ip -p $port -t $DURATION -i 1 --json" \
+                | strip_ansible_header \
+                > "${OUTPUT_DIR}/${EPOCH}_failover_continuous_rep${rep}_${app_short}_${target}.json"
+        ) &
+        PIDS="$PIDS $!"
+        echo "  Launched: $APP_HOST -> $target ($target_ip)"
+    done
+
+    echo ""
+    echo "Baseline: sleeping ${IDLE_WAIT}s..."
+    sleep "$IDLE_WAIT"
+
+    EVENTS="[]"
+
+    for scenario in 1 2 3 4 5; do
+        ifaces="${SCENARIO_IFACES[$scenario]}"
+        desc="${SCENARIO_DESC[$scenario]}"
+
+        echo ""
+        echo "--- Scenario $scenario: $desc ---"
+
+        down_cmd=""
+        for iface in $ifaces; do
+            down_cmd="${down_cmd}ip link set $iface down; "
+        done
+
+        t_down=$(date +%s)
+        run_ansible_become "$APP_HOST" shell "$down_cmd" > /dev/null
+        echo "  DOWN: $ifaces (epoch $t_down)"
+
+        sleep "$SCENARIO_DOWN"
+
+        up_cmd=""
+        for iface in $ifaces; do
+            up_cmd="${up_cmd}ip link set $iface up; "
+        done
+
+        t_up=$(date +%s)
+        run_ansible_become "$APP_HOST" shell "$up_cmd" > /dev/null
+        echo "  UP:   $ifaces (epoch $t_up)"
+
+        EVENTS=$(jq -n \
+            --argjson existing "$EVENTS" \
+            --argjson scenario "$scenario" \
+            --arg desc "$desc" \
+            --argjson t_down "$t_down" \
+            --argjson t_up "$t_up" \
+            --arg ifaces "$ifaces" \
+            '$existing + [{
+                scenario: $scenario,
+                description: $desc,
+                interfaces_down: ($ifaces | split(" ")),
+                t_down_epoch: $t_down,
+                t_up_epoch: $t_up
+            }]')
+
+        if [ "$scenario" -lt 5 ]; then
+            echo "  Settling ${SCENARIO_SETTLE}s..."
+            sleep "$SCENARIO_SETTLE"
+        fi
+    done
+
+    events_file="${OUTPUT_DIR}/${EPOCH}_failover_events_rep${rep}_${app_short}.json"
+    echo "$EVENTS" > "$events_file"
+    echo ""
+    echo "Events log: $events_file"
+
+    echo "Waiting for iperf3 sessions to complete..."
+    wait $PIDS || echo "Warning: one or more iperf3 sessions failed"
+    echo "All iperf3 sessions complete."
+    echo ""
+done
+
+echo "=== Failover Benchmark Complete ==="
+echo "Results saved to: $OUTPUT_DIR"

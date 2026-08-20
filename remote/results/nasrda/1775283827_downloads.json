@@ -1,0 +1,7 @@
+{
+    "test": "object_downloads",
+    "timestamp_utc": "2026-04-04T06:25:56Z",
+    "epoch": 1775283827,
+    "status": "skipped",
+    "reason": "No download URLs configured in .env"
+}

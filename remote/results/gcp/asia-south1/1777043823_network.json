@@ -1,0 +1,23 @@
+{
+    "test": "network_baseline",
+    "timestamp_utc": "2026-04-24T15:17:50Z",
+    "epoch": 1777043823,
+    "target": "eo-catalog.ac-az1.aircentre.org",
+    "ping": {
+        "count": 20,
+        "timeout_s": 5,
+        "rtt_min_ms": 306.095,
+        "rtt_avg_ms": 306.274,
+        "rtt_max_ms": 306.517,
+        "rtt_stddev_ms": 0.095,
+        "packet_loss": "0%"
+    },
+    "traceroute": {
+        "hops": 9,
+        "raw": "traceroute to eo-catalog.ac-az1.aircentre.org (194.210.4.227), 15 hops max, 60 byte packets\n 1  142.251.249.101 (142.251.249.101)  366.935 ms  365.087 ms  365.116 ms\n 2  192.178.99.214 (192.178.99.214)  362.962 ms  362.946 ms 192.178.104.190 (192.178.104.190)  366.438 ms\n 3  * * *\n 4  fccn-ap1-ias-gw.rt0.lis.pt.geant.net (83.97.88.209)  272.423 ms  273.541 ms  277.516 ms\n 5  fccn-ias-ap1-gw.rt0.lis.pt.geant.net (83.97.88.210)  278.692 ms  281.130 ms  279.356 ms\n 6  Router60.Lisboa.fccn.pt (194.210.6.202)  282.690 ms Router30.Lisboa.fccn.pt (194.210.6.102)  281.272 ms Router60.Lisboa.fccn.pt (194.210.6.202)  279.913 ms\n 7  Router63.Lisboa.fccn.pt (194.210.6.213)  281.195 ms Router33.Lisboa.fccn.pt (194.210.6.211)  283.383 ms Router63.Lisboa.fccn.pt (194.210.6.113)  283.737 ms\n 8  * * *\n 9  * * *\n10  * * *\n11  * * *\n12  * * *\n13  * * *\n14  * * *\n15  * * *\n"
+    },
+    "bandwidth_probe": {
+        "url": "https://eo-catalog.ac-az1.aircentre.org/api/v1",
+        "samples": [{"rep":1,"dns_s":0.799507,"connect_s":1.104278,"ttfb_s":4.926732,"total_s":4.926859,"speed_bytes_s":156,"size_bytes":773},{"rep":2,"dns_s":0.001601,"connect_s":0.304463,"ttfb_s":0.924197,"total_s":0.924331,"speed_bytes_s":836,"size_bytes":773},{"rep":3,"dns_s":0.001577,"connect_s":1.335353,"ttfb_s":2.285983,"total_s":2.286116,"speed_bytes_s":338,"size_bytes":773},{"rep":4,"dns_s":0.001378,"connect_s":0.320707,"ttfb_s":2.284046,"total_s":3.491351,"speed_bytes_s":221,"size_bytes":773},{"rep":5,"dns_s":0.001420,"connect_s":0.306307,"ttfb_s":1.322352,"total_s":1.322471,"speed_bytes_s":584,"size_bytes":773}]
+    }
+}

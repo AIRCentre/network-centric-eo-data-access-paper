@@ -1,0 +1,115 @@
+#!/bin/bash
+set -eo pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "$SCRIPT_DIR/common"
+
+OUTPUT_DIR="${OUTPUT_DIR:-$REPO_ROOT/benchmarks/outputs/network/throughput/st-inbound}"
+REPETITIONS="${REPETITIONS:-1}"
+DURATION="${DURATION:-5}"
+IDLE_WAIT="${IDLE_WAIT:-2}"
+PARALLEL_STREAMS=8
+
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        --duration)
+            DURATION="$2"
+            shift 2
+            ;;
+        --repetitions)
+            REPETITIONS="$2"
+            shift 2
+            ;;
+        --output-dir)
+            OUTPUT_DIR="$2"
+            shift 2
+            ;;
+        --idle-wait)
+            IDLE_WAIT="$2"
+            shift 2
+            ;;
+        --help|-h)
+            echo "Usage: $0 [options]"
+            echo ""
+            echo "Options:"
+            echo "  --duration <seconds>   Duration per test (default: 5)"
+            echo "  --repetitions <n>      Number of repetitions (default: 1)"
+            echo "  --output-dir <dir>      Output directory (default: st-inbound)"
+            echo "  --idle-wait <seconds>  Idle wait before collection (default: 2)"
+            exit 0
+            ;;
+        *)
+            echo "Error: Unknown option: $1"
+            echo "Use --help for usage"
+            exit 1
+            ;;
+    esac
+done
+
+echo "=== Throughput Benchmark - Storage-Inbound (3 parallel per storage) ==="
+echo "Duration: ${DURATION}s per run"
+echo "Parallel streams: $PARALLEL_STREAMS"
+echo "Repetitions: $REPETITIONS"
+echo "Output: $OUTPUT_DIR"
+echo ""
+
+mkdir -p "$OUTPUT_DIR"
+
+# Use static helper functions from common instead of dynamic Ansible inventory lookups
+# get_storage_hosts returns storage server hostnames (srv01, srv02, ...)
+storage_hosts=$(get_storage_hosts)
+app_hosts=$(get_app_hosts)
+
+if [ -z "$storage_hosts" ]; then
+    echo "Error: No storage servers found in inventory"
+    exit 1
+fi
+
+if [ -z "$app_hosts" ]; then
+    echo "Error: No app servers found in inventory"
+    exit 1
+fi
+
+echo "App servers: $app_hosts"
+echo "Storage targets: $storage_hosts"
+echo ""
+echo "=== Running storage-inbound throughput tests ==="
+echo "Each storage runs 3 parallel iperf3 tests (to all apps)"
+echo ""
+
+for rep in $(seq 1 $REPETITIONS); do
+    echo "=== Repetition $rep/$REPETITIONS ==="
+    
+    # For each storage server: all apps -> that single storage in parallel
+    for target in $storage_hosts; do
+        target_ip=${STORAGE_IPS[$target]}
+        
+        st_timestamp=$(date +%s)
+        first_host=$(echo "$app_hosts" | head -1)
+        last_host=$(echo "$app_hosts" | tail -1)
+        source_range="${first_host}-${last_host}"
+        "$SCRIPT_DIR/system_snapshot" --rep "$rep" --meta "${source_range}_${target##*-}" --metric tp --qualifier "st-inbound" --epoch "$st_timestamp" --output-dir "$OUTPUT_DIR" --idle-wait "$IDLE_WAIT" || echo "Warning: system_snapshot failed, continuing..."
+        
+        PIDS=""
+        TIMESTAMP=$st_timestamp
+        for app in $app_hosts; do
+            # All apps send to this single storage target in parallel
+            (
+                run_ansible "$app" "shell" "
+                    iperf3 -c $target_ip -p ${APP_PORTS[$app]} -P $PARALLEL_STREAMS -t $DURATION -Z -w 256k -l 64k --json 2>/dev/null
+                " | strip_ansible_header > "${OUTPUT_DIR}/${TIMESTAMP}_tp_st-inbound_rep${rep}_${app##*-}_${target##*-}.json"
+            ) &
+            PIDS="$PIDS $!"
+            echo "  Launched: $app -> $target"
+        done
+        
+        echo "  Waiting for storage $target to complete..."
+        wait $PIDS || echo "Warning: one or more iperf3 jobs failed for $target"
+        echo ""
+    done
+    
+    echo "  Repetition $rep complete"
+done
+
+echo "=== Storage-Inbound Throughput Complete ==="
+echo "Results saved to: $OUTPUT_DIR"

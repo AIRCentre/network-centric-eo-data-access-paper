@@ -1,0 +1,23 @@
+{
+    "test": "network_baseline",
+    "timestamp_utc": "2026-04-17T13:41:40Z",
+    "epoch": 1776433178,
+    "target": "eo-catalog.ac-az1.aircentre.org",
+    "ping": {
+        "count": 20,
+        "timeout_s": 5,
+        "rtt_min_ms": 130.293,
+        "rtt_avg_ms": 130.405,
+        "rtt_max_ms": 130.521,
+        "rtt_stddev_ms": 0.053,
+        "packet_loss": "10%"
+    },
+    "traceroute": {
+        "hops": 1,
+        "raw": "\n"
+    },
+    "bandwidth_probe": {
+        "url": "https://eo-catalog.ac-az1.aircentre.org/api/v1",
+        "samples": [{"rep":1,"dns_s":0.000859,"connect_s":0.131636,"ttfb_s":0.738487,"total_s":0.738503,"speed_bytes_s":1046,"size_bytes":773},{"rep":2,"dns_s":0.000808,"connect_s":0.131750,"ttfb_s":0.403230,"total_s":0.403421,"speed_bytes_s":1916,"size_bytes":773},{"rep":3,"dns_s":0.000638,"connect_s":0.131497,"ttfb_s":0.402705,"total_s":0.402845,"speed_bytes_s":1918,"size_bytes":773},{"rep":4,"dns_s":0.000696,"connect_s":0.131534,"ttfb_s":0.402546,"total_s":0.402666,"speed_bytes_s":1919,"size_bytes":773},{"rep":5,"dns_s":0.000702,"connect_s":0.131543,"ttfb_s":0.699589,"total_s":0.830610,"speed_bytes_s":930,"size_bytes":773}]
+    }
+}

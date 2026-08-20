@@ -1,0 +1,6 @@
+scenario,description,n_links_down,mean_baseline_gbps,mean_trough_gbps,mean_recovery_gbps,mean_recovery_s,worst_recovery_s,mean_throughput_loss_pct,n_observations
+1,1 link disconnected (one port to one switch),1,13.63249747461748,8.283355112948968,12.150841192708162,35.87594558333334,219.00003299999997,38.682625745327854,24
+2,2 links symmetric (1 link per switch),2,13.101868061999069,6.748090279437341,10.487013056104443,9.667451874999998,122.00103999999999,NaN,24
+3,2 links asymmetric (2 links to same switch),2,13.140219883113959,3.1401416930292796,6.96332412410693,61.709333875000006,236.00105599999995,76.19700041144121,24
+4,3 links disconnected (1 remaining),3,10.67828204025104,1.4700960004211607,NaN,NaN,NaN,NaN,24
+5,Full switch disconnect (both Switch B ports),2,NaN,NaN,NaN,NaN,NaN,NaN,24

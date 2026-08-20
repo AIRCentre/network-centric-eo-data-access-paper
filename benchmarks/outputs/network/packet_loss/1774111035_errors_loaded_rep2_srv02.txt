@@ -1,0 +1,6 @@
+11: bond0: <BROADCAST,MULTICAST,MASTER,UP,LOWER_UP> mtu 9000 qdisc noqueue state UP mode DEFAULT group default qlen 1000
+    link/ether xx:xx:xx:xx:xx:xx brd ff:ff:ff:ff:ff:ff
+    RX:       bytes     packets errors dropped  missed   mcast           
+       797897378415 11411707679      0       0       0 7670058 
+    TX:       bytes     packets errors dropped carrier collsns           
+    719767555634660 81056239065      0      14       0       0 

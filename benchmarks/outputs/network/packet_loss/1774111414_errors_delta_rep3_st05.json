@@ -1,0 +1,12 @@
+{
+  "host": "st05",
+  "repetition": 3,
+  "timestamp_epoch": 1774111414,
+  "rx_errors_delta": 0,
+  "tx_errors_delta": 0,
+  "rx_drops_delta": 0,
+  "tx_drops_delta": 0,
+  "rx_packets": 264629304,
+  "tx_packets": 59644190,
+  "loss_pct": 0
+}

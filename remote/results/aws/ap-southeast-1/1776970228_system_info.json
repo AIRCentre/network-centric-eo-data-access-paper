@@ -1,0 +1,13 @@
+{
+    "hostname": "ip-172-31-44-151.ap-southeast-1.compute.internal",
+    "os": "Linux",
+    "os_version": "6.1.166-197.305.amzn2023.aarch64",
+    "arch": "aarch64",
+    "date_utc": "2026-04-23T18:50:31Z",
+    "timezone": "UTC",
+    "curl_version": "curl 8.17.0 (aarch64-amazon-linux-gnu) libcurl/8.17.0 OpenSSL/3.5.5 zlib/1.2.11 libidn2/2.3.2 libpsl/0.21.5 nghttp2/1.59.0 mit-krb5/1.21.3",
+    "site": "aws-ap-southeast-1",
+    "location": "AWS ap-southeast-1",
+    "isp": "AWS",
+    "connection_type": "cloud"
+}

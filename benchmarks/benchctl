@@ -1,0 +1,348 @@
+#!/bin/bash
+set -eo pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
+source "$SCRIPT_DIR/scripts/common"
+
+run_logged() {
+    local log_file="$1"; shift
+    mkdir -p "$(dirname "$log_file")"
+    "$@" 2>&1 | tee "$log_file"
+    return "${PIPESTATUS[0]}"
+}
+
+# Database container management — ensure only the active DB is running
+DB_HOST="srv01"
+DB_CONTAINER_PG="db_bench_postgres"
+
+db_container_stop() {
+    local container="$1"
+    echo "  Stopping $container on $DB_HOST..."
+    run_ansible "$DB_HOST" shell "docker stop $container 2>/dev/null || true" | strip_ansible_header
+}
+
+db_container_start() {
+    local container="$1"
+    echo "  Starting $container on $DB_HOST..."
+    run_ansible "$DB_HOST" shell "docker start $container" | strip_ansible_header
+}
+
+db_container_wait_pg() {
+    echo "  Waiting for PostgreSQL to accept connections..."
+    for i in $(seq 1 30); do
+        if psql "$PG_URI" -c "SELECT 1" &>/dev/null; then
+            echo "  PostgreSQL ready."
+            return 0
+        fi
+        sleep 1
+    done
+    echo "Error: PostgreSQL did not become ready in 30s" >&2
+    return 1
+}
+
+# Start the PostGIS container and wait for readiness.
+db_activate_postgis() {
+    echo "=== Activating PostGIS ==="
+    db_container_start "$DB_CONTAINER_PG"
+    db_container_wait_pg
+}
+
+show_help() {
+    echo "Usage: benchctl [COMMAND]"
+    echo ""
+    echo "Commands:"
+    echo "  iperf start             Start iperf3 servers on storage nodes (ports 5201-5204)"
+    echo "  iperf stop              Stop iperf3 servers on storage nodes"
+    echo "  iperf status            Show iperf3 server status on storage nodes"
+    echo "  warp start              Start warp client listeners on srv02,srv03 (port 7761)"
+    echo "  warp stop               Stop warp client listeners and close firewall"
+    echo "  warp status             Show warp client status on srv nodes"
+    echo "  run net tp              Run throughput tests (per-pair|app-outbound|st-inbound|st-to-st|full-mesh|rds02-to-st-per-pair|rds02-fanout|rds03-to-st-per-pair)"
+    echo "  run net lat             Run latency tests (Section 1.2)"
+    echo "  run net errors          Run error rate tests (Section 1.3)"
+    echo "  run net failover        Run failover tests (Section 1.4)"
+    echo "  run minio single        Run single-client MinIO benchmark (put|get|both, Section 2.1)"
+    echo "  run minio distributed   Run distributed multi-client MinIO benchmark (put|get|both, Section 2.2)"
+    echo "  run minio mixed         Run mixed GET/PUT workload (Section 2.3)"
+    echo "  run minio throttled     Run network-throttled baseline (1g|10g|both, Section 2.4)"
+    echo "  run minio all           Run full MinIO suite in order (2.1 → 2.2 → 2.3 → 2.4)"
+    echo "  run db generate         Generate synthetic EO metadata (Section 3.1)"
+    echo "  run db ingest postgis   Ingest generated data into PostGIS (Section 3.1)"
+    echo "  run db query postgis <scale>  Run PostGIS query benchmarks (Section 3.2)"
+    echo "  test ...                Same as 'run' but with minimal parameters (5s, 1 rep)"
+    echo "                          Output: /tmp/datacentre_benchmarks/outputs/..."
+    echo ""
+    echo "Database scale levels:"
+    echo "  1M|10M|50M|100M|all  Dataset size (default: all)"
+    echo ""
+    echo "Throughput modes:"
+    echo "  per-pair      Sequential per-pair tests (24 pairs × 3 reps)"
+    echo "  app-outbound  One app → all storage (3 apps × 3 reps)"
+    echo "  st-inbound    All apps → one storage (8 storages × 3 reps)"
+    echo "  full-mesh     Full mesh all → all (3 reps)"
+    echo "  st-to-st      Storage-to-storage (4 clients → 4 servers)"
+    echo "  rds02-to-st-per-pair  RDS02 (R7625 dual-EPYC 9634, DDR5) → storage nodes"
+    echo "  rds02-fanout          RDS02 → all 8 storage nodes concurrently (exercises 4×100 GbE bond aggregate)"
+    echo "  rds03-to-st-per-pair  RDS03 (EPYC 9684X V-Cache, DDR5) → storage nodes"
+    echo ""
+    echo "MinIO single-client modes:"
+    echo "  put           PUT only (4 sizes × 3 reps)"
+    echo "  get           GET only (4 sizes × 3 reps)"
+    echo "  both          PUT then GET (default)"
+    echo ""
+    echo "Output: Results stored in benchmarks/outputs/{network,minio,database}/..."
+}
+
+# Dispatch run/test logic (shared between 'run' and 'test' commands)
+dispatch_benchmark() {
+    local TEST_MODE="${1}"; shift
+
+    if [[ "$TEST_MODE" == "1" ]]; then
+        echo "Test Mode: Using minimal parameters"
+    fi
+
+    local TEST_ARGS=""
+    if [[ "$TEST_MODE" == "1" ]]; then
+        case "$1" in
+            net)   TEST_ARGS="--output-dir /tmp/datacentre_benchmarks/outputs/network" ;;
+            minio) TEST_ARGS="--output-dir /tmp/datacentre_benchmarks/outputs/minio" ;;
+            db)    TEST_ARGS="--output-dir /tmp/datacentre_benchmarks/outputs/database" ;;
+        esac
+    fi
+
+    local LOG_EPOCH=$(date +%s)
+    local LOG_DIR
+    case "$1" in
+        net)   [[ "$TEST_MODE" == "1" ]] && LOG_DIR="/tmp/datacentre_benchmarks/outputs/network"  || LOG_DIR="$REPO_ROOT/benchmarks/outputs/network" ;;
+        minio) [[ "$TEST_MODE" == "1" ]] && LOG_DIR="/tmp/datacentre_benchmarks/outputs/minio"   || LOG_DIR="$REPO_ROOT/benchmarks/outputs/minio" ;;
+        db)    [[ "$TEST_MODE" == "1" ]] && LOG_DIR="/tmp/datacentre_benchmarks/outputs/database/run_logs" || LOG_DIR="$REPO_ROOT/benchmarks/outputs/database/run_logs" ;;
+    esac
+
+    case "$1" in
+        net)
+            case "$2" in
+                tp)
+                    local mode="${3:-full-mesh}"
+                    local DURATION REPETITIONS IDLE_WAIT
+                    [[ "$TEST_MODE" == "1" ]] && DURATION=5 || DURATION=120
+                    [[ "$TEST_MODE" == "1" ]] && REPETITIONS=1 || REPETITIONS=3
+                    [[ "$TEST_MODE" == "1" ]] && IDLE_WAIT=2 || IDLE_WAIT=60
+                    case "$mode" in
+                        per-pair) run_logged "${LOG_DIR}/${LOG_EPOCH}_benchctl_run_net_tp-per-pair.log" "$SCRIPT_DIR/scripts/throughput_per-pair" --duration "$DURATION" --repetitions "$REPETITIONS" --idle-wait "$IDLE_WAIT" $TEST_ARGS ;;
+                        app-outbound) run_logged "${LOG_DIR}/${LOG_EPOCH}_benchctl_run_net_tp-app-outbound.log" "$SCRIPT_DIR/scripts/throughput_app-outbound" --duration "$DURATION" --repetitions "$REPETITIONS" --idle-wait "$IDLE_WAIT" $TEST_ARGS ;;
+                        st-inbound) run_logged "${LOG_DIR}/${LOG_EPOCH}_benchctl_run_net_tp-st-inbound.log" "$SCRIPT_DIR/scripts/throughput_st-inbound" --duration "$DURATION" --repetitions "$REPETITIONS" --idle-wait "$IDLE_WAIT" $TEST_ARGS ;;
+                        st-to-st) run_logged "${LOG_DIR}/${LOG_EPOCH}_benchctl_run_net_tp-st-to-st.log" "$SCRIPT_DIR/scripts/throughput_st-to-st" --duration "$DURATION" --repetitions "$REPETITIONS" --idle-wait "$IDLE_WAIT" $TEST_ARGS ;;
+                        full-mesh) run_logged "${LOG_DIR}/${LOG_EPOCH}_benchctl_run_net_tp-full-mesh.log" "$SCRIPT_DIR/scripts/throughput_full-mesh" --duration "$DURATION" --repetitions "$REPETITIONS" --idle-wait "$IDLE_WAIT" $TEST_ARGS ;;
+                        rds02-to-st-per-pair) run_logged "${LOG_DIR}/${LOG_EPOCH}_benchctl_run_net_tp-rds02-to-st-per-pair.log" "$SCRIPT_DIR/scripts/throughput_rds02-to-st-per-pair" --duration "$DURATION" --repetitions "$REPETITIONS" --idle-wait "$IDLE_WAIT" $TEST_ARGS ;;
+                        rds02-fanout) run_logged "${LOG_DIR}/${LOG_EPOCH}_benchctl_run_net_tp-rds02-fanout.log" "$SCRIPT_DIR/scripts/throughput_rds02-fanout" --duration "$DURATION" --repetitions "$REPETITIONS" --idle-wait "$IDLE_WAIT" $TEST_ARGS ;;
+                        rds03-to-st-per-pair) run_logged "${LOG_DIR}/${LOG_EPOCH}_benchctl_run_net_tp-rds03-to-st-per-pair.log" "$SCRIPT_DIR/scripts/throughput_rds03-to-st-per-pair" --duration "$DURATION" --repetitions "$REPETITIONS" --idle-wait "$IDLE_WAIT" $TEST_ARGS ;;
+                        *) echo "Unknown throughput mode: $mode" >&2; exit 1 ;;
+                    esac
+                    ;;
+                lat)
+                    local PING_COUNT PING_INTERVAL REPETITIONS IDLE_WAIT
+                    PING_INTERVAL=0.2
+                    [[ "$TEST_MODE" == "1" ]] && REPETITIONS=1 || REPETITIONS=3
+                    [[ "$TEST_MODE" == "1" ]] && IDLE_WAIT=2 || IDLE_WAIT=5
+                    [[ "$TEST_MODE" == "1" ]] && PING_COUNT=5 || PING_COUNT=500
+                    run_logged "${LOG_DIR}/${LOG_EPOCH}_benchctl_run_net_lat.log" "$SCRIPT_DIR/scripts/latency" --ping-count "$PING_COUNT" --ping-interval "$PING_INTERVAL" --repetitions "$REPETITIONS" --idle-wait "$IDLE_WAIT" $TEST_ARGS
+                    ;;
+                errors)
+                    local DURATION REPETITIONS IDLE_WAIT
+                    [[ "$TEST_MODE" == "1" ]] && DURATION=5 || DURATION=300
+                    [[ "$TEST_MODE" == "1" ]] && REPETITIONS=1 || REPETITIONS=3
+                    [[ "$TEST_MODE" == "1" ]] && IDLE_WAIT=2 || IDLE_WAIT=60
+                    run_logged "${LOG_DIR}/${LOG_EPOCH}_benchctl_run_net_errors.log" "$SCRIPT_DIR/scripts/packet_loss" --duration "$DURATION" --repetitions "$REPETITIONS" --idle-wait "$IDLE_WAIT" $TEST_ARGS
+                    ;;
+                failover)
+                    local DURATION REPETITIONS IDLE_WAIT SCENARIO_DOWN SCENARIO_SETTLE
+                    [[ "$TEST_MODE" == "1" ]] && DURATION=5 || DURATION=600
+                    [[ "$TEST_MODE" == "1" ]] && REPETITIONS=1 || REPETITIONS=3
+                    [[ "$TEST_MODE" == "1" ]] && IDLE_WAIT=2 || IDLE_WAIT=60
+                    SCENARIO_DOWN=60
+                    SCENARIO_SETTLE=30
+                    run_logged "${LOG_DIR}/${LOG_EPOCH}_benchctl_run_net_failover.log" \
+                        "$SCRIPT_DIR/scripts/failover" \
+                        --duration "$DURATION" --repetitions "$REPETITIONS" --idle-wait "$IDLE_WAIT" \
+                        --scenario-down "$SCENARIO_DOWN" --scenario-settle "$SCENARIO_SETTLE" $TEST_ARGS
+                    ;;
+                *) echo "Usage: benchctl run net [tp|lat|errors|failover] [mode]" >&2; exit 1 ;;
+            esac
+            ;;
+        minio)
+            case "$2" in
+                single)
+                    if [[ "$3" == "--help" || "$3" == "-h" ]]; then
+                        "$SCRIPT_DIR/scripts/minio_single" --help
+                    else
+                        local mode="${3:-both}"
+                        local DURATION REPETITIONS IDLE_WAIT
+                        [[ "$TEST_MODE" == "1" ]] && DURATION=5    || DURATION=300
+                        [[ "$TEST_MODE" == "1" ]] && REPETITIONS=1 || REPETITIONS=3
+                        [[ "$TEST_MODE" == "1" ]] && IDLE_WAIT=2   || IDLE_WAIT=60
+                        [[ "$TEST_MODE" == "1" ]] && mode="put"
+                        run_logged "${LOG_DIR}/${LOG_EPOCH}_benchctl_run_minio_single-${mode}.log" \
+                            "$SCRIPT_DIR/scripts/minio_single" --duration "$DURATION" --repetitions "$REPETITIONS" --idle-wait "$IDLE_WAIT" --mode "$mode" $TEST_ARGS
+                    fi
+                    ;;
+                distributed|dist)
+                    if [[ "$3" == "--help" || "$3" == "-h" ]]; then
+                        "$SCRIPT_DIR/scripts/minio_distributed" --help
+                    else
+                        local mode="${3:-both}"
+                        local DURATION REPETITIONS IDLE_WAIT
+                        [[ "$TEST_MODE" == "1" ]] && DURATION=5    || DURATION=600
+                        [[ "$TEST_MODE" == "1" ]] && REPETITIONS=1 || REPETITIONS=3
+                        [[ "$TEST_MODE" == "1" ]] && IDLE_WAIT=2   || IDLE_WAIT=60
+                        [[ "$TEST_MODE" == "1" ]] && mode="put"
+                        run_logged "${LOG_DIR}/${LOG_EPOCH}_benchctl_run_minio_distributed-${mode}.log" \
+                            "$SCRIPT_DIR/scripts/minio_distributed" --duration "$DURATION" --repetitions "$REPETITIONS" --idle-wait "$IDLE_WAIT" --mode "$mode" $TEST_ARGS
+                    fi
+                    ;;
+                mixed)
+                    if [[ "$3" == "--help" || "$3" == "-h" ]]; then
+                        "$SCRIPT_DIR/scripts/minio_mixed" --help
+                    else
+                        local DURATION REPETITIONS IDLE_WAIT
+                        [[ "$TEST_MODE" == "1" ]] && DURATION=5    || DURATION=600
+                        [[ "$TEST_MODE" == "1" ]] && REPETITIONS=1 || REPETITIONS=3
+                        [[ "$TEST_MODE" == "1" ]] && IDLE_WAIT=2   || IDLE_WAIT=60
+                        run_logged "${LOG_DIR}/${LOG_EPOCH}_benchctl_run_minio_mixed.log" \
+                            "$SCRIPT_DIR/scripts/minio_mixed" --duration "$DURATION" --repetitions "$REPETITIONS" --idle-wait "$IDLE_WAIT" $TEST_ARGS
+                    fi
+                    ;;
+                throttled)
+                    if [[ "$3" == "--help" || "$3" == "-h" ]]; then
+                        "$SCRIPT_DIR/scripts/minio_throttled" --help
+                    else
+                        local rate="${3:-both}"
+                        local mode="${4:-both}"
+                        local DURATION REPETITIONS IDLE_WAIT
+                        [[ "$TEST_MODE" == "1" ]] && DURATION=5    || DURATION=300
+                        [[ "$TEST_MODE" == "1" ]] && REPETITIONS=1 || REPETITIONS=3
+                        [[ "$TEST_MODE" == "1" ]] && IDLE_WAIT=2   || IDLE_WAIT=60
+                        [[ "$TEST_MODE" == "1" ]] && rate="1g"
+                        [[ "$TEST_MODE" == "1" ]] && mode="put"
+                        run_logged "${LOG_DIR}/${LOG_EPOCH}_benchctl_run_minio_throttled-${rate}-${mode}.log" \
+                            "$SCRIPT_DIR/scripts/minio_throttled" --duration "$DURATION" \
+                            --repetitions "$REPETITIONS" --idle-wait "$IDLE_WAIT" \
+                            --rate "$rate" --mode "$mode" $TEST_ARGS
+                    fi
+                    ;;
+                all)
+                    local DURATION_S DURATION_L REPETITIONS IDLE_WAIT MINIO_MODE RATE
+                    [[ "$TEST_MODE" == "1" ]] && DURATION_S=5   || DURATION_S=300
+                    [[ "$TEST_MODE" == "1" ]] && DURATION_L=5   || DURATION_L=600
+                    [[ "$TEST_MODE" == "1" ]] && REPETITIONS=1  || REPETITIONS=3
+                    [[ "$TEST_MODE" == "1" ]] && IDLE_WAIT=2    || IDLE_WAIT=60
+                    [[ "$TEST_MODE" == "1" ]] && MINIO_MODE="put" || MINIO_MODE="both"
+                    [[ "$TEST_MODE" == "1" ]] && RATE="1g"      || RATE="both"
+                    echo "=== MinIO full suite (2.1 → 2.2 → 2.3 → 2.4) ==="
+                    run_logged "${LOG_DIR}/${LOG_EPOCH}_benchctl_run_minio_single-${MINIO_MODE}.log" \
+                        "$SCRIPT_DIR/scripts/minio_single" \
+                        --duration "$DURATION_S" --repetitions "$REPETITIONS" --idle-wait "$IDLE_WAIT" \
+                        --mode "$MINIO_MODE" $TEST_ARGS
+                    run_logged "${LOG_DIR}/${LOG_EPOCH}_benchctl_run_minio_distributed-${MINIO_MODE}.log" \
+                        "$SCRIPT_DIR/scripts/minio_distributed" \
+                        --duration "$DURATION_L" --repetitions "$REPETITIONS" --idle-wait "$IDLE_WAIT" \
+                        --mode "$MINIO_MODE" $TEST_ARGS
+                    run_logged "${LOG_DIR}/${LOG_EPOCH}_benchctl_run_minio_mixed.log" \
+                        "$SCRIPT_DIR/scripts/minio_mixed" \
+                        --duration "$DURATION_L" --repetitions "$REPETITIONS" --idle-wait "$IDLE_WAIT" \
+                        $TEST_ARGS
+                    run_logged "${LOG_DIR}/${LOG_EPOCH}_benchctl_run_minio_throttled-${RATE}-${MINIO_MODE}.log" \
+                        "$SCRIPT_DIR/scripts/minio_throttled" \
+                        --duration "$DURATION_S" --repetitions "$REPETITIONS" --idle-wait "$IDLE_WAIT" \
+                        --rate "$RATE" --mode "$MINIO_MODE" $TEST_ARGS
+                    echo "=== MinIO full suite complete ==="
+                    ;;
+                *) echo "Usage: benchctl run minio [single|distributed|mixed|throttled|all]" >&2; exit 1 ;;
+            esac
+            ;;
+        db)
+            case "$2" in
+                generate)
+                    local SCALE="${3:-all}"
+                    [[ "$TEST_MODE" == "1" ]] && SCALE="1M"
+                    db_activate_postgis
+                    run_logged "${LOG_DIR}/${LOG_EPOCH}_benchctl_run_db_generate.log" \
+                        "$SCRIPT_DIR/scripts/db_generate" --scale "$SCALE" $TEST_ARGS
+                    ;;
+                ingest)
+                    local SCALE
+                    case "$3" in
+                        postgis)
+                            SCALE="${4:-all}"
+                            [[ "$TEST_MODE" == "1" ]] && SCALE="1M"
+                            db_activate_postgis
+                            run_logged "${LOG_DIR}/${LOG_EPOCH}_benchctl_run_db_ingest-postgis_${SCALE}.log" \
+                                "$SCRIPT_DIR/scripts/db_ingest_postgis" --scale "$SCALE" $TEST_ARGS
+                            ;;
+                        *) echo "Usage: benchctl run db ingest postgis" >&2; exit 1 ;;
+                    esac
+                    ;;
+                query)
+                    case "$3" in
+                        postgis)
+                            SCALE="${4:?Scale required (1M|10M|50M|100M)}"
+                            [[ "$TEST_MODE" == "1" ]] && SCALE="1M"
+                            db_activate_postgis
+                            "$SCRIPT_DIR/scripts/db_ingest_postgis" --scale "$SCALE"
+                            local REPETITIONS IDLE_WAIT
+                            [[ "$TEST_MODE" == "1" ]] && REPETITIONS=1 || REPETITIONS=50
+                            [[ "$TEST_MODE" == "1" ]] && IDLE_WAIT=0 || IDLE_WAIT=1
+                            for ((rep=1; rep<=REPETITIONS; rep++)); do
+                                local REP_EPOCH=$(date +%s)
+                                [[ $rep -gt 1 && $IDLE_WAIT -gt 0 ]] && sleep "$IDLE_WAIT"
+                                run_logged "${LOG_DIR}/${REP_EPOCH}_benchctl_run_db_query-postgis_${SCALE}_rep${rep}.log" \
+                                    "$SCRIPT_DIR/scripts/db_query_postgis" --scale "$SCALE" --rep "$rep" --epoch "$REP_EPOCH" $TEST_ARGS
+                            done
+                            ;;
+                        *) echo "Usage: benchctl run db query postgis <scale>" >&2; exit 1 ;;
+                    esac
+                    ;;
+                *) echo "Usage: benchctl run db [generate|ingest|query] ..." >&2; exit 1 ;;
+            esac
+            ;;
+        *) echo "Usage: benchctl run [net|minio|db] ..." >&2; show_help; exit 1 ;;
+    esac
+}
+
+case "$1" in
+    -h|--help|"") show_help ;;
+    iperf)
+        if [ "$2" != "start" ] && [ "$2" != "stop" ] && [ "$2" != "status" ]; then
+            echo "Usage: benchctl iperf [start|stop|status]" >&2
+            exit 1
+        fi
+        if ! validate_ansible; then
+            exit 1
+        fi
+        "$SCRIPT_DIR/scripts/iperf" "$2"
+        ;;
+    warp)
+        if [ "$2" != "start" ] && [ "$2" != "stop" ] && [ "$2" != "status" ]; then
+            echo "Usage: benchctl warp [start|stop|status]" >&2
+            exit 1
+        fi
+        if ! validate_ansible; then exit 1; fi
+        "$SCRIPT_DIR/scripts/warp" "$2"
+        ;;
+    run)
+        if [[ "$2" != "db" ]]; then
+            if ! validate_ansible; then exit 1; fi
+        fi
+        dispatch_benchmark 0 "$2" "$3" "$4" "$5"
+        ;;
+    test)
+        if [[ "$2" != "db" ]]; then
+            if ! validate_ansible; then exit 1; fi
+        fi
+        dispatch_benchmark 1 "$2" "$3" "$4" "$5"
+        ;;
+    latency) echo "Use: benchctl run net lat" >&2; exit 1 ;;
+    errors) echo "Use: benchctl run net errors" >&2; exit 1 ;;
+    failover) echo "Use: benchctl run net failover" >&2; exit 1 ;;
+    *) echo "Unknown command: $1" >&2; show_help; exit 1 ;;
+esac

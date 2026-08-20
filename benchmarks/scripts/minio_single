@@ -1,0 +1,140 @@
+#!/bin/bash
+set -eo pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "$SCRIPT_DIR/common"
+
+OUTPUT_DIR_PUT="${OUTPUT_DIR_PUT:-$REPO_ROOT/benchmarks/outputs/minio/warp_put_single}"
+OUTPUT_DIR_GET="${OUTPUT_DIR_GET:-$REPO_ROOT/benchmarks/outputs/minio/warp_get_single}"
+REPETITIONS="${REPETITIONS:-1}"
+DURATION="${DURATION:-5}"
+IDLE_WAIT="${IDLE_WAIT:-2}"
+MODE="${MODE:-both}"
+CONCURRENT=32
+SIZES=(4MiB 64MiB 512MiB 2GiB)
+
+WARP_ACCESS_KEY="${WARP_ACCESS_KEY:?WARP_ACCESS_KEY not set}"
+WARP_SECRET_KEY="${WARP_SECRET_KEY:?WARP_SECRET_KEY not set}"
+
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        --duration)   DURATION="$2";   shift 2 ;;
+        --repetitions) REPETITIONS="$2"; shift 2 ;;
+        --idle-wait)  IDLE_WAIT="$2";  shift 2 ;;
+        --mode)       MODE="$2";       shift 2 ;;
+        --output-dir)
+            BASE="$2"
+            OUTPUT_DIR_PUT="${BASE}/warp_put_single"
+            OUTPUT_DIR_GET="${BASE}/warp_get_single"
+            shift 2
+            ;;
+        --help|-h)
+            echo "Usage: benchctl run minio single [--mode put|get|both]"
+            echo ""
+            echo "Options:"
+            echo "  --duration <seconds>   Duration per warp run (default: 5)"
+            echo "  --repetitions <n>      Number of repetitions (default: 1)"
+            echo "  --idle-wait <seconds>  Idle wait before snapshot (default: 2)"
+            echo "  --mode <put|get|both>  Operation mode (default: both)"
+            echo ""
+        echo "MinIO Server: 192.168.11.20:9000"
+        echo "Credentials: WARP_ACCESS_KEY / WARP_SECRET_KEY (from .env)"
+        echo ""
+        echo "Output: results written to --output-dir/<dir>/"
+        exit 0
+        ;;
+        *)
+            echo "Error: Unknown option: $1"
+            echo "Use --help for usage"
+            exit 1
+            ;;
+    esac
+done
+
+client=$(get_app_hosts | head -1)
+
+echo "=== MinIO Single-Client Benchmark (Section 2.1) ==="
+echo "Client: $client"
+echo "Duration: ${DURATION}s per run"
+echo "Concurrent: $CONCURRENT"
+echo "Repetitions: $REPETITIONS"
+echo "Mode: $MODE"
+echo "Sizes: ${SIZES[*]}"
+echo ""
+
+mkdir -p "$OUTPUT_DIR_PUT" "$OUTPUT_DIR_GET"
+
+warp_run() {
+    local op="$1"   # put or get
+    local size="$2"
+    local rep="$3"
+    local epoch="$4"
+    local out_dir="$5"
+
+    local tmp_base="/tmp/warp_${op}_${size}_rep${rep}_${epoch}_$$"
+    local tmp_zst="${tmp_base}.json.zst"
+    local tmp_local="/tmp/warp_fetch_${op}_${size}_rep${rep}_${epoch}_$$.zst"
+    local out_file="$out_dir/${epoch}_${op}_single-${size}_rep${rep}_${client}.json"
+
+    echo "  Running ${op^^} ($size, rep $rep)..."
+
+    run_ansible "$client" "shell" \
+        "warp $op --host 192.168.11.20:9000 --access-key $WARP_ACCESS_KEY --secret-key $WARP_SECRET_KEY --obj.size $size --concurrent $CONCURRENT --duration ${DURATION}s --benchdata $tmp_base" \
+        || { echo "Error: warp $op failed for $size rep $rep"; return 1; }
+
+    run_ansible "$client" fetch "src=$tmp_zst dest=$tmp_local flat=yes" \
+        > /dev/null \
+        || { echo "Error: fetch failed for $size rep $rep"; return 1; }
+
+    zstd -d "$tmp_local" -o "$out_file" \
+        || { echo "Error: decompress failed for $size rep $rep"; rm -f "$tmp_local" "$out_file"; return 1; }
+
+    run_ansible "$client" "shell" "rm -f $tmp_zst" > /dev/null
+    rm -f "$tmp_local"
+
+    echo "  → $out_file"
+}
+
+for rep in $(seq 1 $REPETITIONS); do
+    echo "=== Repetition $rep/$REPETITIONS ==="
+
+    for SIZE in "${SIZES[@]}"; do
+        echo "  Size: $SIZE"
+
+        if [[ "$MODE" == "put" || "$MODE" == "both" ]]; then
+            EPOCH=$(date +%s)
+            "$SCRIPT_DIR/system_snapshot" \
+                --rep "$rep" \
+                --meta "$client" \
+                --metric "put" \
+                --qualifier "single-${SIZE}" \
+                --epoch "$EPOCH" \
+                --output-dir "$OUTPUT_DIR_PUT" \
+                --idle-wait "$IDLE_WAIT" || echo "Warning: system_snapshot failed, continuing..."
+
+            warp_run "put" "$SIZE" "$rep" "$EPOCH" "$OUTPUT_DIR_PUT" \
+                || echo "Warning: PUT failed for $SIZE rep $rep, continuing..."
+        fi
+
+        if [[ "$MODE" == "get" || "$MODE" == "both" ]]; then
+            EPOCH=$(date +%s)
+            "$SCRIPT_DIR/system_snapshot" \
+                --rep "$rep" \
+                --meta "$client" \
+                --metric "get" \
+                --qualifier "single-${SIZE}" \
+                --epoch "$EPOCH" \
+                --output-dir "$OUTPUT_DIR_GET" \
+                --idle-wait "$IDLE_WAIT" || echo "Warning: system_snapshot failed, continuing..."
+
+            warp_run "get" "$SIZE" "$rep" "$EPOCH" "$OUTPUT_DIR_GET" \
+                || echo "Warning: GET failed for $SIZE rep $rep, continuing..."
+        fi
+
+        echo ""
+    done
+done
+
+echo "=== MinIO Single-Client Complete ==="
+echo "PUT results: $OUTPUT_DIR_PUT"
+echo "GET results: $OUTPUT_DIR_GET"

@@ -1,0 +1,147 @@
+#!/bin/bash
+set -eo pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "$SCRIPT_DIR/common"
+
+# Default values
+OUTPUT_DIR="${OUTPUT_DIR:-$REPO_ROOT/benchmarks/outputs/network/latency}"
+PING_COUNT="${PING_COUNT:-1}"
+PING_INTERVAL="${PING_INTERVAL:-0.2}"
+REPETITIONS="${REPETITIONS:-1}"
+IDLE_WAIT="${IDLE_WAIT:-2}"
+
+# Parse command line flags
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        --ping-count)
+            PING_COUNT="$2"
+            shift 2
+            ;;
+        --ping-interval)
+            PING_INTERVAL="$2"
+            shift 2
+            ;;
+        --repetitions)
+            REPETITIONS="$2"
+            shift 2
+            ;;
+        --idle-wait)
+            IDLE_WAIT="$2"
+            shift 2
+            ;;
+        --output-dir)
+            OUTPUT_DIR="$2"
+            shift 2
+            ;;
+        --help|-h)
+            echo "Usage: $0 [options]"
+            echo ""
+            echo "Options:"
+            echo "  --ping-count <n>       Ping packets per run (default: 1; benchctl uses 500)"
+            echo "  --ping-interval <s>    Ping interval in seconds (default: 0.2)"
+            echo "  --repetitions <n>      Number of repetitions (default: 1; benchctl uses 3)"
+            echo "  --idle-wait <s>        Idle wait before snapshot (default: 2; benchctl uses 5)"
+            echo "  --output-dir <dir>     Output directory"
+            exit 0
+            ;;
+        *)
+            echo "Error: Unknown option: $1"
+            echo "Use --help for usage"
+            exit 1
+            ;;
+    esac
+done
+
+echo "=== Latency Benchmark (track0.md) ==="
+echo "Ping count: $PING_COUNT per condition"
+echo "Ping interval: ${PING_INTERVAL}s"
+echo "Repetitions: $REPETITIONS"
+echo "Idle wait: ${IDLE_WAIT}s"
+echo "Output: $OUTPUT_DIR"
+echo ""
+
+mkdir -p "$OUTPUT_DIR"
+
+storage_hosts=$(get_storage_hosts)
+app_hosts=$(get_app_hosts)
+
+if [ -z "$storage_hosts" ]; then
+    echo "Error: No storage servers found"
+    exit 1
+fi
+
+if [ -z "$app_hosts" ]; then
+    echo "Error: No app servers found"
+    exit 1
+fi
+
+echo "App servers: $app_hosts"
+echo "Storage targets: $storage_hosts"
+echo ""
+
+pairs=()
+for app in $app_hosts; do
+    for target in $storage_hosts; do
+        pairs+=("$app|$target")
+    done
+done
+
+pair_count=${#pairs[@]}
+echo "Total pairs: $pair_count"
+echo ""
+
+# iperf3 background duration must outlast ping; derive from ping parameters + 30s buffer
+iperf_bg_duration=$(awk "BEGIN {print int($PING_COUNT * $PING_INTERVAL) + 30}")
+
+pair_idx=0
+for pair in "${pairs[@]}"; do
+    app="${pair%|*}"
+    target="${pair#*|}"
+    target_ip="${STORAGE_IPS[$target]}"
+    app_port="${APP_PORTS[$app]}"
+
+    pair_idx=$((pair_idx + 1))
+    echo "=== Pair $pair_idx/$pair_count: $app -> $target ==="
+
+    # Condition 1: idle
+    for rep in $(seq 1 "$REPETITIONS"); do
+        echo "  [idle] rep $rep/$REPETITIONS..."
+        rep_epoch=$(date +%s)
+        "$SCRIPT_DIR/system_snapshot" --rep "$rep" --meta "${app##*-}_${target##*-}" --metric lat --qualifier idle --epoch "$rep_epoch" --output-dir "$OUTPUT_DIR" --idle-wait "$IDLE_WAIT" || echo "Warning: system_snapshot failed, continuing..."
+        run_ansible "$app" "shell" "ping -c $PING_COUNT -i $PING_INTERVAL $target_ip" \
+            | strip_ansible_header \
+            > "${OUTPUT_DIR}/${rep_epoch}_lat_idle_rep${rep}_${app##*-}_${target##*-}.txt" \
+            || echo "Warning: latency capture failed for $app -> $target (idle rep $rep)"
+        echo "    Saved: ${rep_epoch}_lat_idle_rep${rep}_${app##*-}_${target##*-}.txt"
+    done
+
+    # Condition 2: 50% load (4 parallel streams)
+    for rep in $(seq 1 "$REPETITIONS"); do
+        echo "  [50pct] rep $rep/$REPETITIONS..."
+        rep_epoch=$(date +%s)
+        "$SCRIPT_DIR/system_snapshot" --rep "$rep" --meta "${app##*-}_${target##*-}" --metric lat --qualifier 50pct --epoch "$rep_epoch" --output-dir "$OUTPUT_DIR" --idle-wait "$IDLE_WAIT" || echo "Warning: system_snapshot failed, continuing..."
+        run_ansible "$app" "shell" "iperf3 -c $target_ip -p $app_port -P 4 -t $iperf_bg_duration -Z -w 256k -l 64k &>/dev/null & IPID=\$!; sleep 2; ping -c $PING_COUNT -i $PING_INTERVAL $target_ip; kill \$IPID 2>/dev/null; wait \$IPID 2>/dev/null" \
+            | strip_ansible_header \
+            > "${OUTPUT_DIR}/${rep_epoch}_lat_50pct_rep${rep}_${app##*-}_${target##*-}.txt" \
+            || echo "Warning: latency capture failed for $app -> $target (50pct rep $rep)"
+        echo "    Saved: ${rep_epoch}_lat_50pct_rep${rep}_${app##*-}_${target##*-}.txt"
+    done
+
+    # Condition 3: 100% load (8 parallel streams)
+    for rep in $(seq 1 "$REPETITIONS"); do
+        echo "  [100pct] rep $rep/$REPETITIONS..."
+        rep_epoch=$(date +%s)
+        "$SCRIPT_DIR/system_snapshot" --rep "$rep" --meta "${app##*-}_${target##*-}" --metric lat --qualifier 100pct --epoch "$rep_epoch" --output-dir "$OUTPUT_DIR" --idle-wait "$IDLE_WAIT" || echo "Warning: system_snapshot failed, continuing..."
+        run_ansible "$app" "shell" "iperf3 -c $target_ip -p $app_port -P 8 -t $iperf_bg_duration -Z -w 256k -l 64k &>/dev/null & IPID=\$!; sleep 2; ping -c $PING_COUNT -i $PING_INTERVAL $target_ip; kill \$IPID 2>/dev/null; wait \$IPID 2>/dev/null" \
+            | strip_ansible_header \
+            > "${OUTPUT_DIR}/${rep_epoch}_lat_100pct_rep${rep}_${app##*-}_${target##*-}.txt" \
+            || echo "Warning: latency capture failed for $app -> $target (100pct rep $rep)"
+        echo "    Saved: ${rep_epoch}_lat_100pct_rep${rep}_${app##*-}_${target##*-}.txt"
+    done
+
+    echo ""
+done
+
+echo "=== Latency Complete ==="
+echo "Results saved to: $OUTPUT_DIR"

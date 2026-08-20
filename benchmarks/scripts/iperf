@@ -1,0 +1,169 @@
+#!/bin/bash
+set -eo pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "$SCRIPT_DIR/common"
+
+ACTION="$1"
+
+if [ "$ACTION" != "start" ] && [ "$ACTION" != "stop" ] && [ "$ACTION" != "status" ]; then
+    echo "Usage: benchctl iperf [start|stop|status]" >&2
+    exit 1
+fi
+
+if ! check_storage_servers; then
+    echo "Storage servers group not found"
+    exit 1
+fi
+
+# Ports 5201-5203: one per app server (srv01-srv03)
+# Port 5204: used by st-to-st throughput benchmark (st01-st04 each bind to 5201-5204)
+PORTS="5201 5202 5203 5204"
+
+if [ "$ACTION" = "start" ]; then
+    for PORT in $PORTS; do
+        echo "Opening firewall port $PORT on storage nodes..."
+        if ! run_ansible storage_servers shell "firewall-cmd --add-port=$PORT/tcp"; then
+            echo "Failed to open firewall port $PORT"
+            exit 1
+        fi
+    done
+
+    echo "Starting iperf3 servers on storage nodes (ports 5201, 5202, 5203, 5204)..."
+    # Start iperf3 on each port separately to avoid port conflicts
+    run_ansible storage_servers command "iperf3 -s -p 5201 -D" || {
+        echo "Failed to start iperf3 on port 5201"
+        exit 1
+    }
+    run_ansible storage_servers command "iperf3 -s -p 5202 -D" || {
+        echo "Failed to start iperf3 on port 5202"
+        exit 1
+    }
+    run_ansible storage_servers command "iperf3 -s -p 5203 -D" || {
+        echo "Failed to start iperf3 on port 5203"
+        exit 1
+    }
+    run_ansible storage_servers command "iperf3 -s -p 5204 -D" || {
+        echo "Failed to start iperf3 on port 5204"
+        exit 1
+    }
+
+    echo "Done. Run 'benchctl status' to verify."
+
+elif [ "$ACTION" = "stop" ]; then
+    echo "Stopping iperf3 servers on storage nodes..."
+    run_ansible storage_servers shell "pkill -f 'iperf3.*-s' 2>/dev/null || true" > /dev/null || true
+
+    for PORT in $PORTS; do
+        echo "Closing firewall port $PORT on storage nodes..."
+        run_ansible storage_servers shell "firewall-cmd --remove-port=$PORT/tcp 2>/dev/null || true" > /dev/null || true
+    done
+
+    echo "Done."
+
+elif [ "$ACTION" = "status" ]; then
+    echo "=== iperf status ==="
+    echo ""
+
+    if ! check_storage_servers; then
+        exit 1
+    fi
+    storage_hosts=$(get_host_count storage_servers)
+
+    storage_reachable=$(ansible storage_servers -m ping 2>/dev/null | grep -c "SUCCESS")
+    if [ -z "$storage_reachable" ]; then
+        echo "Failed to ping storage servers"
+        exit 1
+    fi
+
+    if [ "${storage_reachable:-0}" -lt 8 ]; then
+        echo "unreachable:"
+        ansible storage_servers -m ping 2>/dev/null | grep -E "(FAILED|UNREACHABLE)" | awk '{print $1}' | sed 's/.*/  &/'
+        echo ""
+    fi
+
+    echo "storage_servers:"
+    if [ "${storage_reachable:-0}" -eq 0 ]; then
+        echo "  reachable ${storage_reachable:-0}/${storage_hosts} ${RED}✗${RESET}"
+    else
+        echo "  reachable ${storage_reachable:-0}/${storage_hosts} ${GREEN}✓${RESET}"
+
+        storage_iperf=$(ansible storage_servers -m shell -a "command -v iperf3" 2>/dev/null | grep -c "rc=0")
+        if [ "${storage_iperf:-0}" -eq "${storage_reachable:-0}" ]; then
+            echo "  iperf3 installed ${storage_iperf:-0}/${storage_reachable:-0} ${GREEN}✓${RESET}"
+        else
+            echo "  iperf3 installed ${storage_iperf:-0}/${storage_reachable:-0} ${RED}✗${RESET}"
+        fi
+
+        if [ "${storage_iperf:-0}" -gt 0 ]; then
+            echo "  iperf3 versions:"
+            for host in $(get_storage_hosts); do
+                version=$(run_ansible "$host" shell "iperf3 --version 2>&1 | head -1" 2>/dev/null | grep -v "^$" | grep -v "CHANGED\|FAILED\|ERROR" | head -1)
+                [ -n "$version" ] && echo "    $host: ${GREEN}${version}${RESET}"
+            done
+        fi
+
+        # Stream results: for each port, check all hosts and display immediately
+        port_5201_running=0
+        port_5202_running=0
+        for port in 5201 5202 5203 5204; do
+            echo "  iperf3 server on port $port:"
+            for host in $(get_storage_hosts); do
+                # Get ss output for this host
+                ss_out=$(run_ansible "$host" shell "ss -tlnp" 2>/dev/null)
+                echo "$ss_out" | grep -q ":$port" && running=1 || running=0
+                
+                # Track if any server is running on ports 5201 or 5202
+                [ "$port" = "5201" ] && [ "$running" = "1" ] && port_5201_running=1
+                [ "$port" = "5202" ] && [ "$running" = "1" ] && port_5202_running=1
+                
+                # Check firewall
+                fw_result=$(run_ansible "$host" shell "firewall-cmd --query-port=$port/tcp" 2>/dev/null | grep -E "^yes$|^no$")
+                [ "$fw_result" = "yes" ] && fw=yes || fw=no
+                
+                # Display immediately
+                running_icon=$([ "$running" = "1" ] && echo "${GREEN}✓${RESET}" || echo "${RED}✗${RESET}")
+                fw_icon=$([ "$fw" = "yes" ] && echo "${GREEN}✓${RESET}" || echo "${RED}✗${RESET}")
+                echo "    $host: running $running_icon fw $fw_icon"
+            done
+        done
+
+        if [ "$port_5201_running" = "0" ] && [ "$port_5202_running" = "0" ]; then
+            echo "   Run 'benchctl iperf start' to start iperf3 servers"
+        fi
+    fi
+    echo ""
+
+    if ! check_app_servers; then
+        exit 1
+    fi
+    app_hosts=$(get_host_count app_servers)
+
+    app_reachable=$(ansible app_servers -m ping 2>/dev/null | grep -c "SUCCESS")
+    if [ -z "$app_reachable" ]; then
+        echo "Failed to ping app servers"
+        exit 1
+    fi
+
+    echo "app_servers:"
+    if [ "${app_reachable:-0}" -eq 0 ]; then
+        echo "  reachable ${app_reachable:-0}/${app_hosts} ${RED}✗${RESET}"
+    else
+        echo "  reachable ${app_reachable:-0}/${app_hosts} ${GREEN}✓${RESET}"
+
+        app_iperf=$(ansible app_servers -m shell -a "command -v iperf3" 2>/dev/null | grep -c "rc=0")
+        if [ "${app_iperf:-0}" -eq "${app_reachable:-0}" ]; then
+            echo "  iperf3 installed ${app_iperf:-0}/${app_reachable:-0} ${GREEN}✓${RESET}"
+        else
+            echo "  iperf3 installed ${app_iperf:-0}/${app_reachable:-0} ${RED}✗${RESET}"
+        fi
+
+        if [ "${app_iperf:-0}" -gt 0 ]; then
+            echo "  iperf3 versions:"
+            for host in $(get_app_hosts); do
+                version=$(run_ansible "$host" shell "iperf3 --version 2>&1 | head -1" 2>/dev/null | grep -v "^$" | grep -v "CHANGED\|FAILED\|ERROR" | head -1)
+                [ -n "$version" ] && echo "    $host: ${GREEN}${version}${RESET}"
+            done
+        fi
+    fi
+fi

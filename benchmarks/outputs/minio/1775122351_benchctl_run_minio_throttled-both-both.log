@@ -1,0 +1,942 @@
+=== MinIO Network-Throttled Baseline (Section 2.4) ===
+Coordinator: srv01
+Clients: srv02 srv03
+Rates: 1gbps 10gbps
+Duration: 300s per run
+Concurrent: 1gbps=4, 10gbps=32
+Obj count:  1gbps/4MiB=500, 1gbps/512MiB=8, 10gbps/4MiB=2500, 10gbps/512MiB=64
+Repetitions: 3
+Mode: both
+Sizes: 64MiB
+
+Pre-flight: removing any stale tc rules from prior runs...
+=== Rate: 1gbps (concurrent: 4) ===
+Applying tc throttle (1gbps) on all app nodes...
+r02-srv01 | CHANGED | rc=0 >>
+
+  → srv01: 1gbit burst 1mb (egress + ingress)
+r02-srv02 | CHANGED | rc=0 >>
+
+  → srv02: 1gbit burst 1mb (egress + ingress)
+r04-srv03 | CHANGED | rc=0 >>
+
+  → srv03: 1gbit burst 1mb (egress + ingress)
+  iperf3 verification (before, 1gbps)...
+  → Upload: 1022734198.2886102 bps (target ≤ 1000000000 bps) ✓
+=== Repetition 1/3 ===
+  Size: 64MiB
+=== Initialization ===
+Rep: 1
+Meta: srv01
+Metric: put
+Qualifier: 1gbps-64MiB
+Epoch: 1775122440
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/minio/warp_put_1gbps
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/minio/warp_put_1gbps/1775122440_put_1gbps-64MiB_rep1_srv01_snapshot.csv
+Done.
+Opening firewall port 7761 on srv nodes...
+Starting warp client listeners on srv02 srv03 (port 7761)...
+r02-srv02 | CHANGED | rc=0 >>
+r04-srv03 | CHANGED | rc=0 >>
+Waiting for clients to bind port 7761...
+  → srv02: port 7761 ready
+  → srv03: port 7761 ready
+Done. Run 'benchctl warp status' to verify.
+  Running PUT (64MiB, rep 1, 1gbps)...
+r02-srv01 | CHANGED | rc=0 >>
+
+Report: PUT. Concurrency: 8. Ran: 5m2s
+ * Average: 232.81 MiB/s, 3.64 obj/s
+ * Reqs: Avg: 2168.0ms, 50%: 2099.4ms, 90%: 3086.9ms, 99%: 3281.7ms, Fastest: 942.4ms, Slowest: 5612.2ms, StdDev: 480.5ms
+
+Throughput by host:
+ * http://192.168.11.21:9000: Avg: 27.77 MiB/s, 0.43 obj/s
+ * http://192.168.11.22:9000: Avg: 31.93 MiB/s, 0.50 obj/s
+ * http://192.168.11.23:9000: Avg: 31.90 MiB/s, 0.50 obj/s
+ * http://192.168.11.24:9000: Avg: 30.48 MiB/s, 0.48 obj/s
+ * http://192.168.11.25:9000: Avg: 30.44 MiB/s, 0.48 obj/s
+ * http://192.168.11.26:9000: Avg: 29.54 MiB/s, 0.46 obj/s
+ * http://192.168.11.27:9000: Avg: 25.30 MiB/s, 0.40 obj/s
+ * http://192.168.11.28:9000: Avg: 29.60 MiB/s, 0.46 obj/s
+
+Throughput by client:
+Client 1 throughput: 117.94 MiB/s, 1.84 obj/s
+Client 2 throughput: 118.03 MiB/s, 1.84 obj/s
+
+Throughput, split into 298 x 1s:
+ * Fastest: 264.3MiB/s, 4.13 obj/s
+ * 50% Median: 236.3MiB/s, 3.70 obj/s
+ * Slowest: 195.2MiB/s, 3.05 obj/s
+/tmp/warp_fetch_put_1gbps_64MiB_rep1_1775122440_195829.zst: 1048217 bytes 
+  → /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/minio/warp_put_1gbps/1775122440_put_1gbps-64MiB_rep1_srv01.json
+=== Initialization ===
+Rep: 1
+Meta: srv01
+Metric: get
+Qualifier: 1gbps-64MiB
+Epoch: 1775122823
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/minio/warp_get_1gbps
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/minio/warp_get_1gbps/1775122823_get_1gbps-64MiB_rep1_srv01_snapshot.csv
+Done.
+Opening firewall port 7761 on srv nodes...
+Starting warp client listeners on srv02 srv03 (port 7761)...
+r02-srv02 | CHANGED | rc=0 >>
+r04-srv03 | CHANGED | rc=0 >>
+Waiting for clients to bind port 7761...
+  → srv02: port 7761 ready
+  → srv03: port 7761 ready
+Done. Run 'benchctl warp status' to verify.
+  Running GET (64MiB, rep 1, 1gbps, obj.count=64)...
+r02-srv01 | CHANGED | rc=0 >>
+
+Report: GET. Concurrency: 8. Ran: 5m2s
+ * Average: 230.31 MiB/s, 3.60 obj/s
+ * Reqs: Avg: 2189.5ms, 50%: 2211.6ms, 90%: 3505.6ms, 99%: 3886.1ms, Fastest: 782.0ms, Slowest: 5571.4ms, StdDev: 880.7ms
+ * TTFB: Avg: 10ms, Best: 3ms, 25th: 8ms, Median: 10ms, 75th: 12ms, 90th: 14ms, 99th: 16ms, Worst: 20ms StdDev: 3ms
+
+Throughput by host:
+ * http://192.168.11.21:9000: Avg: 26.49 MiB/s, 0.41 obj/s
+ * http://192.168.11.22:9000: Avg: 27.25 MiB/s, 0.43 obj/s
+ * http://192.168.11.23:9000: Avg: 31.22 MiB/s, 0.49 obj/s
+ * http://192.168.11.24:9000: Avg: 31.44 MiB/s, 0.49 obj/s
+ * http://192.168.11.25:9000: Avg: 32.29 MiB/s, 0.50 obj/s
+ * http://192.168.11.26:9000: Avg: 32.06 MiB/s, 0.50 obj/s
+ * http://192.168.11.27:9000: Avg: 26.55 MiB/s, 0.41 obj/s
+ * http://192.168.11.28:9000: Avg: 27.39 MiB/s, 0.43 obj/s
+
+Throughput by client:
+Client 1 throughput: 118.14 MiB/s, 1.85 obj/s
+Client 2 throughput: 115.72 MiB/s, 1.81 obj/s
+
+Throughput, split into 297 x 1s:
+ * Fastest: 285.7MiB/s, 4.46 obj/s
+ * 50% Median: 233.8MiB/s, 3.65 obj/s
+ * Slowest: 192.6MiB/s, 3.00 obj/s
+
+──────────────────────────────────
+
+Report: PUT. Concurrency: 8. Ran: 36s
+ * Average: 210.10 MiB/s, 3.28 obj/s
+ * Reqs: Avg: 2013.2ms, 50%: 2118.6ms, 90%: 2967.4ms, 99%: 3083.1ms, Fastest: 550.2ms, Slowest: 4148.0ms, StdDev: 619.8ms
+
+Throughput by host:
+ * http://192.168.11.21:9000: Avg: 28.85 MiB/s, 0.45 obj/s
+ * http://192.168.11.22:9000: Avg: 35.04 MiB/s, 0.55 obj/s
+ * http://192.168.11.23:9000: Avg: 36.55 MiB/s, 0.57 obj/s
+ * http://192.168.11.24:9000: Avg: 30.96 MiB/s, 0.48 obj/s
+ * http://192.168.11.25:9000: Avg: 29.49 MiB/s, 0.46 obj/s
+ * http://192.168.11.26:9000: Avg: 30.16 MiB/s, 0.47 obj/s
+ * http://192.168.11.27:9000: Avg: 29.87 MiB/s, 0.47 obj/s
+ * http://192.168.11.28:9000: Avg: 28.09 MiB/s, 0.44 obj/s
+
+Throughput by client:
+Client 1 throughput: 117.98 MiB/s, 1.84 obj/s
+Client 2 throughput: 118.03 MiB/s, 1.84 obj/s
+
+Throughput, split into 32 x 1s:
+ * Fastest: 268.1MiB/s, 4.18 obj/s
+ * 50% Median: 236.7MiB/s, 3.70 obj/s
+ * Slowest: 200.9MiB/s, 3.14 obj/s
+/tmp/warp_fetch_get_1gbps_64MiB_rep1_1775122823_195829.zst: 1499639 bytes 
+  → /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/minio/warp_get_1gbps/1775122823_get_1gbps-64MiB_rep1_srv01.json
+
+=== Repetition 2/3 ===
+  Size: 64MiB
+=== Initialization ===
+Rep: 2
+Meta: srv01
+Metric: put
+Qualifier: 1gbps-64MiB
+Epoch: 1775123240
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/minio/warp_put_1gbps
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/minio/warp_put_1gbps/1775123240_put_1gbps-64MiB_rep2_srv01_snapshot.csv
+Done.
+Opening firewall port 7761 on srv nodes...
+Starting warp client listeners on srv02 srv03 (port 7761)...
+r02-srv02 | CHANGED | rc=0 >>
+r04-srv03 | CHANGED | rc=0 >>
+Waiting for clients to bind port 7761...
+  → srv02: port 7761 ready
+  → srv03: port 7761 ready
+Done. Run 'benchctl warp status' to verify.
+  Running PUT (64MiB, rep 2, 1gbps)...
+r02-srv01 | CHANGED | rc=0 >>
+
+Report: PUT. Concurrency: 8. Ran: 5m2s
+ * Average: 232.97 MiB/s, 3.64 obj/s
+ * Reqs: Avg: 2166.1ms, 50%: 2020.0ms, 90%: 3210.8ms, 99%: 3854.0ms, Fastest: 973.1ms, Slowest: 6149.1ms, StdDev: 653.2ms
+
+Throughput by host:
+ * http://192.168.11.21:9000: Avg: 29.28 MiB/s, 0.46 obj/s
+ * http://192.168.11.22:9000: Avg: 32.66 MiB/s, 0.51 obj/s
+ * http://192.168.11.23:9000: Avg: 32.45 MiB/s, 0.51 obj/s
+ * http://192.168.11.24:9000: Avg: 32.48 MiB/s, 0.51 obj/s
+ * http://192.168.11.25:9000: Avg: 29.30 MiB/s, 0.46 obj/s
+ * http://192.168.11.26:9000: Avg: 28.85 MiB/s, 0.45 obj/s
+ * http://192.168.11.27:9000: Avg: 24.99 MiB/s, 0.39 obj/s
+ * http://192.168.11.28:9000: Avg: 27.43 MiB/s, 0.43 obj/s
+
+Throughput by client:
+Client 1 throughput: 118.03 MiB/s, 1.84 obj/s
+Client 2 throughput: 118.03 MiB/s, 1.84 obj/s
+
+Throughput, split into 298 x 1s:
+ * Fastest: 265.7MiB/s, 4.16 obj/s
+ * 50% Median: 236.2MiB/s, 3.69 obj/s
+ * Slowest: 206.5MiB/s, 3.22 obj/s
+/tmp/warp_fetch_put_1gbps_64MiB_rep2_1775123240_195829.zst: 1049675 bytes 
+  → /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/minio/warp_put_1gbps/1775123240_put_1gbps-64MiB_rep2_srv01.json
+=== Initialization ===
+Rep: 2
+Meta: srv01
+Metric: get
+Qualifier: 1gbps-64MiB
+Epoch: 1775123621
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/minio/warp_get_1gbps
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/minio/warp_get_1gbps/1775123621_get_1gbps-64MiB_rep2_srv01_snapshot.csv
+Done.
+Opening firewall port 7761 on srv nodes...
+Starting warp client listeners on srv02 srv03 (port 7761)...
+r02-srv02 | CHANGED | rc=0 >>
+r04-srv03 | CHANGED | rc=0 >>
+Waiting for clients to bind port 7761...
+  → srv02: port 7761 ready
+  → srv03: port 7761 ready
+Done. Run 'benchctl warp status' to verify.
+  Running GET (64MiB, rep 2, 1gbps, obj.count=64)...
+r02-srv01 | CHANGED | rc=0 >>
+
+Report: GET. Concurrency: 8. Ran: 5m2s
+ * Average: 231.05 MiB/s, 3.61 obj/s
+ * Reqs: Avg: 2181.9ms, 50%: 2221.6ms, 90%: 3410.7ms, 99%: 3783.3ms, Fastest: 783.8ms, Slowest: 6119.6ms, StdDev: 858.2ms
+ * TTFB: Avg: 10ms, Best: 3ms, 25th: 8ms, Median: 10ms, 75th: 12ms, 90th: 14ms, 99th: 16ms, Worst: 21ms StdDev: 3ms
+
+Throughput by host:
+ * http://192.168.11.21:9000: Avg: 27.99 MiB/s, 0.44 obj/s
+ * http://192.168.11.22:9000: Avg: 26.59 MiB/s, 0.42 obj/s
+ * http://192.168.11.23:9000: Avg: 34.29 MiB/s, 0.54 obj/s
+ * http://192.168.11.24:9000: Avg: 32.76 MiB/s, 0.51 obj/s
+ * http://192.168.11.25:9000: Avg: 29.83 MiB/s, 0.47 obj/s
+ * http://192.168.11.26:9000: Avg: 29.12 MiB/s, 0.45 obj/s
+ * http://192.168.11.27:9000: Avg: 27.36 MiB/s, 0.43 obj/s
+ * http://192.168.11.28:9000: Avg: 27.02 MiB/s, 0.42 obj/s
+
+Throughput by client:
+Client 1 throughput: 115.74 MiB/s, 1.81 obj/s
+Client 2 throughput: 118.25 MiB/s, 1.85 obj/s
+
+Throughput, split into 298 x 1s:
+ * Fastest: 273.2MiB/s, 4.27 obj/s
+ * 50% Median: 234.9MiB/s, 3.67 obj/s
+ * Slowest: 193.6MiB/s, 3.03 obj/s
+
+──────────────────────────────────
+
+Report: PUT. Concurrency: 8. Ran: 35s
+ * Average: 209.80 MiB/s, 3.28 obj/s
+ * Reqs: Avg: 1924.5ms, 50%: 1889.6ms, 90%: 2608.0ms, 99%: 3454.5ms, Fastest: 540.9ms, Slowest: 6145.4ms, StdDev: 511.8ms
+
+Throughput by host:
+ * http://192.168.11.21:9000: Avg: 31.77 MiB/s, 0.50 obj/s
+ * http://192.168.11.22:9000: Avg: 33.59 MiB/s, 0.52 obj/s
+ * http://192.168.11.23:9000: Avg: 31.85 MiB/s, 0.50 obj/s
+ * http://192.168.11.24:9000: Avg: 31.35 MiB/s, 0.49 obj/s
+ * http://192.168.11.25:9000: Avg: 31.30 MiB/s, 0.49 obj/s
+ * http://192.168.11.26:9000: Avg: 31.38 MiB/s, 0.49 obj/s
+ * http://192.168.11.27:9000: Avg: 25.46 MiB/s, 0.40 obj/s
+ * http://192.168.11.28:9000: Avg: 31.44 MiB/s, 0.49 obj/s
+
+Throughput by client:
+Client 1 throughput: 118.04 MiB/s, 1.84 obj/s
+Client 2 throughput: 118.04 MiB/s, 1.84 obj/s
+
+Throughput, split into 31 x 1s:
+ * Fastest: 255.5MiB/s, 3.99 obj/s
+ * 50% Median: 235.6MiB/s, 3.68 obj/s
+ * Slowest: 217.5MiB/s, 3.39 obj/s
+/tmp/warp_fetch_get_1gbps_64MiB_rep2_1775123621_195829.zst: 1498599 bytes 
+  → /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/minio/warp_get_1gbps/1775123621_get_1gbps-64MiB_rep2_srv01.json
+
+=== Repetition 3/3 ===
+  Size: 64MiB
+=== Initialization ===
+Rep: 3
+Meta: srv01
+Metric: put
+Qualifier: 1gbps-64MiB
+Epoch: 1775124037
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/minio/warp_put_1gbps
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/minio/warp_put_1gbps/1775124037_put_1gbps-64MiB_rep3_srv01_snapshot.csv
+Done.
+Opening firewall port 7761 on srv nodes...
+Starting warp client listeners on srv02 srv03 (port 7761)...
+r02-srv02 | CHANGED | rc=0 >>
+r04-srv03 | CHANGED | rc=0 >>
+Waiting for clients to bind port 7761...
+  → srv02: port 7761 ready
+  → srv03: port 7761 ready
+Done. Run 'benchctl warp status' to verify.
+  Running PUT (64MiB, rep 3, 1gbps)...
+r02-srv01 | CHANGED | rc=0 >>
+
+Report: PUT. Concurrency: 8. Ran: 5m1s
+ * Average: 232.93 MiB/s, 3.64 obj/s
+ * Reqs: Avg: 2167.2ms, 50%: 2074.8ms, 90%: 3179.0ms, 99%: 3264.0ms, Fastest: 1030.1ms, Slowest: 5254.3ms, StdDev: 507.6ms
+
+Throughput by host:
+ * http://192.168.11.21:9000: Avg: 26.22 MiB/s, 0.41 obj/s
+ * http://192.168.11.22:9000: Avg: 31.90 MiB/s, 0.50 obj/s
+ * http://192.168.11.23:9000: Avg: 31.94 MiB/s, 0.50 obj/s
+ * http://192.168.11.24:9000: Avg: 30.68 MiB/s, 0.48 obj/s
+ * http://192.168.11.25:9000: Avg: 30.47 MiB/s, 0.48 obj/s
+ * http://192.168.11.26:9000: Avg: 30.24 MiB/s, 0.47 obj/s
+ * http://192.168.11.27:9000: Avg: 29.81 MiB/s, 0.47 obj/s
+ * http://192.168.11.28:9000: Avg: 26.19 MiB/s, 0.41 obj/s
+
+Throughput by client:
+Client 1 throughput: 118.03 MiB/s, 1.84 obj/s
+Client 2 throughput: 118.03 MiB/s, 1.84 obj/s
+
+Throughput, split into 297 x 1s:
+ * Fastest: 264.7MiB/s, 4.13 obj/s
+ * 50% Median: 236.3MiB/s, 3.70 obj/s
+ * Slowest: 204.8MiB/s, 3.20 obj/s
+/tmp/warp_fetch_put_1gbps_64MiB_rep3_1775124037_195829.zst: 1047615 bytes 
+  → /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/minio/warp_put_1gbps/1775124037_put_1gbps-64MiB_rep3_srv01.json
+=== Initialization ===
+Rep: 3
+Meta: srv01
+Metric: get
+Qualifier: 1gbps-64MiB
+Epoch: 1775124419
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/minio/warp_get_1gbps
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/minio/warp_get_1gbps/1775124419_get_1gbps-64MiB_rep3_srv01_snapshot.csv
+Done.
+Opening firewall port 7761 on srv nodes...
+Starting warp client listeners on srv02 srv03 (port 7761)...
+r02-srv02 | CHANGED | rc=0 >>
+r04-srv03 | CHANGED | rc=0 >>
+Waiting for clients to bind port 7761...
+  → srv02: port 7761 ready
+  → srv03: port 7761 ready
+Done. Run 'benchctl warp status' to verify.
+  Running GET (64MiB, rep 3, 1gbps, obj.count=64)...
+r02-srv01 | CHANGED | rc=0 >>
+
+Report: GET. Concurrency: 8. Ran: 5m3s
+ * Average: 230.24 MiB/s, 3.60 obj/s
+ * Reqs: Avg: 2182.8ms, 50%: 2232.7ms, 90%: 3319.1ms, 99%: 3724.4ms, Fastest: 772.7ms, Slowest: 4929.8ms, StdDev: 806.6ms
+ * TTFB: Avg: 9ms, Best: 3ms, 25th: 8ms, Median: 9ms, 75th: 11ms, 90th: 13ms, 99th: 15ms, Worst: 19ms StdDev: 3ms
+
+Throughput by host:
+ * http://192.168.11.21:9000: Avg: 28.16 MiB/s, 0.44 obj/s
+ * http://192.168.11.22:9000: Avg: 27.90 MiB/s, 0.44 obj/s
+ * http://192.168.11.23:9000: Avg: 32.89 MiB/s, 0.51 obj/s
+ * http://192.168.11.24:9000: Avg: 30.24 MiB/s, 0.47 obj/s
+ * http://192.168.11.25:9000: Avg: 31.02 MiB/s, 0.48 obj/s
+ * http://192.168.11.26:9000: Avg: 30.14 MiB/s, 0.47 obj/s
+ * http://192.168.11.27:9000: Avg: 26.99 MiB/s, 0.42 obj/s
+ * http://192.168.11.28:9000: Avg: 27.02 MiB/s, 0.42 obj/s
+
+Throughput by client:
+Client 1 throughput: 118.17 MiB/s, 1.85 obj/s
+Client 2 throughput: 115.09 MiB/s, 1.80 obj/s
+
+Throughput, split into 299 x 1s:
+ * Fastest: 276.5MiB/s, 4.32 obj/s
+ * 50% Median: 234.2MiB/s, 3.66 obj/s
+ * Slowest: 175.1MiB/s, 2.74 obj/s
+
+──────────────────────────────────
+
+Report: PUT. Concurrency: 8. Ran: 36s
+ * Average: 210.38 MiB/s, 3.29 obj/s
+ * Reqs: Avg: 1956.1ms, 50%: 2041.5ms, 90%: 2803.1ms, 99%: 3010.1ms, Fastest: 541.7ms, Slowest: 3929.5ms, StdDev: 565.0ms
+
+Throughput by host:
+ * http://192.168.11.21:9000: Avg: 28.28 MiB/s, 0.44 obj/s
+ * http://192.168.11.22:9000: Avg: 33.22 MiB/s, 0.52 obj/s
+ * http://192.168.11.23:9000: Avg: 33.63 MiB/s, 0.53 obj/s
+ * http://192.168.11.24:9000: Avg: 33.85 MiB/s, 0.53 obj/s
+ * http://192.168.11.25:9000: Avg: 31.87 MiB/s, 0.50 obj/s
+ * http://192.168.11.26:9000: Avg: 31.15 MiB/s, 0.49 obj/s
+ * http://192.168.11.27:9000: Avg: 30.81 MiB/s, 0.48 obj/s
+ * http://192.168.11.28:9000: Avg: 27.78 MiB/s, 0.43 obj/s
+
+Throughput by client:
+Client 1 throughput: 118.12 MiB/s, 1.85 obj/s
+Client 2 throughput: 118.04 MiB/s, 1.84 obj/s
+
+Throughput, split into 32 x 1s:
+ * Fastest: 264.2MiB/s, 4.13 obj/s
+ * 50% Median: 236.3MiB/s, 3.70 obj/s
+ * Slowest: 212.2MiB/s, 3.31 obj/s
+/tmp/warp_fetch_get_1gbps_64MiB_rep3_1775124419_195829.zst: 1501231 bytes 
+  → /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/minio/warp_get_1gbps/1775124419_get_1gbps-64MiB_rep3_srv01.json
+
+  iperf3 verification (after, 1gbps)...
+  → Upload: 1024275878.7205708 bps (target ≤ 1000000000 bps) ✓
+Removing tc throttle from all app nodes...
+
+=== Rate: 10gbps (concurrent: 32) ===
+Applying tc throttle (10gbps) on all app nodes...
+r02-srv01 | CHANGED | rc=0 >>
+
+  → srv01: 10gbit burst 10mb (egress + ingress)
+r02-srv02 | CHANGED | rc=0 >>
+
+  → srv02: 10gbit burst 10mb (egress + ingress)
+r04-srv03 | CHANGED | rc=0 >>
+
+  → srv03: 10gbit burst 10mb (egress + ingress)
+  iperf3 verification (before, 10gbps)...
+  → Upload: 9956074709.46676 bps (target ≤ 10000000000 bps) ✓
+=== Repetition 1/3 ===
+  Size: 64MiB
+=== Initialization ===
+Rep: 1
+Meta: srv01
+Metric: put
+Qualifier: 10gbps-64MiB
+Epoch: 1775124986
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/minio/warp_put_10gbps
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/minio/warp_put_10gbps/1775124986_put_10gbps-64MiB_rep1_srv01_snapshot.csv
+Done.
+Opening firewall port 7761 on srv nodes...
+Starting warp client listeners on srv02 srv03 (port 7761)...
+r02-srv02 | CHANGED | rc=0 >>
+r04-srv03 | CHANGED | rc=0 >>
+Waiting for clients to bind port 7761...
+  → srv02: port 7761 ready
+  → srv03: port 7761 ready
+Done. Run 'benchctl warp status' to verify.
+  Running PUT (64MiB, rep 1, 10gbps)...
+r02-srv01 | CHANGED | rc=0 >>
+
+Report: PUT. Concurrency: 64. Ran: 5m1s
+ * Average: 2330.81 MiB/s, 36.42 obj/s
+ * Reqs: Avg: 1731.7ms, 50%: 1465.5ms, 90%: 2589.9ms, 99%: 2798.7ms, Fastest: 392.7ms, Slowest: 3819.0ms, StdDev: 646.7ms
+
+Throughput by host:
+ * http://192.168.11.21:9000: Avg: 372.37 MiB/s, 5.82 obj/s
+ * http://192.168.11.22:9000: Avg: 308.26 MiB/s, 4.82 obj/s
+ * http://192.168.11.23:9000: Avg: 268.89 MiB/s, 4.20 obj/s
+ * http://192.168.11.24:9000: Avg: 296.55 MiB/s, 4.63 obj/s
+ * http://192.168.11.25:9000: Avg: 258.66 MiB/s, 4.04 obj/s
+ * http://192.168.11.26:9000: Avg: 302.95 MiB/s, 4.73 obj/s
+ * http://192.168.11.27:9000: Avg: 286.54 MiB/s, 4.48 obj/s
+ * http://192.168.11.28:9000: Avg: 268.89 MiB/s, 4.20 obj/s
+
+Throughput by client:
+Client 1 throughput: 1181.53 MiB/s, 18.46 obj/s
+Client 2 throughput: 1181.50 MiB/s, 18.46 obj/s
+
+Throughput, split into 297 x 1s:
+ * Fastest: 2517.8MiB/s, 39.34 obj/s
+ * 50% Median: 2363.9MiB/s, 36.94 obj/s
+ * Slowest: 2199.7MiB/s, 34.37 obj/s
+/tmp/warp_fetch_put_10gbps_64MiB_rep1_1775124986_195829.zst: 1061319 bytes 
+  → /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/minio/warp_put_10gbps/1775124986_put_10gbps-64MiB_rep1_srv01.json
+=== Initialization ===
+Rep: 1
+Meta: srv01
+Metric: get
+Qualifier: 10gbps-64MiB
+Epoch: 1775125369
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/minio/warp_get_10gbps
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/minio/warp_get_10gbps/1775125369_get_10gbps-64MiB_rep1_srv01_snapshot.csv
+Done.
+Opening firewall port 7761 on srv nodes...
+Starting warp client listeners on srv02 srv03 (port 7761)...
+r02-srv02 | CHANGED | rc=0 >>
+r04-srv03 | CHANGED | rc=0 >>
+Waiting for clients to bind port 7761...
+  → srv02: port 7761 ready
+  → srv03: port 7761 ready
+Done. Run 'benchctl warp status' to verify.
+  Running GET (64MiB, rep 1, 10gbps, obj.count=640)...
+r02-srv01 | CHANGED | rc=0 >>
+
+Report: GET. Concurrency: 64. Ran: 5m2s
+ * Average: 2326.63 MiB/s, 36.35 obj/s
+ * Reqs: Avg: 1722.4ms, 50%: 1635.8ms, 90%: 2331.2ms, 99%: 2718.5ms, Fastest: 153.0ms, Slowest: 9335.4ms, StdDev: 419.9ms
+ * TTFB: Avg: 10ms, Best: 3ms, 25th: 10ms, Median: 10ms, 75th: 11ms, 90th: 11ms, 99th: 12ms, Worst: 42ms StdDev: 1ms
+
+Throughput by host:
+ * http://192.168.11.21:9000: Avg: 310.25 MiB/s, 4.85 obj/s
+ * http://192.168.11.22:9000: Avg: 309.84 MiB/s, 4.84 obj/s
+ * http://192.168.11.23:9000: Avg: 269.61 MiB/s, 4.21 obj/s
+ * http://192.168.11.24:9000: Avg: 272.17 MiB/s, 4.25 obj/s
+ * http://192.168.11.25:9000: Avg: 282.38 MiB/s, 4.41 obj/s
+ * http://192.168.11.26:9000: Avg: 280.25 MiB/s, 4.38 obj/s
+ * http://192.168.11.27:9000: Avg: 318.35 MiB/s, 4.97 obj/s
+ * http://192.168.11.28:9000: Avg: 314.09 MiB/s, 4.91 obj/s
+
+Throughput by client:
+Client 1 throughput: 1183.27 MiB/s, 18.49 obj/s
+Client 2 throughput: 1174.09 MiB/s, 18.35 obj/s
+
+Throughput, split into 298 x 1s:
+ * Fastest: 2616.7MiB/s, 40.89 obj/s
+ * 50% Median: 2360.2MiB/s, 36.88 obj/s
+ * Slowest: 2124.2MiB/s, 33.19 obj/s
+
+──────────────────────────────────
+
+Report: PUT. Concurrency: 64. Ran: 36s
+ * Average: 2105.69 MiB/s, 32.90 obj/s
+ * Reqs: Avg: 1406.1ms, 50%: 1638.1ms, 90%: 2248.6ms, 99%: 2292.8ms, Fastest: 77.9ms, Slowest: 2631.8ms, StdDev: 723.3ms
+
+Throughput by host:
+ * http://192.168.11.21:9000: Avg: 269.72 MiB/s, 4.21 obj/s
+ * http://192.168.11.22:9000: Avg: 315.70 MiB/s, 4.93 obj/s
+ * http://192.168.11.23:9000: Avg: 377.39 MiB/s, 5.90 obj/s
+ * http://192.168.11.24:9000: Avg: 293.45 MiB/s, 4.59 obj/s
+ * http://192.168.11.25:9000: Avg: 273.09 MiB/s, 4.27 obj/s
+ * http://192.168.11.26:9000: Avg: 288.50 MiB/s, 4.51 obj/s
+ * http://192.168.11.27:9000: Avg: 257.18 MiB/s, 4.02 obj/s
+ * http://192.168.11.28:9000: Avg: 292.21 MiB/s, 4.57 obj/s
+
+Throughput by client:
+Client 1 throughput: 1181.19 MiB/s, 18.46 obj/s
+Client 2 throughput: 1180.91 MiB/s, 18.45 obj/s
+
+Throughput, split into 32 x 1s:
+ * Fastest: 2553.8MiB/s, 39.90 obj/s
+ * 50% Median: 2367.2MiB/s, 36.99 obj/s
+ * Slowest: 2164.4MiB/s, 33.81 obj/s
+/tmp/warp_fetch_get_10gbps_64MiB_rep1_1775125369_195829.zst: 1519400 bytes 
+  → /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/minio/warp_get_10gbps/1775125369_get_10gbps-64MiB_rep1_srv01.json
+
+=== Repetition 2/3 ===
+  Size: 64MiB
+=== Initialization ===
+Rep: 2
+Meta: srv01
+Metric: put
+Qualifier: 10gbps-64MiB
+Epoch: 1775125785
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/minio/warp_put_10gbps
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/minio/warp_put_10gbps/1775125785_put_10gbps-64MiB_rep2_srv01_snapshot.csv
+Done.
+Opening firewall port 7761 on srv nodes...
+Starting warp client listeners on srv02 srv03 (port 7761)...
+r02-srv02 | CHANGED | rc=0 >>
+r04-srv03 | CHANGED | rc=0 >>
+Waiting for clients to bind port 7761...
+  → srv02: port 7761 ready
+  → srv03: port 7761 ready
+Done. Run 'benchctl warp status' to verify.
+  Running PUT (64MiB, rep 2, 10gbps)...
+r02-srv01 | CHANGED | rc=0 >>
+
+Report: PUT. Concurrency: 64. Ran: 5m2s
+ * Average: 2331.73 MiB/s, 36.43 obj/s
+ * Reqs: Avg: 1732.0ms, 50%: 1740.6ms, 90%: 3013.7ms, 99%: 3450.0ms, Fastest: 403.0ms, Slowest: 4813.6ms, StdDev: 827.4ms
+
+Throughput by host:
+ * http://192.168.11.21:9000: Avg: 351.87 MiB/s, 5.50 obj/s
+ * http://192.168.11.22:9000: Avg: 268.91 MiB/s, 4.20 obj/s
+ * http://192.168.11.23:9000: Avg: 344.06 MiB/s, 5.38 obj/s
+ * http://192.168.11.24:9000: Avg: 298.46 MiB/s, 4.66 obj/s
+ * http://192.168.11.25:9000: Avg: 319.13 MiB/s, 4.99 obj/s
+ * http://192.168.11.26:9000: Avg: 266.33 MiB/s, 4.16 obj/s
+ * http://192.168.11.27:9000: Avg: 233.60 MiB/s, 3.65 obj/s
+ * http://192.168.11.28:9000: Avg: 280.45 MiB/s, 4.38 obj/s
+
+Throughput by client:
+Client 1 throughput: 1181.48 MiB/s, 18.46 obj/s
+Client 2 throughput: 1181.34 MiB/s, 18.46 obj/s
+
+Throughput, split into 298 x 1s:
+ * Fastest: 2572.0MiB/s, 40.19 obj/s
+ * 50% Median: 2361.4MiB/s, 36.89 obj/s
+ * Slowest: 2167.5MiB/s, 33.87 obj/s
+/tmp/warp_fetch_put_10gbps_64MiB_rep2_1775125785_195829.zst: 1071597 bytes 
+  → /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/minio/warp_put_10gbps/1775125785_put_10gbps-64MiB_rep2_srv01.json
+=== Initialization ===
+Rep: 2
+Meta: srv01
+Metric: get
+Qualifier: 10gbps-64MiB
+Epoch: 1775126166
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/minio/warp_get_10gbps
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/minio/warp_get_10gbps/1775126166_get_10gbps-64MiB_rep2_srv01_snapshot.csv
+Done.
+Opening firewall port 7761 on srv nodes...
+Starting warp client listeners on srv02 srv03 (port 7761)...
+r02-srv02 | CHANGED | rc=0 >>
+r04-srv03 | CHANGED | rc=0 >>
+Waiting for clients to bind port 7761...
+  → srv02: port 7761 ready
+  → srv03: port 7761 ready
+Done. Run 'benchctl warp status' to verify.
+  Running GET (64MiB, rep 2, 10gbps, obj.count=640)...
+r02-srv01 | CHANGED | rc=0 >>
+
+Report: GET. Concurrency: 64. Ran: 5m2s
+ * Average: 2325.99 MiB/s, 36.34 obj/s
+ * Reqs: Avg: 1732.0ms, 50%: 1662.8ms, 90%: 2518.6ms, 99%: 3068.5ms, Fastest: 114.1ms, Slowest: 10880.6ms, StdDev: 519.0ms
+ * TTFB: Avg: 11ms, Best: 3ms, 25th: 10ms, Median: 11ms, 75th: 11ms, 90th: 12ms, 99th: 13ms, Worst: 42ms StdDev: 1ms
+
+Throughput by host:
+ * http://192.168.11.21:9000: Avg: 294.60 MiB/s, 4.60 obj/s
+ * http://192.168.11.22:9000: Avg: 286.57 MiB/s, 4.48 obj/s
+ * http://192.168.11.23:9000: Avg: 286.95 MiB/s, 4.48 obj/s
+ * http://192.168.11.24:9000: Avg: 296.77 MiB/s, 4.64 obj/s
+ * http://192.168.11.25:9000: Avg: 305.09 MiB/s, 4.77 obj/s
+ * http://192.168.11.26:9000: Avg: 294.71 MiB/s, 4.60 obj/s
+ * http://192.168.11.27:9000: Avg: 295.45 MiB/s, 4.62 obj/s
+ * http://192.168.11.28:9000: Avg: 296.59 MiB/s, 4.63 obj/s
+
+Throughput by client:
+Client 1 throughput: 1175.14 MiB/s, 18.36 obj/s
+Client 2 throughput: 1181.79 MiB/s, 18.47 obj/s
+
+Throughput, split into 298 x 1s:
+ * Fastest: 2472.9MiB/s, 38.64 obj/s
+ * 50% Median: 2359.5MiB/s, 36.86 obj/s
+ * Slowest: 2202.6MiB/s, 34.42 obj/s
+
+──────────────────────────────────
+
+Report: PUT. Concurrency: 64. Ran: 36s
+ * Average: 2103.13 MiB/s, 32.86 obj/s
+ * Reqs: Avg: 1407.5ms, 50%: 1536.0ms, 90%: 2253.5ms, 99%: 2714.0ms, Fastest: 65.4ms, Slowest: 3836.4ms, StdDev: 720.0ms
+
+Throughput by host:
+ * http://192.168.11.21:9000: Avg: 489.58 MiB/s, 7.65 obj/s
+ * http://192.168.11.22:9000: Avg: 248.42 MiB/s, 3.88 obj/s
+ * http://192.168.11.23:9000: Avg: 261.00 MiB/s, 4.08 obj/s
+ * http://192.168.11.24:9000: Avg: 269.32 MiB/s, 4.21 obj/s
+ * http://192.168.11.25:9000: Avg: 308.25 MiB/s, 4.82 obj/s
+ * http://192.168.11.26:9000: Avg: 259.74 MiB/s, 4.06 obj/s
+ * http://192.168.11.27:9000: Avg: 254.68 MiB/s, 3.98 obj/s
+ * http://192.168.11.28:9000: Avg: 275.41 MiB/s, 4.30 obj/s
+
+Throughput by client:
+Client 1 throughput: 1181.08 MiB/s, 18.45 obj/s
+Client 2 throughput: 1180.57 MiB/s, 18.45 obj/s
+
+Throughput, split into 32 x 1s:
+ * Fastest: 2544.1MiB/s, 39.75 obj/s
+ * 50% Median: 2366.1MiB/s, 36.97 obj/s
+ * Slowest: 2173.0MiB/s, 33.96 obj/s
+/tmp/warp_fetch_get_10gbps_64MiB_rep2_1775126166_195829.zst: 1516089 bytes 
+  → /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/minio/warp_get_10gbps/1775126166_get_10gbps-64MiB_rep2_srv01.json
+
+=== Repetition 3/3 ===
+  Size: 64MiB
+=== Initialization ===
+Rep: 3
+Meta: srv01
+Metric: put
+Qualifier: 10gbps-64MiB
+Epoch: 1775126583
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/minio/warp_put_10gbps
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/minio/warp_put_10gbps/1775126583_put_10gbps-64MiB_rep3_srv01_snapshot.csv
+Done.
+Opening firewall port 7761 on srv nodes...
+Starting warp client listeners on srv02 srv03 (port 7761)...
+r02-srv02 | CHANGED | rc=0 >>
+r04-srv03 | CHANGED | rc=0 >>
+Waiting for clients to bind port 7761...
+  → srv02: port 7761 ready
+  → srv03: port 7761 ready
+Done. Run 'benchctl warp status' to verify.
+  Running PUT (64MiB, rep 3, 10gbps)...
+r02-srv01 | CHANGED | rc=0 >>
+
+Report: PUT. Concurrency: 64. Ran: 5m2s
+ * Average: 2328.48 MiB/s, 36.38 obj/s
+ * Reqs: Avg: 1734.0ms, 50%: 1782.8ms, 90%: 3066.2ms, 99%: 3105.7ms, Fastest: 447.8ms, Slowest: 4483.5ms, StdDev: 948.1ms
+
+Throughput by host:
+ * http://192.168.11.21:9000: Avg: 365.90 MiB/s, 5.72 obj/s
+ * http://192.168.11.22:9000: Avg: 243.49 MiB/s, 3.80 obj/s
+ * http://192.168.11.23:9000: Avg: 303.19 MiB/s, 4.74 obj/s
+ * http://192.168.11.24:9000: Avg: 349.51 MiB/s, 5.46 obj/s
+ * http://192.168.11.25:9000: Avg: 258.15 MiB/s, 4.03 obj/s
+ * http://192.168.11.26:9000: Avg: 259.63 MiB/s, 4.06 obj/s
+ * http://192.168.11.27:9000: Avg: 310.63 MiB/s, 4.85 obj/s
+ * http://192.168.11.28:9000: Avg: 267.07 MiB/s, 4.17 obj/s
+
+Throughput by client:
+Client 1 throughput: 1181.52 MiB/s, 18.46 obj/s
+Client 2 throughput: 1177.88 MiB/s, 18.40 obj/s
+
+Throughput, split into 298 x 1s:
+ * Fastest: 2590.2MiB/s, 40.47 obj/s
+ * 50% Median: 2361.9MiB/s, 36.90 obj/s
+ * Slowest: 2098.8MiB/s, 32.79 obj/s
+/tmp/warp_fetch_put_10gbps_64MiB_rep3_1775126583_195829.zst: 1070779 bytes 
+  → /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/minio/warp_put_10gbps/1775126583_put_10gbps-64MiB_rep3_srv01.json
+=== Initialization ===
+Rep: 3
+Meta: srv01
+Metric: get
+Qualifier: 10gbps-64MiB
+Epoch: 1775126966
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/minio/warp_get_10gbps
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/minio/warp_get_10gbps/1775126966_get_10gbps-64MiB_rep3_srv01_snapshot.csv
+Done.
+Opening firewall port 7761 on srv nodes...
+Starting warp client listeners on srv02 srv03 (port 7761)...
+r02-srv02 | CHANGED | rc=0 >>
+r04-srv03 | CHANGED | rc=0 >>
+Waiting for clients to bind port 7761...
+  → srv02: port 7761 ready
+  → srv03: port 7761 ready
+Done. Run 'benchctl warp status' to verify.
+  Running GET (64MiB, rep 3, 10gbps, obj.count=640)...
+r02-srv01 | CHANGED | rc=0 >>
+
+Report: GET. Concurrency: 64. Ran: 5m2s
+ * Average: 2325.84 MiB/s, 36.34 obj/s
+ * Reqs: Avg: 1724.2ms, 50%: 1705.0ms, 90%: 2351.4ms, 99%: 2692.2ms, Fastest: 119.1ms, Slowest: 10709.7ms, StdDev: 411.4ms
+ * TTFB: Avg: 10ms, Best: 3ms, 25th: 10ms, Median: 10ms, 75th: 11ms, 90th: 11ms, 99th: 13ms, Worst: 45ms StdDev: 1ms
+
+Throughput by host:
+ * http://192.168.11.21:9000: Avg: 306.13 MiB/s, 4.78 obj/s
+ * http://192.168.11.22:9000: Avg: 288.33 MiB/s, 4.51 obj/s
+ * http://192.168.11.23:9000: Avg: 287.51 MiB/s, 4.49 obj/s
+ * http://192.168.11.24:9000: Avg: 300.42 MiB/s, 4.69 obj/s
+ * http://192.168.11.25:9000: Avg: 285.72 MiB/s, 4.46 obj/s
+ * http://192.168.11.26:9000: Avg: 281.02 MiB/s, 4.39 obj/s
+ * http://192.168.11.27:9000: Avg: 301.49 MiB/s, 4.71 obj/s
+ * http://192.168.11.28:9000: Avg: 306.34 MiB/s, 4.79 obj/s
+
+Throughput by client:
+Client 1 throughput: 1183.11 MiB/s, 18.49 obj/s
+Client 2 throughput: 1173.67 MiB/s, 18.34 obj/s
+
+Throughput, split into 298 x 1s:
+ * Fastest: 2481.7MiB/s, 38.78 obj/s
+ * 50% Median: 2359.5MiB/s, 36.87 obj/s
+ * Slowest: 2166.4MiB/s, 33.85 obj/s
+
+──────────────────────────────────
+
+Report: PUT. Concurrency: 64. Ran: 35s
+ * Average: 2091.72 MiB/s, 32.68 obj/s
+ * Reqs: Avg: 1351.6ms, 50%: 1425.6ms, 90%: 2174.6ms, 99%: 2312.7ms, Fastest: 66.4ms, Slowest: 2986.9ms, StdDev: 693.6ms
+
+Throughput by host:
+ * http://192.168.11.21:9000: Avg: 293.48 MiB/s, 4.59 obj/s
+ * http://192.168.11.22:9000: Avg: 387.13 MiB/s, 6.05 obj/s
+ * http://192.168.11.23:9000: Avg: 221.88 MiB/s, 3.47 obj/s
+ * http://192.168.11.24:9000: Avg: 240.06 MiB/s, 3.75 obj/s
+ * http://192.168.11.25:9000: Avg: 301.30 MiB/s, 4.71 obj/s
+ * http://192.168.11.26:9000: Avg: 305.49 MiB/s, 4.77 obj/s
+ * http://192.168.11.27:9000: Avg: 273.69 MiB/s, 4.28 obj/s
+ * http://192.168.11.28:9000: Avg: 343.16 MiB/s, 5.36 obj/s
+
+Throughput by client:
+Client 1 throughput: 1181.29 MiB/s, 18.46 obj/s
+Client 2 throughput: 1180.74 MiB/s, 18.45 obj/s
+
+Throughput, split into 31 x 1s:
+ * Fastest: 2483.7MiB/s, 38.80 obj/s
+ * 50% Median: 2352.9MiB/s, 36.76 obj/s
+ * Slowest: 2266.5MiB/s, 35.42 obj/s
+/tmp/warp_fetch_get_10gbps_64MiB_rep3_1775126966_195829.zst: 1517543 bytes 
+  → /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/minio/warp_get_10gbps/1775126966_get_10gbps-64MiB_rep3_srv01.json
+
+  iperf3 verification (after, 10gbps)...
+  → Upload: 9958449610.0715256 bps (target ≤ 10000000000 bps) ✓
+Removing tc throttle from all app nodes...
+
+=== MinIO Network-Throttled Complete ===
+Removing tc throttle from all app nodes...

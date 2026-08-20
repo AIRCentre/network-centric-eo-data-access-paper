@@ -1,0 +1,174 @@
+# Paper-location hints for analysis/generate_provenance.jl.
+#
+# One entry per section tag emitted by analysis/paper_values.jl. Each
+# entry has:
+#   default_location: free-text paper location applied to every claim in
+#                     the section unless per_claim overrides.
+#   notes:            free-text note surfaced once per section in
+#                     PROVENANCE.md (optional).
+#   per_claim:        map of claim_id -> paper_location for claims that
+#                     need a more precise location than default_location
+#                     (optional).
+#
+# Paper-location strings should be human-readable. Typical patterns:
+#   "§5.2, Table 2"
+#   "§5.2, Table 2, row 'R750 app view', column 'min'"
+#   "§5.2 prose, paragraph 2"
+#   "§9, second paragraph, sentence 3"
+#
+# "[LOCATION TBD]" is the escape hatch for claims whose paper location is
+# unknown at hints-write time. In strict mode (the default for
+# regeneration) the generator fails on any [LOCATION TBD] it resolves. In
+# build mode (--allow-tbd) the generator permits them and reports a
+# summary of unresolved claims at the end of the run.
+#
+# Claims flow one-way: CSVs -> paper_values.jl -> paper_values.json ->
+# PROVENANCE.md -> paper prose. If this hints file disagrees with the
+# paper draft, the draft wins for locations; re-edit the hint. If the
+# hints file disagrees with paper_values.json about which section tags
+# exist, the generator fails loud.
+
+sections:
+
+  # ============================================================
+  # §5 Network Fabric Characterisation
+  # ============================================================
+
+  "5.2.table2":
+    default_location: "§5.2, Table 2"
+    notes: ""
+
+  "5.2.prose":
+    default_location: "§5.2 prose"
+    notes: "sec5_2_prose_r750_perstore_min_gbps and sec5_2_prose_r750_perstore_max_gbps are cited in v41 at two locations: §5.2 line 437 (the two-view R750 throughput statement) and §5.5 line 555 (the NUMA-context recap). The default location is §5.2; §5.5 reuses the values. Cross-reference recorded in decisions/2026-05-23_01.md."
+
+  "5.3.table3":
+    default_location: "§5.3, Table 3"
+    notes: ""
+
+  "5.3.prose":
+    default_location: "§5.3 prose"
+    notes: "The 60 s regime-change claim is a qualitative Figure 5 observation, not a tabular value."
+
+  "5.4.table4":
+    default_location: "§5.4, Table 4"
+    notes: ""
+
+  "5.4.prose":
+    default_location: "§5.4 prose"
+    notes: ""
+
+  "5.5.table5":
+    default_location: "§5.5, Table 5"
+    per_claim:
+      sec5_5_table5_perpair_throughput_per_node:
+        "§5.5, Table 5, row 'Per-pair', column 'Throughput per node'"
+      sec5_5_table5_stinbound_throughput_per_node:
+        "§5.5, Table 5, row 'Storage-inbound', column 'Throughput per node'"
+      sec5_5_table5_ststst_throughput_per_node:
+        "§5.5, Table 5, row 'St-to-st', column 'Throughput per node'"
+      sec5_5_table5_appoutbound_throughput_per_node:
+        "§5.5, Table 5, row 'App-outbound', column 'Throughput per node'"
+      sec5_5_table5_fullmesh_throughput_per_node:
+        "§5.5, Table 5, row 'Full-mesh', column 'Throughput per node'"
+
+  "5.5.prose":
+    default_location: "§5.5 prose"
+
+  "5.5.table5a":
+    default_location: "§5.5, Table 5a, row 'R7615 (modelling)', column 'Mem BW (GB/s)'"
+    notes: "Table 5a in v8 §5.5 is a distinct table ('Memory architecture and theoretical network saturation by node class'). Values appear as '~51', '~307', '~154' in the 'Mem BW (GB/s)' column."
+
+  "5.5.table5b":
+    default_location: "§5.5, Table 5b"
+    notes: "R7625 hardware specs (CPU, sockets/cores, memory, channels, theoretical memory bandwidth, bond capacity) reported in Table 5b at v41 lines 563–565. The R7625 fan-out measurement claims that share Table 5b's lower half remain tagged 5.5.prose because the substantive citation paragraph at v41 lines 566–573 is where they are read in flow; the table is a summary box for that prose. See decisions/2026-05-23_01.md."
+
+  "5.6.table6":
+    default_location: "§5.6, Table 6"
+    notes: "v41 Table 6 reports three numeric columns (mean, p95, max) at three load conditions (idle, 50%, 100%). The max column is annotated as the worst observed RTT across 24 pairs × 3 reps, not a percentile."
+
+  "5.7.prose":
+    default_location: "§5.7 prose"
+
+  "5.8.table7":
+    default_location: "§5.8, Table 7"
+
+  "5.8.prose":
+    default_location: "§5.8 prose"
+
+  "5.9.summary":
+    default_location: "§5.9 Summary"
+    notes: ""
+
+  # ============================================================
+  # §6 Object Storage and Data Access Evaluation
+  # ============================================================
+
+  "6.2.table8":
+    default_location: "§6.2, Table 8"
+    notes: ""
+
+  "6.3.table9":
+    default_location: "§6.3, Table 9"
+    notes: "v41 Table 9 reports the post-correction distributed multi-client throughput; the earlier rep-1 exclusion has been rolled into a re-run, so n_reps_effective = n_reps_original = 3 and excluded_reps = 0. The footnote that previously documented the exclusion no longer exists in v41. The three footnote-suffixed claims (n_reps_effective, n_reps_original, excluded_reps) are retained as table metadata and fall back to the default Table 9 location."
+
+  "6.3.prose":
+    default_location: "§6.3 prose"
+
+  "6.4.table10":
+    default_location: "§6.4, Table 10"
+    notes: ""
+
+  "6.5.table11":
+    default_location: "§6.5, Table 11"
+    notes: ""
+
+  "6.5.prose":
+    default_location: "§6.5 prose"
+
+  "6.6.table12":
+    default_location: "§6.6, Table 12"
+    notes: ""
+
+  "6.6.prose":
+    default_location: "§6.6 prose"
+    notes: ""
+
+  "6.7.summary":
+    default_location: "§6.7 Summary"
+    notes: ""
+
+  # ============================================================
+  # §8 Discussion
+  # ============================================================
+
+  "8.1.prose":
+    default_location: "§8.1 prose"
+    notes: "8.1 'The Network as a First-Class Resource'. Synthesises the throttled-vs-unthrottled headline ratio and the §5.2 / §6 transfer-time claims. Most claims are cross-references to §5 / §6 canonical values."
+
+  "8.2.prose":
+    default_location: "§8.2 prose"
+    notes: "8.2 'Implications for Hardware Selection and Procurement'. Derives the R6525 NUMA-remote-access fraction (75%) from the populated-vs-total NUMA node ratio. Other claims cross-reference §5.2."
+
+  "8.3.prose":
+    default_location: "§8.3 prose"
+    notes: "8.3 'LACP Bonding Under Parallel EO Workloads'. Cross-references to §5.4 stream-CV values (per-pair, full-mesh, st-to-st)."
+
+  "8.5.prose":
+    default_location: "§8.5 prose"
+    notes: "8.5 'Benchmarking as a Diagnostic Tool'. All claims are NARRATIVE pre-fix anecdotes (st04 BIOS, srv01 Docker Swarm, st06 SACK). Values are anecdotal and not in the current CSVs; preserved for narrative continuity."
+
+  "8.6.prose":
+    default_location: "§8.6 prose"
+    notes: "8.6 'Relevance to Distributed EO Infrastructure'. Single-client GET headline (10107 MiB/s = 84.8 Gbps), 1 Gbps comparison (225 MiB/s), and the Lisbon RTT preliminary measurement (29 ms; cited narratively, not from benchmark CSVs)."
+    per_claim:
+      sec9_6_lisbon_rtt:
+        "§8.6 prose, preliminary external measurement; narrative claim"
+
+  # ============================================================
+  # §9 Conclusion and Future Work
+  # ============================================================
+
+  "9.summary":
+    default_location: "§9 prose"
+    notes: "Headline figures recapitulated in the Conclusion: st-to-st aggregate (1378.6 Gbps, 86.2% of theoretical), distributed 2 GiB GET (17,287 MiB/s), and the 512 MiB transfer-time triple (29 ms / 218 ms / 2.26 s) plus the 79x range factor."

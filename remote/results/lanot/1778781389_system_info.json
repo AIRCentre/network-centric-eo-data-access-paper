@@ -1,0 +1,13 @@
+{
+    "hostname": "Lanot24.",
+    "os": "Linux",
+    "os_version": "5.15.167.4-microsoft-standard-WSL2",
+    "arch": "x86_64",
+    "date_utc": "2026-05-14T17:56:32Z",
+    "timezone": "CDT",
+    "curl_version": "curl 7.68.0 (x86_64-pc-linux-gnu) libcurl/7.68.0 OpenSSL/1.1.1f zlib/1.2.11 brotli/1.0.7 libidn2/2.2.0 libpsl/0.21.0 (+libidn2/2.2.0) libssh/0.9.3/openssl/zlib nghttp2/1.40.0 librtmp/2.3",
+    "site": "lanot",
+    "location": "Mexico City, Mexico",
+    "isp": "Red UNAM / DGTIC-UNAM",
+    "connection_type": "office"
+}

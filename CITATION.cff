@@ -1,0 +1,52 @@
+cff-version: 1.2.0
+message: "If you use this artefact, please cite the paper it accompanies."
+title: >-
+  Benchmark data and analysis for "Design and Empirical Evaluation of a
+  Network-Centric, On-Premises Architecture for Earth Observation Data Access"
+type: dataset
+license: CC-BY-4.0
+authors:
+  - family-names: Pinelo
+    given-names: João
+    affiliation: "AIR Centre, Azores, Portugal"
+  - family-names: Gonçalves
+    given-names: João
+    affiliation: "AIR Centre, Azores, Portugal"
+  - family-names: Willett
+    given-names: Denis
+    affiliation: "North Carolina Institute for Climate Studies (NCICS/NOAA), USA"
+    orcid: "https://orcid.org/0000-0001-5351-7917"
+  - family-names: Ruhela
+    given-names: Amit
+    affiliation: "Texas Advanced Computing Center, The University of Texas at Austin, USA"
+  - family-names: Steinmoeller
+    given-names: Derek
+    affiliation: "University of Waterloo, Waterloo, Ontario, Canada"
+  - family-names: Mendoza
+    given-names: Uriel
+    affiliation: >-
+      Laboratorio Nacional de Observación de la Tierra (LANOT), Universidad
+      Nacional Autónoma de México, Mexico
+  - family-names: Alao
+    given-names: Pelumi S.
+    affiliation: "National Space Research and Development Agency (NASRDA), Nigeria"
+  - family-names: Soares Lopes
+    given-names: Ronald
+    affiliation: "Instituto Federal Fluminense (IFF), Brazil"
+  - family-names: Atem de Carvalho
+    given-names: Rogerio
+    affiliation: "Instituto Federal Fluminense (IFF), Brazil"
+    orcid: "https://orcid.org/0000-0003-4429-2482"
+  - family-names: Mattos
+    given-names: Pedro
+    affiliation: >-
+      Laboratório de Métodos Computacionais em Engenharia (LAMCE),
+      Universidade Federal do Rio de Janeiro, Brazil
+keywords:
+  - Earth observation
+  - object storage
+  - network fabric characterisation
+  - 100 Gigabit Ethernet
+  - cloud-native data format
+  - multi-site replication
+  - research data federation

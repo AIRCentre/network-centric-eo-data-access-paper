@@ -1,0 +1,23 @@
+{
+    "test": "network_baseline",
+    "timestamp_utc": "2026-04-24T15:17:11Z",
+    "epoch": 1777043805,
+    "target": "eo-catalog.ac-az1.aircentre.org",
+    "ping": {
+        "count": 20,
+        "timeout_s": 5,
+        "rtt_min_ms": 71.689,
+        "rtt_avg_ms": 71.830,
+        "rtt_max_ms": 72.015,
+        "rtt_stddev_ms": 0.066,
+        "packet_loss": "0%"
+    },
+    "traceroute": {
+        "hops": 9,
+        "raw": "traceroute to eo-catalog.ac-az1.aircentre.org (194.210.4.227), 15 hops max, 60 byte packets\n 1  142.251.249.101 (142.251.249.101)  3.192 ms  3.339 ms  8.056 ms\n 2  192.178.99.214 (192.178.99.214)  8.333 ms 192.178.104.102 (192.178.104.102)  22.667 ms 108.170.255.202 (108.170.255.202)  41.017 ms\n 3  * * *\n 4  fccn-ap1-ias-gw.rt0.lis.pt.geant.net (83.97.88.209)  52.745 ms  38.478 ms  33.695 ms\n 5  fccn-ias-ap1-gw.rt0.lis.pt.geant.net (83.97.88.210)  44.814 ms  44.326 ms  81.990 ms\n 6  Router30.Lisboa.fccn.pt (194.210.6.102)  48.975 ms  49.207 ms Router60.Lisboa.fccn.pt (194.210.6.202)  44.343 ms\n 7  Router33.Lisboa.fccn.pt (194.210.6.111)  44.882 ms Router33.Lisboa.fccn.pt (194.210.6.211)  49.595 ms Router33.Lisboa.fccn.pt (194.210.6.111)  69.694 ms\n 8  * * *\n 9  * * *\n10  * * *\n11  * * *\n12  * * *\n13  * * *\n14  * * *\n15  * * *\n"
+    },
+    "bandwidth_probe": {
+        "url": "https://eo-catalog.ac-az1.aircentre.org/api/v1",
+        "samples": [{"rep":1,"dns_s":0.001290,"connect_s":0.069065,"ttfb_s":0.215486,"total_s":0.215547,"speed_bytes_s":3586,"size_bytes":773},{"rep":2,"dns_s":0.001280,"connect_s":0.073212,"ttfb_s":0.227934,"total_s":0.228277,"speed_bytes_s":3386,"size_bytes":773},{"rep":3,"dns_s":0.001196,"connect_s":0.072765,"ttfb_s":0.227136,"total_s":0.227298,"speed_bytes_s":3400,"size_bytes":773},{"rep":4,"dns_s":0.001343,"connect_s":0.068463,"ttfb_s":0.213689,"total_s":0.213779,"speed_bytes_s":3615,"size_bytes":773},{"rep":5,"dns_s":0.001205,"connect_s":0.072984,"ttfb_s":0.227368,"total_s":0.227445,"speed_bytes_s":3398,"size_bytes":773}]
+    }
+}

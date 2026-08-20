@@ -1,0 +1,362 @@
+#!/bin/bash
+set -eo pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "$SCRIPT_DIR/common"
+
+OUTPUT_BASE="${OUTPUT_BASE:-$REPO_ROOT/benchmarks/outputs/minio}"
+REPETITIONS="${REPETITIONS:-1}"
+DURATION="${DURATION:-10}"
+IDLE_WAIT="${IDLE_WAIT:-2}"
+RATE="${RATE:-both}"
+MODE="${MODE:-both}"
+declare -A TC_CONCURRENT TC_OBJ_COUNT
+TC_CONCURRENT[1gbps]=4
+TC_CONCURRENT[10gbps]=32
+# --objects targets ~30s pre-populate at each rate/size (floor: 2×CONCURRENT)
+TC_OBJ_COUNT[1gbps_4MiB]=500
+TC_OBJ_COUNT[1gbps_512MiB]=8
+TC_OBJ_COUNT[10gbps_4MiB]=2500
+TC_OBJ_COUNT[1gbps_64MiB]=64
+TC_OBJ_COUNT[10gbps_64MiB]=640
+TC_OBJ_COUNT[10gbps_512MiB]=64
+# SIZES=(4MiB 64MiB 512MiB)
+SIZES=(64MiB)
+
+WARP_ACCESS_KEY="${WARP_ACCESS_KEY:?WARP_ACCESS_KEY not set}"
+WARP_SECRET_KEY="${WARP_SECRET_KEY:?WARP_SECRET_KEY not set}"
+
+# Warp client port (default 7761)
+WARP_CLIENT_PORT=7761
+
+# Coordinator and client nodes
+coordinator="srv01"
+client_nodes=(srv02 srv03)
+all_app_nodes=(srv01 srv02 srv03)
+
+# tc parameters per issue #15
+declare -A TC_RATE TC_BURST
+TC_RATE[1gbps]="1gbit"
+TC_RATE[10gbps]="10gbit"
+TC_BURST[1gbps]="1mb"
+TC_BURST[10gbps]="10mb"
+TC_LATENCY="10ms"
+
+# iperf3 verification: port 5201, 8 parallel streams, 30s
+IPERF_PORT=5201
+IPERF_STREAMS=8
+IPERF_DURATION=30
+
+# iperf3 target: st01
+IPERF_TARGET="${STORAGE_IPS[st01]}"
+
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        --duration)    DURATION="$2";    shift 2 ;;
+        --repetitions) REPETITIONS="$2"; shift 2 ;;
+        --idle-wait)   IDLE_WAIT="$2";   shift 2 ;;
+        --output-dir)
+            OUTPUT_BASE="$2"
+            shift 2
+            ;;
+        --rate)        RATE="$2";        shift 2 ;;
+        --mode)        MODE="$2";        shift 2 ;;
+        --port)        WARP_CLIENT_PORT="$2"; shift 2 ;;
+        --help|-h)
+            echo "Usage: benchctl run minio throttled [1g|10g|both] [put|get|both]"
+            echo ""
+            echo "Options:"
+            echo "  --duration <seconds>   Duration per warp run (default: 10)"
+            echo "  --repetitions <n>      Number of repetitions (default: 1)"
+            echo "  --idle-wait <seconds>  Idle wait before snapshot (default: 2)"
+            echo "  --rate <1g|10g|both>   Throttle rate to test (default: both)"
+            echo "  --mode <put|get|both>  Operation mode (default: both)"
+            echo "  --port <port>          Warp client port (default: 7761)"
+            echo ""
+            echo "Throttle device: bond0 on all app nodes (srv01-srv03)"
+            echo "tc params:  1g = rate 1gbit burst 1mb latency 10ms"
+            echo "            10g = rate 10gbit burst 10mb latency 10ms"
+            echo "NOTE: Ansible uses bond0. SSH is minimally affected at both rates."
+            echo "NOTE: Requires benchctl warp start (clients on srv02, srv03)"
+            echo "Coordinator: srv01"
+            echo "Credentials: WARP_ACCESS_KEY / WARP_SECRET_KEY (from .env)"
+            exit 0
+            ;;
+        *)
+            echo "Error: Unknown option: $1"
+            echo "Use --help for usage"
+            exit 1
+            ;;
+    esac
+done
+
+# Resolve rate list
+case "$RATE" in
+    1g)   RATES=(1gbps) ;;
+    10g)  RATES=(10gbps) ;;
+    both) RATES=(1gbps 10gbps) ;;
+    *)
+        echo "Error: Unknown rate: $RATE. Use 1g, 10g, or both."
+        exit 1
+        ;;
+esac
+
+# Build --warp-client argument string
+warp_client_arg=""
+for node in "${client_nodes[@]}"; do
+    ip="${APP_IPS[$node]}"
+    if [[ -n "$warp_client_arg" ]]; then
+        warp_client_arg="${warp_client_arg},${ip}:${WARP_CLIENT_PORT}"
+    else
+        warp_client_arg="${ip}:${WARP_CLIENT_PORT}"
+    fi
+done
+
+# Build --host argument: all 8 storage nodes in single comma-separated value
+# NOTE: warp treats repeated --host flags as overrides (last wins), not accumulation
+warp_hosts="${STORAGE_IPS[st01]}:9000,${STORAGE_IPS[st02]}:9000,${STORAGE_IPS[st03]}:9000,${STORAGE_IPS[st04]}:9000,${STORAGE_IPS[st05]}:9000,${STORAGE_IPS[st06]}:9000,${STORAGE_IPS[st07]}:9000,${STORAGE_IPS[st08]}:9000"
+
+# ---- tc lifecycle ----
+
+tc_preflight() {
+    echo "Pre-flight: removing any stale tc rules from prior runs..."
+    for node in "${all_app_nodes[@]}"; do
+        run_ansible_become "$node" shell \
+            "tc filter del dev bond0 parent ffff: pref 900 2>/dev/null || true" > /dev/null 2>&1
+        run_ansible_become "$node" shell \
+            "tc qdisc del dev ifb-eth0 root 2>/dev/null || true" > /dev/null 2>&1
+        run_ansible_become "$node" shell \
+            "ip link del ifb-eth0 2>/dev/null || true" > /dev/null 2>&1
+        run_ansible_become "$node" shell \
+            "tc qdisc del dev bond0 root 2>/dev/null || true" > /dev/null 2>&1
+        run_ansible_become "$node" shell \
+            "tc qdisc del dev bond0 ingress 2>/dev/null || true" > /dev/null 2>&1
+    done
+}
+
+tc_apply() {
+    local rate_key="$1"   # 1gbps or 10gbps
+    local rate="${TC_RATE[$rate_key]}"
+    local burst="${TC_BURST[$rate_key]}"
+    echo "Applying tc throttle ($rate_key) on all app nodes..."
+    for node in "${all_app_nodes[@]}"; do
+        run_ansible_become "$node" shell \
+            "tc qdisc replace dev bond0 root handle 0001: tbf rate $rate burst $burst latency $TC_LATENCY" \
+            > /dev/null \
+            || { echo "Error: tc_apply failed on $node"; return 1; }
+        run_ansible_become "$node" shell \
+            "tc qdisc add dev bond0 handle ffff: ingress" > /dev/null 2>&1 || true
+        run_ansible_become "$node" shell \
+            "ip link add ifb-eth0 type ifb" > /dev/null 2>&1 || true
+        run_ansible_become "$node" shell \
+            "ip link set ifb-eth0 up" > /dev/null 2>&1
+        run_ansible_become "$node" shell \
+            "tc qdisc add dev ifb-eth0 root tbf rate $rate burst $burst latency $TC_LATENCY" \
+            > /dev/null 2>&1 \
+            || { echo "Error: ifb tbf failed on $node"; return 1; }
+        run_ansible_become "$node" shell \
+            "tc filter add dev bond0 parent ffff: protocol all pref 900 u32 match u32 0 0 action mirred egress redirect dev ifb-eth0" \
+            || { echo "Error: ifb filter failed on $node"; return 1; }
+        echo "  → $node: $rate burst $burst (egress + ingress)"
+    done
+    sleep 1
+}
+
+tc_remove() {
+    echo "Removing tc throttle from all app nodes..."
+    for node in "${all_app_nodes[@]}"; do
+        run_ansible_become "$node" shell \
+            "tc filter del dev bond0 parent ffff: pref 900 2>/dev/null || true" > /dev/null 2>&1
+        run_ansible_become "$node" shell \
+            "tc qdisc del dev ifb-eth0 root 2>/dev/null || true" > /dev/null 2>&1
+        run_ansible_become "$node" shell \
+            "ip link del ifb-eth0 2>/dev/null || true" > /dev/null 2>&1
+        run_ansible_become "$node" shell \
+            "tc qdisc del dev bond0 root 2>/dev/null || true" > /dev/null 2>&1
+    done
+}
+
+# ---- iperf3 verification ----
+
+iperf3_verify() {
+    local phase="$1"    # before or after
+    local rate_key="$2" # 1gbps or 10gbps
+    local epoch="$3"
+    local out_dir="$4"
+
+    echo "  iperf3 verification ($phase, $rate_key)..."
+
+    # Upload direction (measures egress throttle — affects PUT)
+    run_ansible "$coordinator" shell \
+        "iperf3 -c $IPERF_TARGET -p $IPERF_PORT -P $IPERF_STREAMS -t $IPERF_DURATION --json 2>/dev/null" \
+        | strip_ansible_header \
+        > "$out_dir/${epoch}_tc_verify_${rate_key}_${phase}_${coordinator}.json" \
+        || echo "Warning: iperf3 upload verification failed ($phase $rate_key)"
+
+    # Reverse direction (measures ingress — affects GET)
+    run_ansible "$coordinator" shell \
+        "iperf3 -c $IPERF_TARGET -p $IPERF_PORT -P $IPERF_STREAMS -t $IPERF_DURATION -R --json 2>/dev/null" \
+        | strip_ansible_header \
+        > "$out_dir/${epoch}_tc_verify_${rate_key}_${phase}_reverse_${coordinator}.json" \
+        || echo "Warning: iperf3 reverse verification failed ($phase $rate_key)"
+
+    # Assert upload throughput within 20% of target
+    local target_bps
+    case "$rate_key" in
+        1gbps)  target_bps=1000000000 ;;
+        10gbps) target_bps=10000000000 ;;
+    esac
+    local verify_file="$out_dir/${epoch}_tc_verify_${rate_key}_${phase}_${coordinator}.json"
+    if [[ -f "$verify_file" ]]; then
+        local measured measured_int
+        measured=$(jq -r '.end.sum_sent.bits_per_second // 0' "$verify_file" 2>/dev/null || echo 0)
+        measured_int=$(awk "BEGIN {printf \"%.0f\", $measured}")
+        local threshold=$(( target_bps * 12 / 10 ))  # 120% of target
+        if (( measured_int > threshold )); then
+            echo "FATAL: tc not effective — measured ${measured} bps exceeds 120% of target ${target_bps} bps"
+            echo "       Check tc rules on app nodes before proceeding"
+            return 1
+        fi
+        echo "  → Upload: ${measured} bps (target ≤ ${target_bps} bps) ✓"
+    fi
+}
+
+# ---- warp run ----
+
+
+REMOTE_TMP=""
+cleanup() {
+    tc_remove
+    if [[ -n "$REMOTE_TMP" ]]; then
+        run_ansible "$coordinator" "shell" "rm -f ${REMOTE_TMP}*" > /dev/null 2>&1 || true
+        REMOTE_TMP=""
+    fi
+}
+trap cleanup EXIT
+trap 'cleanup; exit 1' INT TERM
+
+warp_run() {
+    local op="$1"
+    local size="$2"
+    local rep="$3"
+    local epoch="$4"
+    local out_dir="$5"
+    local rate_key="$6"
+    local concurrent="$7"
+
+    local tmp_base="/tmp/warp_${op}_${rate_key}_${size}_rep${rep}_${epoch}_$$"
+    local tmp_zst="${tmp_base}.json.zst"
+    local tmp_local="/tmp/warp_fetch_${op}_${rate_key}_${size}_rep${rep}_${epoch}_$$.zst"
+    local out_file="$out_dir/${epoch}_${op}_${rate_key}-${size}_rep${rep}_${coordinator}.json"
+
+    local obj_count_arg=""
+    if [[ "$op" == "get" ]]; then
+        local obj_count="${TC_OBJ_COUNT[${rate_key}_${size}]}"
+        obj_count_arg="--objects $obj_count"
+    fi
+    echo "  Running ${op^^} ($size, rep $rep, $rate_key${obj_count_arg:+, obj.count=${obj_count_arg##* }})..."
+
+    REMOTE_TMP="$tmp_base"
+    run_ansible "$coordinator" "shell" \
+        "warp $op \
+            --host $warp_hosts \
+            --warp-client ${warp_client_arg} \
+            --access-key $WARP_ACCESS_KEY --secret-key $WARP_SECRET_KEY \
+            --obj.size $size --concurrent $concurrent $obj_count_arg \
+            --duration ${DURATION}s \
+            --benchdata $tmp_base" \
+        || { echo "Error: warp $op failed for $size rep $rep ($rate_key)"; return 1; }
+
+    run_ansible "$coordinator" "fetch" "src=$tmp_zst dest=$tmp_local flat=yes" \
+        > /dev/null \
+        || { echo "Error: fetch failed for $size rep $rep ($rate_key)"; return 1; }
+
+    zstd -d "$tmp_local" -o "$out_file" \
+        || { echo "Error: decompress failed for $size rep $rep ($rate_key)"; rm -f "$tmp_local" "$out_file"; return 1; }
+
+    run_ansible "$coordinator" "shell" "rm -f $tmp_zst" > /dev/null || true
+    rm -f "$tmp_local"
+    REMOTE_TMP=""
+
+    echo "  → $out_file"
+}
+
+# ---- main ----
+
+echo "=== MinIO Network-Throttled Baseline (Section 2.4) ==="
+echo "Coordinator: $coordinator"
+echo "Clients: ${client_nodes[*]}"
+echo "Rates: ${RATES[*]}"
+echo "Duration: ${DURATION}s per run"
+echo "Concurrent: 1gbps=${TC_CONCURRENT[1gbps]}, 10gbps=${TC_CONCURRENT[10gbps]}"
+echo "Obj count:  1gbps/4MiB=${TC_OBJ_COUNT[1gbps_4MiB]}, 1gbps/512MiB=${TC_OBJ_COUNT[1gbps_512MiB]}, 10gbps/4MiB=${TC_OBJ_COUNT[10gbps_4MiB]}, 10gbps/512MiB=${TC_OBJ_COUNT[10gbps_512MiB]}"
+echo "Repetitions: $REPETITIONS"
+echo "Mode: $MODE"
+echo "Sizes: ${SIZES[*]}"
+echo ""
+
+tc_preflight
+
+for rate_key in "${RATES[@]}"; do
+    out_put="$OUTPUT_BASE/warp_put_${rate_key}"
+    out_get="$OUTPUT_BASE/warp_get_${rate_key}"
+    out_verify="$OUTPUT_BASE/tc_verification"
+    mkdir -p "$out_put" "$out_get" "$out_verify"
+
+    concurrent=${TC_CONCURRENT[$rate_key]}
+    echo "=== Rate: $rate_key (concurrent: $concurrent) ==="
+    tc_apply "$rate_key"
+
+    VERIFY_EPOCH=$(date +%s)
+    iperf3_verify "before" "$rate_key" "$VERIFY_EPOCH" "$out_verify"
+
+    for rep in $(seq 1 $REPETITIONS); do
+        echo "=== Repetition $rep/$REPETITIONS ==="
+
+        for SIZE in "${SIZES[@]}"; do
+            echo "  Size: $SIZE"
+
+            if [[ "$MODE" == "put" || "$MODE" == "both" ]]; then
+                EPOCH=$(date +%s)
+                "$SCRIPT_DIR/system_snapshot" \
+                    --rep "$rep" \
+                    --meta "$coordinator" \
+                    --metric "put" \
+                    --qualifier "${rate_key}-${SIZE}" \
+                    --epoch "$EPOCH" \
+                    --output-dir "$out_put" \
+                    --idle-wait "$IDLE_WAIT" || echo "Warning: system_snapshot failed, continuing..."
+
+                "$SCRIPT_DIR/warp" start
+                warp_run "put" "$SIZE" "$rep" "$EPOCH" "$out_put" "$rate_key" "$concurrent" \
+                    || echo "Warning: PUT failed for $SIZE rep $rep ($rate_key), continuing..."
+            fi
+
+            if [[ "$MODE" == "get" || "$MODE" == "both" ]]; then
+                EPOCH=$(date +%s)
+                "$SCRIPT_DIR/system_snapshot" \
+                    --rep "$rep" \
+                    --meta "$coordinator" \
+                    --metric "get" \
+                    --qualifier "${rate_key}-${SIZE}" \
+                    --epoch "$EPOCH" \
+                    --output-dir "$out_get" \
+                    --idle-wait "$IDLE_WAIT" || echo "Warning: system_snapshot failed, continuing..."
+
+                "$SCRIPT_DIR/warp" start
+                warp_run "get" "$SIZE" "$rep" "$EPOCH" "$out_get" "$rate_key" "$concurrent" \
+                    || echo "Warning: GET failed for $SIZE rep $rep ($rate_key), continuing..."
+            fi
+
+            echo ""
+        done
+    done
+
+    VERIFY_EPOCH=$(date +%s)
+    iperf3_verify "after" "$rate_key" "$VERIFY_EPOCH" "$out_verify"
+
+    tc_remove
+    echo ""
+done
+
+echo "=== MinIO Network-Throttled Complete ==="

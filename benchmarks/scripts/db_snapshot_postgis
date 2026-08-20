@@ -1,0 +1,80 @@
+#!/bin/bash
+set -eo pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "$SCRIPT_DIR/common"
+
+PG_URI="${PG_URI:?PG_URI not set}"
+
+# Defaults
+EPOCH="${EPOCH:-$(date +%s)}"
+REP="${REP:-1}"
+METRIC=""
+QUALIFIER=""
+OUTPUT_DIR="${OUTPUT_DIR:-$REPO_ROOT/benchmarks/outputs/database/postgis}"
+
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        --epoch)      EPOCH="$2";      shift 2 ;;
+        --rep)        REP="$2";        shift 2 ;;
+        --metric)     METRIC="$2";     shift 2 ;;
+        --qualifier)  QUALIFIER="$2";  shift 2 ;;
+        --output-dir) OUTPUT_DIR="$2"; shift 2 ;;
+        --help|-h)
+            echo "Usage: db_snapshot_postgis --metric <q1-point|q2-bbox|q3-knn> --qualifier <1M|10M|...> [options]"
+            echo ""
+            echo "Options:"
+            echo "  --metric <metric>      Query type (required)"
+            echo "  --qualifier <qual>     Scale level (required)"
+            echo "  --epoch <ts>           Epoch timestamp (default: now)"
+            echo "  --rep <n>              Repetition number (default: 1)"
+            echo "  --output-dir <dir>     Output directory"
+            exit 0
+            ;;
+        *) echo "Error: Unknown option: $1" >&2; exit 1 ;;
+    esac
+done
+
+if [[ -z "$METRIC" || -z "$QUALIFIER" ]]; then
+    echo "Error: --metric and --qualifier are required" >&2
+    exit 1
+fi
+
+mkdir -p "$OUTPUT_DIR"
+
+OUTPUT_FILE="$OUTPUT_DIR/${EPOCH}_${METRIC}_${QUALIFIER}_rep${REP}_postgis_snapshot.csv"
+
+echo "metric,value" > "$OUTPUT_FILE"
+
+psql "$PG_URI" -t -A -F',' -c "
+SELECT 'active_connections', numbackends
+  FROM pg_stat_database WHERE datname = current_database()
+UNION ALL
+SELECT 'cache_hit_ratio',
+  CASE WHEN (heap_blks_hit + heap_blks_read) = 0 THEN 0
+       ELSE round(heap_blks_hit::numeric / (heap_blks_hit + heap_blks_read), 4)
+  END
+  FROM pg_statio_user_tables WHERE relname = 'eo_metadata'
+UNION ALL
+SELECT 'table_size_mb',
+  round(pg_total_relation_size('eo_metadata') / 1024.0 / 1024, 2)
+UNION ALL
+SELECT 'index_gist_size_mb',
+  round(pg_relation_size('idx_footprint') / 1024.0 / 1024, 2)
+UNION ALL
+SELECT 'index_ts_size_mb',
+  round(pg_relation_size('idx_timestamp') / 1024.0 / 1024, 2)
+UNION ALL
+SELECT 'shared_buffers_used_pct',
+  round(100.0 * (SELECT count(*) FROM pg_buffercache WHERE reldatabase = (SELECT oid FROM pg_database WHERE datname = current_database())) /
+        (SELECT setting::bigint FROM pg_settings WHERE name = 'shared_buffers'), 2)
+UNION ALL
+SELECT 'seq_scans', seq_scan
+  FROM pg_stat_user_tables WHERE relname = 'eo_metadata'
+UNION ALL
+SELECT 'idx_scans', idx_scan
+  FROM pg_stat_user_tables WHERE relname = 'eo_metadata'
+;" >> "$OUTPUT_FILE" \
+    || echo "Warning: PostGIS snapshot capture failed"
+
+echo "  → $OUTPUT_FILE"

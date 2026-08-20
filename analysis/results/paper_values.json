@@ -1,0 +1,2517 @@
+{
+    "canonical": {
+        "fullmesh_degradation_mean_pct": 79.5,
+        "r750_app_min_gbps": 319.8,
+        "error_rate": 1.889159467105074e-10,
+        "put_spread_range_max_pct": 9,
+        "total_errors": 3,
+        "r750_store_min_gbps": 339.2,
+        "transfer_512mib_10g_ms": 218.19,
+        "fullmesh_total_gbps_mean": 529,
+        "transfer_512mib_100g_ms": 28.53,
+        "r750_store_max_gbps": 352.3,
+        "ststst_pct_of_theoretical": 86.2,
+        "fullmesh_degradation_max_pct": 88.3,
+        "ststst_total_gbps_mean": 1378.6,
+        "throttled_range_factor": 79,
+        "transfer_512mib_1g_s": 2.26,
+        "packets_per_run": 5293359388,
+        "fullmesh_pct_of_theoretical": 44.1,
+        "r6525_per_node_min_gbps": 168.7,
+        "r6525_per_node_pct": 44.1,
+        "r6525_per_node_mean_gbps": 176.3,
+        "distributed_512mib_get_mean_mibs": 17945.85,
+        "r6525_per_node_max_gbps": 191.7,
+        "perpair_total_gbps_mean": 2570.3,
+        "fullmesh_degradation_min_pct": 66.7,
+        "put_spread_range_min_pct": 4,
+        "r750_app_max_gbps": 359.3,
+        "total_packets": 15880078163,
+        "n_reps_packetloss": 3
+    },
+    "generated_by": "analysis/paper_values.jl",
+    "config": {
+        "STST_THEORETICAL_GBPS": 1600,
+        "FM_THEORETICAL_GBPS": 1200,
+        "R750_MEMORY_BW_GBPS": 307.2,
+        "R7615_MEMORY_BW_GBPS": 153.6,
+        "N_PARALLEL_STREAMS": 8,
+        "BOND_CAPACITY_GBPS": 400,
+        "R6525_NPS": 4,
+        "R6525_NUMA_NODES_TOTAL": 8,
+        "R6525_NUMA_NODES_POPULATED": 2,
+        "R7625_MEMORY_BW_GBPS": 921.6,
+        "R6525_MEMORY_BW_GBPS": 51.2
+    },
+    "sections": [
+        {
+            "claims": [
+                {
+                    "value": 2570.3,
+                    "unit": "Gbps",
+                    "id": "sec5_2_table2_perpair_aggregate_gbps_mean",
+                    "type": "DERIVED",
+                    "status": "OK",
+                    "source": "track1_aggregate_per_rep.csv, mode=per-pair, mean(total_gbps)"
+                },
+                {
+                    "value": 11.5,
+                    "unit": "Gbps",
+                    "id": "sec5_2_table2_perpair_aggregate_gbps_std",
+                    "type": "DERIVED",
+                    "status": "OK",
+                    "source": "track1_aggregate_per_rep.csv, mode=per-pair, std(total_gbps)"
+                },
+                {
+                    "value": 107.1,
+                    "unit": "Gbps",
+                    "id": "sec5_2_table2_perpair_perpair_mean_gbps",
+                    "type": "DERIVED",
+                    "status": "OK",
+                    "source": "track1_per_pair_per_pair.csv, mean(mean_gbps) across 24 pairs"
+                },
+                {
+                    "value": 13,
+                    "unit": "count",
+                    "id": "sec5_2_table2_perpair_retransmits",
+                    "type": "DERIVED",
+                    "status": "OK",
+                    "source": "track1_aggregate_per_rep.csv, mode=per-pair, mean(total_retransmits) rounded"
+                },
+                {
+                    "value": 2458,
+                    "unit": "Gbps",
+                    "id": "sec5_2_table2_stinbound_aggregate_gbps_mean",
+                    "type": "DERIVED",
+                    "status": "OK",
+                    "source": "track1_aggregate_per_rep.csv, mode=st-inbound, mean(total_gbps)"
+                },
+                {
+                    "value": 34.1,
+                    "unit": "Gbps",
+                    "id": "sec5_2_table2_stinbound_aggregate_gbps_std",
+                    "type": "DERIVED",
+                    "status": "OK",
+                    "source": "track1_aggregate_per_rep.csv, mode=st-inbound, std(total_gbps)"
+                },
+                {
+                    "value": 102.4,
+                    "unit": "Gbps",
+                    "id": "sec5_2_table2_stinbound_perpair_mean_gbps",
+                    "type": "DERIVED",
+                    "status": "OK",
+                    "source": "track1_st_inbound_per_pair.csv, mean(mean_gbps) across 24 pairs"
+                },
+                {
+                    "value": 19,
+                    "unit": "count",
+                    "id": "sec5_2_table2_stinbound_retransmits",
+                    "type": "DERIVED",
+                    "status": "OK",
+                    "source": "track1_aggregate_per_rep.csv, mode=st-inbound, mean(total_retransmits) rounded"
+                },
+                {
+                    "value": 522.9,
+                    "unit": "Gbps",
+                    "id": "sec5_2_table2_appoutbound_aggregate_gbps_mean",
+                    "type": "DERIVED",
+                    "status": "OK",
+                    "source": "track1_aggregate_per_rep.csv, mode=app-outbound, mean(total_gbps)"
+                },
+                {
+                    "value": 4.3,
+                    "unit": "Gbps",
+                    "id": "sec5_2_table2_appoutbound_aggregate_gbps_std",
+                    "type": "DERIVED",
+                    "status": "OK",
+                    "source": "track1_aggregate_per_rep.csv, mode=app-outbound, std(total_gbps)"
+                },
+                {
+                    "value": 21,
+                    "unit": "count",
+                    "id": "sec5_2_table2_appoutbound_retransmits",
+                    "type": "DERIVED",
+                    "status": "OK",
+                    "source": "track1_aggregate_per_rep.csv, mode=app-outbound, mean(total_retransmits) rounded"
+                },
+                {
+                    "value": 529,
+                    "unit": "Gbps",
+                    "id": "sec5_2_table2_fullmesh_aggregate_gbps_mean",
+                    "type": "DERIVED",
+                    "status": "OK",
+                    "source": "track1_aggregate_per_rep.csv, mode=full-mesh, mean(total_gbps)"
+                },
+                {
+                    "value": 14,
+                    "unit": "Gbps",
+                    "id": "sec5_2_table2_fullmesh_aggregate_gbps_std",
+                    "type": "DERIVED",
+                    "status": "OK",
+                    "source": "track1_aggregate_per_rep.csv, mode=full-mesh, std(total_gbps)"
+                },
+                {
+                    "value": 22,
+                    "unit": "Gbps",
+                    "id": "sec5_2_table2_fullmesh_perpair_mean_gbps",
+                    "type": "DERIVED",
+                    "status": "OK",
+                    "source": "track1_full_mesh_per_pair.csv, mean(mean_gbps) across 24 pairs"
+                },
+                {
+                    "value": 20,
+                    "unit": "count",
+                    "id": "sec5_2_table2_fullmesh_retransmits",
+                    "type": "DERIVED",
+                    "status": "OK",
+                    "source": "track1_aggregate_per_rep.csv, mode=full-mesh, mean(total_retransmits) rounded"
+                },
+                {
+                    "value": 1378.6,
+                    "unit": "Gbps",
+                    "id": "sec5_2_table2_ststst_aggregate_gbps_mean",
+                    "type": "DERIVED",
+                    "status": "OK",
+                    "source": "track1_aggregate_per_rep.csv, mode=st-to-st, mean(total_gbps)"
+                },
+                {
+                    "value": 31.1,
+                    "unit": "Gbps",
+                    "id": "sec5_2_table2_ststst_aggregate_gbps_std",
+                    "type": "DERIVED",
+                    "status": "OK",
+                    "source": "track1_aggregate_per_rep.csv, mode=st-to-st, std(total_gbps)"
+                },
+                {
+                    "value": 86.2,
+                    "unit": "Gbps",
+                    "id": "sec5_2_table2_ststst_perpair_mean_gbps",
+                    "type": "DERIVED",
+                    "status": "OK",
+                    "source": "track1_st_to_st_per_pair.csv, mean(mean_gbps) across 16 pairs"
+                },
+                {
+                    "value": 199,
+                    "unit": "count",
+                    "id": "sec5_2_table2_ststst_retransmits",
+                    "type": "DERIVED",
+                    "status": "OK",
+                    "source": "track1_aggregate_per_rep.csv, mode=st-to-st, mean(total_retransmits) rounded"
+                }
+            ],
+            "section": "5.2.table2"
+        },
+        {
+            "claims": [
+                {
+                    "value": 98,
+                    "unit": "Gbps",
+                    "id": "sec5_2_prose_perpair_range_min_gbps",
+                    "type": "DERIVED",
+                    "status": "OK",
+                    "source": "track1_per_pair_per_pair.csv, min(mean_gbps)"
+                },
+                {
+                    "value": 112.7,
+                    "unit": "Gbps",
+                    "id": "sec5_2_prose_perpair_range_max_gbps",
+                    "type": "DERIVED",
+                    "status": "OK",
+                    "source": "track1_per_pair_per_pair.csv, max(mean_gbps)"
+                },
+                {
+                    "value": 84,
+                    "unit": "Gbps",
+                    "id": "sec5_2_prose_st04_bios_gbps",
+                    "type": "NARRATIVE",
+                    "status": "NARRATIVE",
+                    "source": "pre-fix historical anomaly; not in current CSVs"
+                },
+                {
+                    "value": 44.1,
+                    "unit": "%",
+                    "id": "sec5_2_prose_fullmesh_theoretical_pct",
+                    "type": "DERIVED",
+                    "status": "OK",
+                    "source": "canonical_fullmesh_total_gbps_mean / FM_THEORETICAL_GBPS"
+                },
+                {
+                    "value": 79.5,
+                    "unit": "%",
+                    "id": "sec5_2_prose_fullmesh_degradation_mean_pct",
+                    "type": "DERIVED",
+                    "status": "OK",
+                    "source": "track1_throughput_cross_mode.csv, mean(degradation_pct)"
+                },
+                {
+                    "value": 66.7,
+                    "unit": "%",
+                    "id": "sec5_2_prose_fullmesh_degradation_min_pct",
+                    "type": "DERIVED",
+                    "status": "OK",
+                    "source": "track1_throughput_cross_mode.csv, min(degradation_pct)"
+                },
+                {
+                    "value": 88.3,
+                    "unit": "%",
+                    "id": "sec5_2_prose_fullmesh_degradation_max_pct",
+                    "type": "DERIVED",
+                    "status": "OK",
+                    "source": "track1_throughput_cross_mode.csv, max(degradation_pct)"
+                },
+                {
+                    "value": 86.2,
+                    "unit": "%",
+                    "id": "sec5_2_prose_ststst_theoretical_pct",
+                    "type": "DERIVED",
+                    "status": "OK",
+                    "source": "canonical_ststst_total_gbps_mean / STST_THEORETICAL_GBPS"
+                },
+                {
+                    "value": 319.8,
+                    "unit": "Gbps",
+                    "id": "sec5_2_prose_r750_perapp_min_gbps",
+                    "type": "DERIVED",
+                    "status": "OK",
+                    "notes": "Per-app view (client side) min.",
+                    "source": "track1_st_to_st_per_app.csv, min(mean_total_gbps)"
+                },
+                {
+                    "value": 359.3,
+                    "unit": "Gbps",
+                    "id": "sec5_2_prose_r750_perapp_max_gbps",
+                    "type": "DERIVED",
+                    "status": "OK",
+                    "notes": "Per-app view (client side) max.",
+                    "source": "track1_st_to_st_per_app.csv, max(mean_total_gbps)"
+                },
+                {
+                    "value": 339.2,
+                    "unit": "Gbps",
+                    "id": "sec5_2_prose_r750_perstore_min_gbps",
+                    "type": "DERIVED",
+                    "status": "OK",
+                    "notes": "Per-storage view (server side) min.",
+                    "source": "track1_st_to_st_per_storage.csv, min(mean_total_gbps)"
+                },
+                {
+                    "value": 352.3,
+                    "unit": "Gbps",
+                    "id": "sec5_2_prose_r750_perstore_max_gbps",
+                    "type": "DERIVED",
+                    "status": "OK",
+                    "notes": "Per-storage view (server side) max.",
+                    "source": "track1_st_to_st_per_storage.csv, max(mean_total_gbps)"
+                },
+                {
+                    "value": 80,
+                    "unit": "%",
+                    "id": "sec5_2_prose_r750_perapp_pct_min",
+                    "type": "DERIVED",
+                    "status": "OK",
+                    "source": "canonical_r750_app_min_gbps / BOND_CAPACITY_GBPS"
+                },
+                {
+                    "value": 89.8,
+                    "unit": "%",
+                    "id": "sec5_2_prose_r750_perapp_pct_max",
+                    "type": "DERIVED",
+                    "status": "OK",
+                    "source": "canonical_r750_app_max_gbps / BOND_CAPACITY_GBPS"
+                },
+                {
+                    "value": 168.7,
+                    "unit": "Gbps",
+                    "id": "sec5_2_prose_r6525_per_node_min_gbps",
+                    "type": "DERIVED",
+                    "status": "OK",
+                    "source": "track1_full_mesh_per_app.csv, min(mean_total_gbps)"
+                },
+                {
+                    "value": 191.7,
+                    "unit": "Gbps",
+                    "id": "sec5_2_prose_r6525_per_node_max_gbps",
+                    "type": "DERIVED",
+                    "status": "OK",
+                    "source": "track1_full_mesh_per_app.csv, max(mean_total_gbps)"
+                },
+                {
+                    "value": 176.3,
+                    "unit": "Gbps",
+                    "id": "sec5_2_prose_r6525_per_node_mean_gbps",
+                    "type": "DERIVED",
+                    "status": "OK",
+                    "source": "track1_full_mesh_per_app.csv, mean(mean_total_gbps)"
+                },
+                {
+                    "value": 44.1,
+                    "unit": "%",
+                    "id": "sec5_2_prose_r6525_per_node_pct",
+                    "type": "DERIVED",
+                    "status": "OK",
+                    "source": "canonical_r6525_per_node_mean_gbps / BOND_CAPACITY_GBPS"
+                }
+            ],
+            "section": "5.2.prose"
+        },
+        {
+            "claims": [
+                {
+                    "value": 5.28,
+                    "unit": "%",
+                    "id": "sec5_3_table3_perpair_cv_mean",
+                    "type": "DIRECT",
+                    "status": "OK",
+                    "source": "track1_throughput_raw.csv, mode=per-pair, mean(cv_pct)"
+                },
+                {
+                    "value": 11.38,
+                    "unit": "%",
+                    "id": "sec5_3_table3_perpair_cv_worst",
+                    "type": "DIRECT",
+                    "status": "OK",
+                    "source": "track1_throughput_raw.csv, mode=per-pair, max(cv_pct)"
+                },
+                {
+                    "value": 4.92,
+                    "unit": "%",
+                    "id": "sec5_3_table3_stinbound_cv_mean",
+                    "type": "DIRECT",
+                    "status": "OK",
+                    "source": "track1_throughput_raw.csv, mode=st-inbound, mean(cv_pct)"
+                },
+                {
+                    "value": 13.37,
+                    "unit": "%",
+                    "id": "sec5_3_table3_stinbound_cv_worst",
+                    "type": "DIRECT",
+                    "status": "OK",
+                    "source": "track1_throughput_raw.csv, mode=st-inbound, max(cv_pct)"
+                },
+                {
+                    "value": 14.99,
+                    "unit": "%",
+                    "id": "sec5_3_table3_appoutbound_cv_mean",
+                    "type": "DIRECT",
+                    "status": "OK",
+                    "source": "track1_throughput_raw.csv, mode=app-outbound, mean(cv_pct)"
+                },
+                {
+                    "value": 44.56,
+                    "unit": "%",
+                    "id": "sec5_3_table3_appoutbound_cv_worst",
+                    "type": "DIRECT",
+                    "status": "OK",
+                    "source": "track1_throughput_raw.csv, mode=app-outbound, max(cv_pct)"
+                },
+                {
+                    "value": 14.06,
+                    "unit": "%",
+                    "id": "sec5_3_table3_fullmesh_cv_mean",
+                    "type": "DIRECT",
+                    "status": "OK",
+                    "source": "track1_throughput_raw.csv, mode=full-mesh, mean(cv_pct)"
+                },
+                {
+                    "value": 44.47,
+                    "unit": "%",
+                    "id": "sec5_3_table3_fullmesh_cv_worst",
+                    "type": "DIRECT",
+                    "status": "OK",
+                    "source": "track1_throughput_raw.csv, mode=full-mesh, max(cv_pct)"
+                },
+                {
+                    "value": 2.75,
+                    "unit": "%",
+                    "id": "sec5_3_table3_sttost_cv_mean",
+                    "type": "DIRECT",
+                    "status": "OK",
+                    "source": "track1_throughput_raw.csv, mode=st-to-st, mean(cv_pct)"
+                },
+                {
+                    "value": 4.42,
+                    "unit": "%",
+                    "id": "sec5_3_table3_sttost_cv_worst",
+                    "type": "DIRECT",
+                    "status": "OK",
+                    "source": "track1_throughput_raw.csv, mode=st-to-st, max(cv_pct)"
+                }
+            ],
+            "section": "5.3.table3"
+        },
+        {
+            "claims": [
+                {
+                    "value": null,
+                    "unit": "narrative",
+                    "id": "sec5_3_prose_60s_regime_change",
+                    "type": "NARRATIVE",
+                    "status": "NARRATIVE",
+                    "source": "Figure 5 panel 3 observation; qualitative claim, not a CSV cell"
+                }
+            ],
+            "section": "5.3.prose"
+        },
+        {
+            "claims": [
+                {
+                    "value": 9.59,
+                    "unit": "%",
+                    "id": "sec5_4_table4_perpair_streamcv_mean",
+                    "type": "DIRECT",
+                    "status": "OK",
+                    "source": "track1_throughput_raw.csv, mode=per-pair, mean(stream_cv_pct)"
+                },
+                {
+                    "value": 20.97,
+                    "unit": "%",
+                    "id": "sec5_4_table4_perpair_streamcv_worst",
+                    "type": "DIRECT",
+                    "status": "OK",
+                    "source": "track1_throughput_raw.csv, mode=per-pair, max(stream_cv_pct)"
+                },
+                {
+                    "value": 13.19,
+                    "unit": "%",
+                    "id": "sec5_4_table4_stinbound_streamcv_mean",
+                    "type": "DIRECT",
+                    "status": "OK",
+                    "source": "track1_throughput_raw.csv, mode=st-inbound, mean(stream_cv_pct)"
+                },
+                {
+                    "value": 37.68,
+                    "unit": "%",
+                    "id": "sec5_4_table4_stinbound_streamcv_worst",
+                    "type": "DIRECT",
+                    "status": "OK",
+                    "source": "track1_throughput_raw.csv, mode=st-inbound, max(stream_cv_pct)"
+                },
+                {
+                    "value": 22.84,
+                    "unit": "%",
+                    "id": "sec5_4_table4_sttost_streamcv_mean",
+                    "type": "DIRECT",
+                    "status": "OK",
+                    "source": "track1_throughput_raw.csv, mode=st-to-st, mean(stream_cv_pct)"
+                },
+                {
+                    "value": 42.22,
+                    "unit": "%",
+                    "id": "sec5_4_table4_sttost_streamcv_worst",
+                    "type": "DIRECT",
+                    "status": "OK",
+                    "source": "track1_throughput_raw.csv, mode=st-to-st, max(stream_cv_pct)"
+                },
+                {
+                    "value": 76.55,
+                    "unit": "%",
+                    "id": "sec5_4_table4_appoutbound_streamcv_mean",
+                    "type": "DIRECT",
+                    "status": "OK",
+                    "source": "track1_throughput_raw.csv, mode=app-outbound, mean(stream_cv_pct)"
+                },
+                {
+                    "value": 132.84,
+                    "unit": "%",
+                    "id": "sec5_4_table4_appoutbound_streamcv_worst",
+                    "type": "DIRECT",
+                    "status": "OK",
+                    "source": "track1_throughput_raw.csv, mode=app-outbound, max(stream_cv_pct)"
+                },
+                {
+                    "value": 93.28,
+                    "unit": "%",
+                    "id": "sec5_4_table4_fullmesh_streamcv_mean",
+                    "type": "DIRECT",
+                    "status": "OK",
+                    "source": "track1_throughput_raw.csv, mode=full-mesh, mean(stream_cv_pct)"
+                },
+                {
+                    "value": 162.69,
+                    "unit": "%",
+                    "id": "sec5_4_table4_fullmesh_streamcv_worst",
+                    "type": "DIRECT",
+                    "status": "OK",
+                    "source": "track1_throughput_raw.csv, mode=full-mesh, max(stream_cv_pct)"
+                }
+            ],
+            "section": "5.4.table4"
+        },
+        {
+            "claims": [
+                {
+                    "value": 13.4,
+                    "unit": "Gbps",
+                    "id": "sec5_4_prose_perpair_stream_gbps_approx",
+                    "type": "DERIVED",
+                    "status": "OK",
+                    "source": "mean(perpair_mean_gbps) / N_PARALLEL_STREAMS"
+                },
+                {
+                    "value": "some streams carry 5-6 Gbps while others receive less than 1 Gbps",
+                    "unit": "narrative",
+                    "id": "sec5_4_prose_fullmesh_stream_range_qualitative",
+                    "type": "NARRATIVE",
+                    "status": "NARRATIVE",
+                    "source": "track1_per_stream.csv, mode=full-mesh; qualitative summary of distribution"
+                }
+            ],
+            "section": "5.4.prose"
+        },
+        {
+            "claims": [
+                {
+                    "value": 246.9,
+                    "unit": "%",
+                    "id": "sec5_5_table5_perpair_cpu_mean",
+                    "type": "DIRECT",
+                    "status": "OK",
+                    "source": "track1_throughput_raw.csv, mode=per-pair, mean(host_cpu_total)"
+                },
+                {
+                    "value": 29.2,
+                    "unit": "%",
+                    "id": "sec5_5_table5_perpair_cpu_std",
+                    "type": "DIRECT",
+                    "status": "OK",
+                    "source": "track1_throughput_raw.csv, mode=per-pair, std(host_cpu_total)"
+                },
+                {
+                    "value": 228.8,
+                    "unit": "%",
+                    "id": "sec5_5_table5_stinbound_cpu_mean",
+                    "type": "DIRECT",
+                    "status": "OK",
+                    "source": "track1_throughput_raw.csv, mode=st-inbound, mean(host_cpu_total)"
+                },
+                {
+                    "value": 35.6,
+                    "unit": "%",
+                    "id": "sec5_5_table5_stinbound_cpu_std",
+                    "type": "DIRECT",
+                    "status": "OK",
+                    "source": "track1_throughput_raw.csv, mode=st-inbound, std(host_cpu_total)"
+                },
+                {
+                    "value": 54.7,
+                    "unit": "%",
+                    "id": "sec5_5_table5_sttost_cpu_mean",
+                    "type": "DIRECT",
+                    "status": "OK",
+                    "source": "track1_throughput_raw.csv, mode=st-to-st, mean(host_cpu_total)"
+                },
+                {
+                    "value": 7.7,
+                    "unit": "%",
+                    "id": "sec5_5_table5_sttost_cpu_std",
+                    "type": "DIRECT",
+                    "status": "OK",
+                    "source": "track1_throughput_raw.csv, mode=st-to-st, std(host_cpu_total)"
+                },
+                {
+                    "value": 38.3,
+                    "unit": "%",
+                    "id": "sec5_5_table5_appoutbound_cpu_mean",
+                    "type": "DIRECT",
+                    "status": "OK",
+                    "source": "track1_throughput_raw.csv, mode=app-outbound, mean(host_cpu_total)"
+                },
+                {
+                    "value": 15.3,
+                    "unit": "%",
+                    "id": "sec5_5_table5_appoutbound_cpu_std",
+                    "type": "DIRECT",
+                    "status": "OK",
+                    "source": "track1_throughput_raw.csv, mode=app-outbound, std(host_cpu_total)"
+                },
+                {
+                    "value": 39.1,
+                    "unit": "%",
+                    "id": "sec5_5_table5_fullmesh_cpu_mean",
+                    "type": "DIRECT",
+                    "status": "OK",
+                    "source": "track1_throughput_raw.csv, mode=full-mesh, mean(host_cpu_total)"
+                },
+                {
+                    "value": 15.8,
+                    "unit": "%",
+                    "id": "sec5_5_table5_fullmesh_cpu_std",
+                    "type": "DIRECT",
+                    "status": "OK",
+                    "source": "track1_throughput_raw.csv, mode=full-mesh, std(host_cpu_total)"
+                },
+                {
+                    "value": 856.8,
+                    "unit": "Gbps",
+                    "id": "sec5_5_table5_perpair_throughput_per_node",
+                    "type": "DERIVED",
+                    "status": "OK",
+                    "source": "track1_per_pair_per_app.csv, mean(mean_total_gbps)"
+                },
+                {
+                    "value": 819.3,
+                    "unit": "Gbps",
+                    "id": "sec5_5_table5_stinbound_throughput_per_node",
+                    "type": "DERIVED",
+                    "status": "OK",
+                    "source": "track1_st_inbound_per_app.csv, mean(mean_total_gbps)"
+                },
+                {
+                    "value": 344.6,
+                    "unit": "Gbps",
+                    "id": "sec5_5_table5_ststst_throughput_per_node",
+                    "type": "DERIVED",
+                    "status": "OK",
+                    "source": "track1_st_to_st_per_app.csv, mean(mean_total_gbps)"
+                },
+                {
+                    "value": 174.3,
+                    "unit": "Gbps",
+                    "id": "sec5_5_table5_appoutbound_throughput_per_node",
+                    "type": "DERIVED",
+                    "status": "OK",
+                    "source": "track1_app_outbound_per_app.csv, mean(mean_total_gbps)"
+                },
+                {
+                    "value": 176.3,
+                    "unit": "Gbps",
+                    "id": "sec5_5_table5_fullmesh_throughput_per_node",
+                    "type": "DERIVED",
+                    "status": "OK",
+                    "source": "track1_full_mesh_per_app.csv, mean(mean_total_gbps); same as canonical_r6525_per_node_mean_gbps"
+                }
+            ],
+            "section": "5.5.table5"
+        },
+        {
+            "claims": [
+                {
+                    "value": 4,
+                    "unit": "count",
+                    "id": "sec5_5_prose_r6525_nps",
+                    "type": "CONFIG",
+                    "status": "CONFIG",
+                    "source": "hardware configuration: NPS=4 on R6525"
+                },
+                {
+                    "value": 8,
+                    "unit": "count",
+                    "id": "sec5_5_prose_r6525_numa_nodes_total",
+                    "type": "CONFIG",
+                    "status": "CONFIG",
+                    "source": "2 sockets x NPS=4"
+                },
+                {
+                    "value": 2,
+                    "unit": "count",
+                    "id": "sec5_5_prose_r6525_numa_nodes_populated",
+                    "type": "CONFIG",
+                    "status": "CONFIG",
+                    "source": "only 1 DIMM per socket populated on the current R6525 configuration"
+                },
+                {
+                    "value": 51.2,
+                    "unit": "GB/s",
+                    "id": "sec5_5_prose_r6525_memory_bw_gbps",
+                    "type": "CONFIG",
+                    "status": "CONFIG",
+                    "source": "2 x DDR4-3200 channels at 25.6 GB/s each"
+                },
+                {
+                    "value": 44.1,
+                    "unit": "%",
+                    "id": "sec5_5_prose_r6525_43pct_bond",
+                    "type": "DERIVED",
+                    "status": "OK",
+                    "source": "canonical_r6525_per_node_pct"
+                },
+                {
+                    "value": 307.2,
+                    "unit": "GB/s",
+                    "id": "sec5_5_prose_r750_memory_bw_gbps",
+                    "type": "CONFIG",
+                    "status": "CONFIG",
+                    "source": "12 x DDR4-3200 channels at 25.6 GB/s each"
+                },
+                {
+                    "value": 86.2,
+                    "unit": "%",
+                    "id": "sec5_5_prose_r750_86pct_bond",
+                    "type": "DERIVED",
+                    "status": "OK",
+                    "source": "canonical_ststst_pct_of_theoretical (86% of 1600 theoretical)"
+                },
+                {
+                    "value": 377.8,
+                    "unit": "Gbps",
+                    "id": "sec5_5_prose_r7625_fanout_aggregate_gbps_mean",
+                    "type": "DERIVED",
+                    "status": "OK",
+                    "source": "track1_rds02_fanout_per_app.csv, mean_total_gbps (sum across 8 targets per rep, mean across 3 reps)"
+                },
+                {
+                    "value": 5.9,
+                    "unit": "Gbps",
+                    "id": "sec5_5_prose_r7625_fanout_aggregate_gbps_std",
+                    "type": "DERIVED",
+                    "status": "OK",
+                    "source": "track1_rds02_fanout_per_app.csv, std_total_gbps"
+                },
+                {
+                    "value": 94.5,
+                    "unit": "%",
+                    "id": "sec5_5_prose_r7625_fanout_pct_of_bond",
+                    "type": "DERIVED",
+                    "status": "OK",
+                    "source": "canonical_rds02_fanout_aggregate_gbps_mean / BOND_CAPACITY_GBPS"
+                },
+                {
+                    "value": 47.2,
+                    "unit": "Gbps",
+                    "id": "sec5_5_prose_r7625_fanout_target_mean_gbps",
+                    "type": "DERIVED",
+                    "status": "OK",
+                    "source": "track1_rds02_fanout_per_pair.csv, mean(mean_gbps) across 8 targets"
+                },
+                {
+                    "value": 43.7,
+                    "unit": "Gbps",
+                    "id": "sec5_5_prose_r7625_fanout_target_min_gbps",
+                    "type": "DERIVED",
+                    "status": "OK",
+                    "source": "track1_rds02_fanout_per_pair.csv, min(mean_gbps) across 8 targets"
+                },
+                {
+                    "value": 49,
+                    "unit": "Gbps",
+                    "id": "sec5_5_prose_r7625_fanout_target_max_gbps",
+                    "type": "DERIVED",
+                    "status": "OK",
+                    "source": "track1_rds02_fanout_per_pair.csv, max(mean_gbps) across 8 targets"
+                },
+                {
+                    "value": 3.92,
+                    "unit": "%",
+                    "id": "sec5_5_prose_r7625_fanout_target_cv_pct",
+                    "type": "DERIVED",
+                    "status": "OK",
+                    "source": "std(per_target_mean_gbps) / mean(per_target_mean_gbps) * 100 across 8 targets"
+                },
+                {
+                    "value": 3,
+                    "unit": "count",
+                    "id": "sec5_5_prose_r7625_fanout_total_retransmits",
+                    "type": "DERIVED",
+                    "status": "OK",
+                    "source": "track1_rds02_fanout_per_app.csv, mean_retransmits rounded"
+                }
+            ],
+            "section": "5.5.prose"
+        },
+        {
+            "claims": [
+                {
+                    "value": 153.6,
+                    "unit": "GB/s",
+                    "id": "sec5_5_table5a_r7615_memory_bw_gbps",
+                    "type": "CONFIG",
+                    "status": "CONFIG",
+                    "source": "4 x DDR5-4800 channels at 38.4 GB/s each"
+                }
+            ],
+            "section": "5.5.table5a"
+        },
+        {
+            "claims": [
+                {
+                    "value": "AMD EPYC 9634",
+                    "unit": "narrative",
+                    "id": "sec5_5_table5b_r7625_cpu_model",
+                    "type": "CONFIG",
+                    "status": "CONFIG",
+                    "source": "config: R7625_CPU_MODEL; per datacenter_info/server_pool.md r04-rds02 block"
+                },
+                {
+                    "value": 2,
+                    "unit": "count",
+                    "id": "sec5_5_table5b_r7625_cpu_sockets",
+                    "type": "CONFIG",
+                    "status": "CONFIG",
+                    "source": "config: R7625_CPU_SOCKETS"
+                },
+                {
+                    "value": 168,
+                    "unit": "count",
+                    "id": "sec5_5_table5b_r7625_cpu_cores_total",
+                    "type": "CONFIG",
+                    "status": "CONFIG",
+                    "source": "config: R7625_CPU_CORES_TOTAL (2 sockets x 84 cores)"
+                },
+                {
+                    "value": 1536,
+                    "unit": "GiB",
+                    "id": "sec5_5_table5b_r7625_memory_total_gib",
+                    "type": "CONFIG",
+                    "status": "CONFIG",
+                    "source": "config: R7625_MEMORY_TOTAL_GIB (24 x 64 GiB DDR5-4800)"
+                },
+                {
+                    "value": 24,
+                    "unit": "count",
+                    "id": "sec5_5_table5b_r7625_dimms_populated",
+                    "type": "CONFIG",
+                    "status": "CONFIG",
+                    "source": "config: R7625_DIMMS_POPULATED"
+                },
+                {
+                    "value": 24,
+                    "unit": "count",
+                    "id": "sec5_5_table5b_r7625_channels_populated",
+                    "type": "CONFIG",
+                    "status": "CONFIG",
+                    "source": "config: R7625_CHANNELS_POPULATED (12 channels/socket x 2 sockets)"
+                },
+                {
+                    "value": 921.6,
+                    "unit": "GB/s",
+                    "id": "sec5_5_table5b_r7625_memory_bw_gbps",
+                    "type": "CONFIG",
+                    "status": "CONFIG",
+                    "source": "24 x DDR5-4800 channels at 38.4 GB/s each"
+                },
+                {
+                    "value": 400,
+                    "unit": "Gbps",
+                    "id": "sec5_5_table5b_r7625_bond_capacity_gbps",
+                    "type": "CONFIG",
+                    "status": "CONFIG",
+                    "source": "config: BOND_CAPACITY_GBPS (shared across all hosts in the testbed)"
+                }
+            ],
+            "section": "5.5.table5b"
+        },
+        {
+            "claims": [
+                {
+                    "value": 0.053,
+                    "unit": "ms",
+                    "id": "sec5_6_table6_idle_mean_ms",
+                    "type": "DIRECT",
+                    "status": "OK",
+                    "source": "track1_latency_by_condition.csv, condition=idle, overall_mean_ms"
+                },
+                {
+                    "value": 0.075,
+                    "unit": "ms",
+                    "id": "sec5_6_table6_idle_p95_ms",
+                    "type": "DIRECT",
+                    "status": "OK",
+                    "source": "track1_latency_by_condition.csv, condition=idle, overall_p95_ms"
+                },
+                {
+                    "value": 0.84,
+                    "unit": "ms",
+                    "id": "sec5_6_table6_idle_max_ms",
+                    "type": "DIRECT",
+                    "status": "OK",
+                    "source": "track1_latency_by_condition.csv, condition=idle, worst_max_ms"
+                },
+                {
+                    "value": 0.047,
+                    "unit": "ms",
+                    "id": "sec5_6_table6_50pct_mean_ms",
+                    "type": "DIRECT",
+                    "status": "OK",
+                    "source": "track1_latency_by_condition.csv, condition=50pct, overall_mean_ms"
+                },
+                {
+                    "value": 0.081,
+                    "unit": "ms",
+                    "id": "sec5_6_table6_50pct_p95_ms",
+                    "type": "DIRECT",
+                    "status": "OK",
+                    "source": "track1_latency_by_condition.csv, condition=50pct, overall_p95_ms"
+                },
+                {
+                    "value": 4.67,
+                    "unit": "ms",
+                    "id": "sec5_6_table6_50pct_max_ms",
+                    "type": "DIRECT",
+                    "status": "OK",
+                    "source": "track1_latency_by_condition.csv, condition=50pct, worst_max_ms"
+                },
+                {
+                    "value": 0.072,
+                    "unit": "ms",
+                    "id": "sec5_6_table6_100pct_mean_ms",
+                    "type": "DIRECT",
+                    "status": "OK",
+                    "source": "track1_latency_by_condition.csv, condition=100pct, overall_mean_ms"
+                },
+                {
+                    "value": 0.173,
+                    "unit": "ms",
+                    "id": "sec5_6_table6_100pct_p95_ms",
+                    "type": "DIRECT",
+                    "status": "OK",
+                    "source": "track1_latency_by_condition.csv, condition=100pct, overall_p95_ms"
+                },
+                {
+                    "value": 2.59,
+                    "unit": "ms",
+                    "id": "sec5_6_table6_100pct_max_ms",
+                    "type": "DIRECT",
+                    "status": "OK",
+                    "source": "track1_latency_by_condition.csv, condition=100pct, worst_max_ms"
+                }
+            ],
+            "section": "5.6.table6"
+        },
+        {
+            "claims": [
+                {
+                    "value": 3,
+                    "unit": "count",
+                    "id": "sec5_7_prose_total_rx_errors",
+                    "type": "DIRECT",
+                    "status": "OK",
+                    "source": "track1_packet_loss_summary.csv, sum(total_rx_errors)"
+                },
+                {
+                    "value": 0,
+                    "unit": "count",
+                    "id": "sec5_7_prose_total_tx_errors",
+                    "type": "DIRECT",
+                    "status": "OK",
+                    "source": "track1_packet_loss_summary.csv, sum(total_tx_errors)"
+                },
+                {
+                    "value": 3,
+                    "unit": "count",
+                    "id": "sec5_7_prose_total_errors",
+                    "type": "DERIVED",
+                    "status": "OK",
+                    "source": "sum of rx + tx errors across all hosts (campaign total)"
+                },
+                {
+                    "value": 5293359388,
+                    "unit": "count",
+                    "id": "sec5_7_prose_packets_per_run",
+                    "type": "DERIVED",
+                    "status": "OK",
+                    "notes": "Mean packets transported by the fabric in a single benchmark rep.",
+                    "source": "track1_packet_loss_summary.csv, sum(mean_rx_packets) + sum(mean_tx_packets)"
+                },
+                {
+                    "value": 3,
+                    "unit": "count",
+                    "id": "sec5_7_prose_n_reps_packetloss",
+                    "type": "DIRECT",
+                    "status": "OK",
+                    "notes": "Number of benchmark reps aggregated by the packet-loss summary.",
+                    "source": "track1_packet_loss_summary.csv, n_reps column (uniform across hosts)"
+                },
+                {
+                    "value": 15880078163,
+                    "unit": "count",
+                    "id": "sec5_7_prose_total_packets_campaign",
+                    "type": "DERIVED",
+                    "status": "OK",
+                    "notes": "Campaign-total packet count; denominator for the error-rate claim.",
+                    "source": "canonical_packets_per_run * canonical_n_reps_packetloss"
+                },
+                {
+                    "value": 1.889159467105074e-10,
+                    "unit": "ratio",
+                    "id": "sec5_7_prose_error_rate",
+                    "type": "DERIVED",
+                    "status": "OK",
+                    "source": "canonical_total_errors / canonical_total_packets (campaign-wide)"
+                }
+            ],
+            "section": "5.7.prose"
+        },
+        {
+            "claims": [
+                {
+                    "value": "Single link failure on a storage node (1 port to one switch): LACP renegotiates; throughput recovers automatically at reduced capacity.",
+                    "unit": "narrative",
+                    "id": "sec5_8_table7_scenario1_description",
+                    "type": "NARRATIVE",
+                    "status": "NARRATIVE",
+                    "source": "qualitative description of fault-tolerance behaviour"
+                },
+                {
+                    "value": "Symmetric dual link failure (one link per switch): LACP renegotiates via surviving ports; throughput recovers automatically at reduced capacity.",
+                    "unit": "narrative",
+                    "id": "sec5_8_table7_scenario2_description",
+                    "type": "NARRATIVE",
+                    "status": "NARRATIVE",
+                    "source": "qualitative description of fault-tolerance behaviour"
+                },
+                {
+                    "value": "Asymmetric dual link failure (two links to the same switch): recovery is markedly slower than scenarios 1 and 2 but completes at reduced capacity.",
+                    "unit": "narrative",
+                    "id": "sec5_8_table7_scenario3_description",
+                    "type": "NARRATIVE",
+                    "status": "NARRATIVE",
+                    "source": "qualitative description of fault-tolerance behaviour"
+                },
+                {
+                    "value": "Three links disconnected (one port remaining): node remains reachable via the surviving port but operates at 1/4 bond capacity.",
+                    "unit": "narrative",
+                    "id": "sec5_8_table7_scenario4_description",
+                    "type": "NARRATIVE",
+                    "status": "NARRATIVE",
+                    "source": "qualitative description"
+                },
+                {
+                    "value": "Full switch disconnect (both ports to one switch): node is isolated when combined with any failure on the other switch; the 4-port bond tolerates up to 2 link failures per node distributed across both switches.",
+                    "unit": "narrative",
+                    "id": "sec5_8_table7_scenario5_description",
+                    "type": "NARRATIVE",
+                    "status": "NARRATIVE",
+                    "source": "qualitative description"
+                }
+            ],
+            "section": "5.8.table7"
+        },
+        {
+            "claims": [
+                {
+                    "value": "Automatic recovery from single-component failures via LACP bond renegotiation; multi-component failures exceeding the designed redundancy envelope isolate the affected node.",
+                    "unit": "narrative",
+                    "id": "sec5_8_prose_recovery_qualitative",
+                    "type": "NARRATIVE",
+                    "status": "NARRATIVE",
+                    "source": "qualitative description of recovery behaviour"
+                }
+            ],
+            "section": "5.8.prose"
+        },
+        {
+            "claims": [
+                {
+                    "value": 86.2,
+                    "unit": "%",
+                    "id": "sec5_9_summary_ststst_pct",
+                    "type": "DERIVED",
+                    "status": "OK",
+                    "source": "canonical_ststst_pct_of_theoretical"
+                },
+                {
+                    "value": 529,
+                    "unit": "Gbps",
+                    "id": "sec5_9_summary_fullmesh_gbps",
+                    "type": "DERIVED",
+                    "status": "OK",
+                    "source": "canonical_fullmesh_total_gbps_mean"
+                }
+            ],
+            "section": "5.9.summary"
+        },
+        {
+            "claims": [
+                {
+                    "value": 5576,
+                    "unit": "MiB/s",
+                    "id": "sec6_2_table8_4mib_put_mean_mibs",
+                    "type": "DIRECT",
+                    "status": "OK",
+                    "source": "track2_summary.csv, experiment=single, operation=PUT, rate=100gbps, size=4MiB, mean_mibs"
+                },
+                {
+                    "value": 121,
+                    "unit": "MiB/s",
+                    "id": "sec6_2_table8_4mib_put_std_mibs",
+                    "type": "DIRECT",
+                    "status": "OK",
+                    "source": "track2_summary.csv, experiment=single, operation=PUT, rate=100gbps, size=4MiB, std_mibs"
+                },
+                {
+                    "value": 46.8,
+                    "unit": "Gbps",
+                    "id": "sec6_2_table8_4mib_put_gbps",
+                    "type": "DIRECT",
+                    "status": "OK",
+                    "source": "track2_summary.csv, experiment=single, operation=PUT, rate=100gbps, size=4MiB, mean_gbps"
+                },
+                {
+                    "value": 9966,
+                    "unit": "MiB/s",
+                    "id": "sec6_2_table8_4mib_get_mean_mibs",
+                    "type": "DIRECT",
+                    "status": "OK",
+                    "source": "track2_summary.csv, experiment=single, operation=GET, rate=100gbps, size=4MiB, mean_mibs"
+                },
+                {
+                    "value": 296,
+                    "unit": "MiB/s",
+                    "id": "sec6_2_table8_4mib_get_std_mibs",
+                    "type": "DIRECT",
+                    "status": "OK",
+                    "source": "track2_summary.csv, experiment=single, operation=GET, rate=100gbps, size=4MiB, std_mibs"
+                },
+                {
+                    "value": 83.6,
+                    "unit": "Gbps",
+                    "id": "sec6_2_table8_4mib_get_gbps",
+                    "type": "DIRECT",
+                    "status": "OK",
+                    "source": "track2_summary.csv, experiment=single, operation=GET, rate=100gbps, size=4MiB, mean_gbps"
+                },
+                {
+                    "value": 7099,
+                    "unit": "MiB/s",
+                    "id": "sec6_2_table8_64mib_put_mean_mibs",
+                    "type": "DIRECT",
+                    "status": "OK",
+                    "source": "track2_summary.csv, experiment=single, operation=PUT, rate=100gbps, size=64MiB, mean_mibs"
+                },
+                {
+                    "value": 223,
+                    "unit": "MiB/s",
+                    "id": "sec6_2_table8_64mib_put_std_mibs",
+                    "type": "DIRECT",
+                    "status": "OK",
+                    "source": "track2_summary.csv, experiment=single, operation=PUT, rate=100gbps, size=64MiB, std_mibs"
+                },
+                {
+                    "value": 59.6,
+                    "unit": "Gbps",
+                    "id": "sec6_2_table8_64mib_put_gbps",
+                    "type": "DIRECT",
+                    "status": "OK",
+                    "source": "track2_summary.csv, experiment=single, operation=PUT, rate=100gbps, size=64MiB, mean_gbps"
+                },
+                {
+                    "value": 10019,
+                    "unit": "MiB/s",
+                    "id": "sec6_2_table8_64mib_get_mean_mibs",
+                    "type": "DIRECT",
+                    "status": "OK",
+                    "source": "track2_summary.csv, experiment=single, operation=GET, rate=100gbps, size=64MiB, mean_mibs"
+                },
+                {
+                    "value": 895,
+                    "unit": "MiB/s",
+                    "id": "sec6_2_table8_64mib_get_std_mibs",
+                    "type": "DIRECT",
+                    "status": "OK",
+                    "source": "track2_summary.csv, experiment=single, operation=GET, rate=100gbps, size=64MiB, std_mibs"
+                },
+                {
+                    "value": 84,
+                    "unit": "Gbps",
+                    "id": "sec6_2_table8_64mib_get_gbps",
+                    "type": "DIRECT",
+                    "status": "OK",
+                    "source": "track2_summary.csv, experiment=single, operation=GET, rate=100gbps, size=64MiB, mean_gbps"
+                },
+                {
+                    "value": 7369,
+                    "unit": "MiB/s",
+                    "id": "sec6_2_table8_512mib_put_mean_mibs",
+                    "type": "DIRECT",
+                    "status": "OK",
+                    "source": "track2_summary.csv, experiment=single, operation=PUT, rate=100gbps, size=512MiB, mean_mibs"
+                },
+                {
+                    "value": 116,
+                    "unit": "MiB/s",
+                    "id": "sec6_2_table8_512mib_put_std_mibs",
+                    "type": "DIRECT",
+                    "status": "OK",
+                    "source": "track2_summary.csv, experiment=single, operation=PUT, rate=100gbps, size=512MiB, std_mibs"
+                },
+                {
+                    "value": 61.8,
+                    "unit": "Gbps",
+                    "id": "sec6_2_table8_512mib_put_gbps",
+                    "type": "DIRECT",
+                    "status": "OK",
+                    "source": "track2_summary.csv, experiment=single, operation=PUT, rate=100gbps, size=512MiB, mean_gbps"
+                },
+                {
+                    "value": 10444,
+                    "unit": "MiB/s",
+                    "id": "sec6_2_table8_512mib_get_mean_mibs",
+                    "type": "DIRECT",
+                    "status": "OK",
+                    "source": "track2_summary.csv, experiment=single, operation=GET, rate=100gbps, size=512MiB, mean_mibs"
+                },
+                {
+                    "value": 212,
+                    "unit": "MiB/s",
+                    "id": "sec6_2_table8_512mib_get_std_mibs",
+                    "type": "DIRECT",
+                    "status": "OK",
+                    "source": "track2_summary.csv, experiment=single, operation=GET, rate=100gbps, size=512MiB, std_mibs"
+                },
+                {
+                    "value": 87.6,
+                    "unit": "Gbps",
+                    "id": "sec6_2_table8_512mib_get_gbps",
+                    "type": "DIRECT",
+                    "status": "OK",
+                    "source": "track2_summary.csv, experiment=single, operation=GET, rate=100gbps, size=512MiB, mean_gbps"
+                },
+                {
+                    "value": 7288,
+                    "unit": "MiB/s",
+                    "id": "sec6_2_table8_2gib_put_mean_mibs",
+                    "type": "DIRECT",
+                    "status": "OK",
+                    "source": "track2_summary.csv, experiment=single, operation=PUT, rate=100gbps, size=2GiB, mean_mibs"
+                },
+                {
+                    "value": 118,
+                    "unit": "MiB/s",
+                    "id": "sec6_2_table8_2gib_put_std_mibs",
+                    "type": "DIRECT",
+                    "status": "OK",
+                    "source": "track2_summary.csv, experiment=single, operation=PUT, rate=100gbps, size=2GiB, std_mibs"
+                },
+                {
+                    "value": 61.1,
+                    "unit": "Gbps",
+                    "id": "sec6_2_table8_2gib_put_gbps",
+                    "type": "DIRECT",
+                    "status": "OK",
+                    "source": "track2_summary.csv, experiment=single, operation=PUT, rate=100gbps, size=2GiB, mean_gbps"
+                },
+                {
+                    "value": 9998,
+                    "unit": "MiB/s",
+                    "id": "sec6_2_table8_2gib_get_mean_mibs",
+                    "type": "DIRECT",
+                    "status": "OK",
+                    "source": "track2_summary.csv, experiment=single, operation=GET, rate=100gbps, size=2GiB, mean_mibs"
+                },
+                {
+                    "value": 891,
+                    "unit": "MiB/s",
+                    "id": "sec6_2_table8_2gib_get_std_mibs",
+                    "type": "DIRECT",
+                    "status": "OK",
+                    "source": "track2_summary.csv, experiment=single, operation=GET, rate=100gbps, size=2GiB, std_mibs"
+                },
+                {
+                    "value": 83.9,
+                    "unit": "Gbps",
+                    "id": "sec6_2_table8_2gib_get_gbps",
+                    "type": "DIRECT",
+                    "status": "OK",
+                    "source": "track2_summary.csv, experiment=single, operation=GET, rate=100gbps, size=2GiB, mean_gbps"
+                }
+            ],
+            "section": "6.2.table8"
+        },
+        {
+            "claims": [
+                {
+                    "value": 13218,
+                    "unit": "MiB/s",
+                    "id": "sec6_3_table9_4mib_put_mean_mibs",
+                    "type": "DIRECT",
+                    "status": "OK",
+                    "source": "track2_summary.csv, experiment=distributed, operation=PUT, rate=100gbps, size=4MiB, mean_mibs"
+                },
+                {
+                    "value": 57,
+                    "unit": "MiB/s",
+                    "id": "sec6_3_table9_4mib_put_std_mibs",
+                    "type": "DIRECT",
+                    "status": "OK",
+                    "source": "track2_summary.csv, experiment=distributed, operation=PUT, rate=100gbps, size=4MiB, std_mibs"
+                },
+                {
+                    "value": 110.9,
+                    "unit": "Gbps",
+                    "id": "sec6_3_table9_4mib_put_gbps",
+                    "type": "DIRECT",
+                    "status": "OK",
+                    "source": "track2_summary.csv, experiment=distributed, operation=PUT, rate=100gbps, size=4MiB, mean_gbps"
+                },
+                {
+                    "value": 18217,
+                    "unit": "MiB/s",
+                    "id": "sec6_3_table9_4mib_get_mean_mibs",
+                    "type": "DIRECT",
+                    "status": "OK",
+                    "source": "track2_summary.csv, experiment=distributed, operation=GET, rate=100gbps, size=4MiB, mean_mibs"
+                },
+                {
+                    "value": 164,
+                    "unit": "MiB/s",
+                    "id": "sec6_3_table9_4mib_get_std_mibs",
+                    "type": "DIRECT",
+                    "status": "OK",
+                    "source": "track2_summary.csv, experiment=distributed, operation=GET, rate=100gbps, size=4MiB, std_mibs"
+                },
+                {
+                    "value": 152.8,
+                    "unit": "Gbps",
+                    "id": "sec6_3_table9_4mib_get_gbps",
+                    "type": "DIRECT",
+                    "status": "OK",
+                    "source": "track2_summary.csv, experiment=distributed, operation=GET, rate=100gbps, size=4MiB, mean_gbps"
+                },
+                {
+                    "value": 16092,
+                    "unit": "MiB/s",
+                    "id": "sec6_3_table9_64mib_put_mean_mibs",
+                    "type": "DIRECT",
+                    "status": "OK",
+                    "source": "track2_summary.csv, experiment=distributed, operation=PUT, rate=100gbps, size=64MiB, mean_mibs"
+                },
+                {
+                    "value": 168,
+                    "unit": "MiB/s",
+                    "id": "sec6_3_table9_64mib_put_std_mibs",
+                    "type": "DIRECT",
+                    "status": "OK",
+                    "source": "track2_summary.csv, experiment=distributed, operation=PUT, rate=100gbps, size=64MiB, std_mibs"
+                },
+                {
+                    "value": 135,
+                    "unit": "Gbps",
+                    "id": "sec6_3_table9_64mib_put_gbps",
+                    "type": "DIRECT",
+                    "status": "OK",
+                    "source": "track2_summary.csv, experiment=distributed, operation=PUT, rate=100gbps, size=64MiB, mean_gbps"
+                },
+                {
+                    "value": 18867,
+                    "unit": "MiB/s",
+                    "id": "sec6_3_table9_64mib_get_mean_mibs",
+                    "type": "DIRECT",
+                    "status": "OK",
+                    "source": "track2_summary.csv, experiment=distributed, operation=GET, rate=100gbps, size=64MiB, mean_mibs"
+                },
+                {
+                    "value": 520,
+                    "unit": "MiB/s",
+                    "id": "sec6_3_table9_64mib_get_std_mibs",
+                    "type": "DIRECT",
+                    "status": "OK",
+                    "source": "track2_summary.csv, experiment=distributed, operation=GET, rate=100gbps, size=64MiB, std_mibs"
+                },
+                {
+                    "value": 158.3,
+                    "unit": "Gbps",
+                    "id": "sec6_3_table9_64mib_get_gbps",
+                    "type": "DIRECT",
+                    "status": "OK",
+                    "source": "track2_summary.csv, experiment=distributed, operation=GET, rate=100gbps, size=64MiB, mean_gbps"
+                },
+                {
+                    "value": 15954,
+                    "unit": "MiB/s",
+                    "id": "sec6_3_table9_512mib_put_mean_mibs",
+                    "type": "DIRECT",
+                    "status": "OK",
+                    "source": "track2_summary.csv, experiment=distributed, operation=PUT, rate=100gbps, size=512MiB, mean_mibs"
+                },
+                {
+                    "value": 268,
+                    "unit": "MiB/s",
+                    "id": "sec6_3_table9_512mib_put_std_mibs",
+                    "type": "DIRECT",
+                    "status": "OK",
+                    "source": "track2_summary.csv, experiment=distributed, operation=PUT, rate=100gbps, size=512MiB, std_mibs"
+                },
+                {
+                    "value": 133.8,
+                    "unit": "Gbps",
+                    "id": "sec6_3_table9_512mib_put_gbps",
+                    "type": "DIRECT",
+                    "status": "OK",
+                    "source": "track2_summary.csv, experiment=distributed, operation=PUT, rate=100gbps, size=512MiB, mean_gbps"
+                },
+                {
+                    "value": 17946,
+                    "unit": "MiB/s",
+                    "id": "sec6_3_table9_512mib_get_mean_mibs",
+                    "type": "DIRECT",
+                    "status": "OK",
+                    "source": "track2_summary.csv, experiment=distributed, operation=GET, rate=100gbps, size=512MiB, mean_mibs"
+                },
+                {
+                    "value": 531,
+                    "unit": "MiB/s",
+                    "id": "sec6_3_table9_512mib_get_std_mibs",
+                    "type": "DIRECT",
+                    "status": "OK",
+                    "source": "track2_summary.csv, experiment=distributed, operation=GET, rate=100gbps, size=512MiB, std_mibs"
+                },
+                {
+                    "value": 150.5,
+                    "unit": "Gbps",
+                    "id": "sec6_3_table9_512mib_get_gbps",
+                    "type": "DIRECT",
+                    "status": "OK",
+                    "source": "track2_summary.csv, experiment=distributed, operation=GET, rate=100gbps, size=512MiB, mean_gbps"
+                },
+                {
+                    "value": 16544,
+                    "unit": "MiB/s",
+                    "id": "sec6_3_table9_2gib_put_mean_mibs",
+                    "type": "DIRECT",
+                    "status": "OK",
+                    "source": "track2_summary.csv, experiment=distributed, operation=PUT, rate=100gbps, size=2GiB, mean_mibs"
+                },
+                {
+                    "value": 343,
+                    "unit": "MiB/s",
+                    "id": "sec6_3_table9_2gib_put_std_mibs",
+                    "type": "DIRECT",
+                    "status": "OK",
+                    "source": "track2_summary.csv, experiment=distributed, operation=PUT, rate=100gbps, size=2GiB, std_mibs"
+                },
+                {
+                    "value": 138.8,
+                    "unit": "Gbps",
+                    "id": "sec6_3_table9_2gib_put_gbps",
+                    "type": "DIRECT",
+                    "status": "OK",
+                    "source": "track2_summary.csv, experiment=distributed, operation=PUT, rate=100gbps, size=2GiB, mean_gbps"
+                },
+                {
+                    "value": 17287,
+                    "unit": "MiB/s",
+                    "id": "sec6_3_table9_2gib_get_mean_mibs",
+                    "type": "DIRECT",
+                    "status": "OK",
+                    "source": "track2_summary.csv, experiment=distributed, operation=GET, rate=100gbps, size=2GiB, mean_mibs"
+                },
+                {
+                    "value": 1800,
+                    "unit": "MiB/s",
+                    "id": "sec6_3_table9_2gib_get_std_mibs",
+                    "type": "DIRECT",
+                    "status": "OK",
+                    "source": "track2_summary.csv, experiment=distributed, operation=GET, rate=100gbps, size=2GiB, std_mibs"
+                },
+                {
+                    "value": 145,
+                    "unit": "Gbps",
+                    "id": "sec6_3_table9_2gib_get_gbps",
+                    "type": "DIRECT",
+                    "status": "OK",
+                    "source": "track2_summary.csv, experiment=distributed, operation=GET, rate=100gbps, size=2GiB, mean_gbps"
+                },
+                {
+                    "value": 3,
+                    "unit": "count",
+                    "id": "sec6_3_table9_footnote_n_reps_effective",
+                    "type": "DIRECT",
+                    "status": "OK",
+                    "source": "track2_summary.csv, distributed/GET/100gbps/512MiB, n_reps_effective"
+                },
+                {
+                    "value": 3,
+                    "unit": "count",
+                    "id": "sec6_3_table9_footnote_n_reps_original",
+                    "type": "DIRECT",
+                    "status": "OK",
+                    "source": "track2_summary.csv, distributed/GET/100gbps/512MiB, n_reps_original"
+                },
+                {
+                    "value": 0,
+                    "unit": "count",
+                    "id": "sec6_3_table9_footnote_excluded_reps",
+                    "type": "DIRECT",
+                    "status": "OK",
+                    "source": "track2_summary.csv, distributed/GET/100gbps/512MiB"
+                }
+            ],
+            "section": "6.3.table9"
+        },
+        {
+            "claims": [
+                {
+                    "value": 2.37,
+                    "unit": "x",
+                    "id": "sec6_3_prose_put_scaling_4mib",
+                    "type": "DERIVED",
+                    "status": "OK",
+                    "source": "distributed 4 MiB PUT mean_mibs / single 4 MiB PUT mean_mibs"
+                },
+                {
+                    "value": 2.16,
+                    "unit": "x",
+                    "id": "sec6_3_prose_put_scaling_512mib",
+                    "type": "DERIVED",
+                    "status": "OK",
+                    "source": "distributed 512 MiB PUT mean_mibs / single 512 MiB PUT mean_mibs"
+                },
+                {
+                    "value": 137,
+                    "unit": "MiB/s",
+                    "id": "sec6_3_prose_st06_pre_fix_mibs",
+                    "type": "NARRATIVE",
+                    "status": "NARRATIVE",
+                    "source": "pre-SACK-fix historical anomaly; not in current CSVs"
+                },
+                {
+                    "value": 2500,
+                    "unit": "MiB/s",
+                    "id": "sec6_3_prose_st06_other_nodes_min_mibs",
+                    "type": "NARRATIVE",
+                    "status": "NARRATIVE",
+                    "source": "pre-SACK-fix historical anecdote; qualitative lower bound"
+                },
+                {
+                    "value": 3200,
+                    "unit": "MiB/s",
+                    "id": "sec6_3_prose_st06_other_nodes_max_mibs",
+                    "type": "NARRATIVE",
+                    "status": "NARRATIVE",
+                    "source": "pre-SACK-fix historical anecdote; qualitative upper bound"
+                },
+                {
+                    "value": 2214,
+                    "unit": "MiB/s",
+                    "id": "sec6_3_prose_st06_post_fix_min_mibs",
+                    "type": "DERIVED",
+                    "status": "OK",
+                    "source": "track2_distributed_get_per_host.csv, host=st06, min mean_mibs across 4/64/512 MiB"
+                },
+                {
+                    "value": 2414,
+                    "unit": "MiB/s",
+                    "id": "sec6_3_prose_st06_post_fix_max_mibs",
+                    "type": "DERIVED",
+                    "status": "OK",
+                    "source": "track2_distributed_get_per_host.csv, host=st06, max mean_mibs across 4/64/512 MiB"
+                },
+                {
+                    "value": 0.6,
+                    "unit": "%",
+                    "id": "sec6_3_prose_put_spread_4mib_pct",
+                    "type": "DERIVED",
+                    "status": "OK",
+                    "source": "track2_distributed_put_per_host.csv, size=4MiB, (max-min)/min * 100"
+                },
+                {
+                    "value": 8.8,
+                    "unit": "%",
+                    "id": "sec6_3_prose_put_spread_64mib_pct",
+                    "type": "DERIVED",
+                    "status": "OK",
+                    "source": "track2_distributed_put_per_host.csv, size=64MiB, (max-min)/min * 100"
+                },
+                {
+                    "value": 6.9,
+                    "unit": "%",
+                    "id": "sec6_3_prose_put_spread_512mib_pct",
+                    "type": "DERIVED",
+                    "status": "OK",
+                    "source": "track2_distributed_put_per_host.csv, size=512MiB, (max-min)/min * 100"
+                },
+                {
+                    "value": 3.8,
+                    "unit": "%",
+                    "id": "sec6_3_prose_put_spread_2gib_pct",
+                    "type": "DERIVED",
+                    "status": "OK",
+                    "source": "track2_distributed_put_per_host.csv, size=2GiB, (max-min)/min * 100"
+                },
+                {
+                    "value": 12.4,
+                    "unit": "%",
+                    "id": "sec6_3_prose_get_spread_4mib_pct",
+                    "type": "DERIVED",
+                    "status": "OK",
+                    "source": "track2_distributed_get_per_host.csv, size=4MiB, (max-min)/min * 100"
+                },
+                {
+                    "value": 17.3,
+                    "unit": "%",
+                    "id": "sec6_3_prose_get_spread_64mib_pct",
+                    "type": "DERIVED",
+                    "status": "OK",
+                    "source": "track2_distributed_get_per_host.csv, size=64MiB, (max-min)/min * 100"
+                },
+                {
+                    "value": 19.5,
+                    "unit": "%",
+                    "id": "sec6_3_prose_get_spread_512mib_pct",
+                    "type": "DERIVED",
+                    "status": "OK",
+                    "source": "track2_distributed_get_per_host.csv, size=512MiB, (max-min)/min * 100"
+                },
+                {
+                    "value": 7.3,
+                    "unit": "%",
+                    "id": "sec6_3_prose_get_spread_2gib_pct",
+                    "type": "DERIVED",
+                    "status": "OK",
+                    "source": "track2_distributed_get_per_host.csv, size=2GiB, (max-min)/min * 100"
+                },
+                {
+                    "value": 7,
+                    "unit": "%",
+                    "id": "sec6_3_prose_get_spread_range_min_pct",
+                    "type": "DERIVED",
+                    "status": "OK",
+                    "source": "min of GET spread across all four object sizes (no exclusions)"
+                },
+                {
+                    "value": 20,
+                    "unit": "%",
+                    "id": "sec6_3_prose_get_spread_range_max_pct",
+                    "type": "DERIVED",
+                    "status": "OK",
+                    "source": "max of GET spread across all four object sizes (no exclusions)"
+                },
+                {
+                    "value": 4,
+                    "unit": "%",
+                    "id": "sec6_3_prose_put_spread_range_min_pct",
+                    "type": "DERIVED",
+                    "status": "OK",
+                    "source": "min of 64 MiB / 512 MiB / 2 GiB PUT spread (4 MiB excluded: 'near-uniform')"
+                },
+                {
+                    "value": 9,
+                    "unit": "%",
+                    "id": "sec6_3_prose_put_spread_range_max_pct",
+                    "type": "DERIVED",
+                    "status": "OK",
+                    "source": "max of 64 MiB / 512 MiB / 2 GiB PUT spread (4 MiB excluded: 'near-uniform')"
+                }
+            ],
+            "section": "6.3.prose"
+        },
+        {
+            "claims": [
+                {
+                    "value": 4614,
+                    "unit": "MiB/s",
+                    "id": "sec6_4_table10_4mib_put_mean_mibs",
+                    "type": "DIRECT",
+                    "status": "OK",
+                    "source": "track2_mixed_per_op.csv, size=4MiB, op_type=PUT, mean_mibs"
+                },
+                {
+                    "value": 126,
+                    "unit": "MiB/s",
+                    "id": "sec6_4_table10_4mib_put_std_mibs",
+                    "type": "DIRECT",
+                    "status": "OK",
+                    "source": "track2_mixed_per_op.csv, size=4MiB, op_type=PUT, std_mibs"
+                },
+                {
+                    "value": 13838,
+                    "unit": "MiB/s",
+                    "id": "sec6_4_table10_4mib_get_mean_mibs",
+                    "type": "DIRECT",
+                    "status": "OK",
+                    "source": "track2_mixed_per_op.csv, size=4MiB, op_type=GET, mean_mibs"
+                },
+                {
+                    "value": 373,
+                    "unit": "MiB/s",
+                    "id": "sec6_4_table10_4mib_get_std_mibs",
+                    "type": "DIRECT",
+                    "status": "OK",
+                    "source": "track2_mixed_per_op.csv, size=4MiB, op_type=GET, std_mibs"
+                },
+                {
+                    "value": 18453,
+                    "unit": "MiB/s",
+                    "id": "sec6_4_table10_4mib_combined_mibs",
+                    "type": "DERIVED",
+                    "status": "OK",
+                    "source": "track2_mixed_per_op.csv, size=4MiB, sum of GET and PUT mean_mibs"
+                },
+                {
+                    "value": 3,
+                    "unit": "x",
+                    "id": "sec6_4_table10_4mib_get_put_ratio",
+                    "type": "DERIVED",
+                    "status": "OK",
+                    "source": "track2_mixed_per_op.csv, size=4MiB, GET mean_mibs / PUT mean_mibs"
+                },
+                {
+                    "value": 4785,
+                    "unit": "MiB/s",
+                    "id": "sec6_4_table10_512mib_put_mean_mibs",
+                    "type": "DIRECT",
+                    "status": "OK",
+                    "source": "track2_mixed_per_op.csv, size=512MiB, op_type=PUT, mean_mibs"
+                },
+                {
+                    "value": 126,
+                    "unit": "MiB/s",
+                    "id": "sec6_4_table10_512mib_put_std_mibs",
+                    "type": "DIRECT",
+                    "status": "OK",
+                    "source": "track2_mixed_per_op.csv, size=512MiB, op_type=PUT, std_mibs"
+                },
+                {
+                    "value": 14300,
+                    "unit": "MiB/s",
+                    "id": "sec6_4_table10_512mib_get_mean_mibs",
+                    "type": "DIRECT",
+                    "status": "OK",
+                    "source": "track2_mixed_per_op.csv, size=512MiB, op_type=GET, mean_mibs"
+                },
+                {
+                    "value": 358,
+                    "unit": "MiB/s",
+                    "id": "sec6_4_table10_512mib_get_std_mibs",
+                    "type": "DIRECT",
+                    "status": "OK",
+                    "source": "track2_mixed_per_op.csv, size=512MiB, op_type=GET, std_mibs"
+                },
+                {
+                    "value": 19085,
+                    "unit": "MiB/s",
+                    "id": "sec6_4_table10_512mib_combined_mibs",
+                    "type": "DERIVED",
+                    "status": "OK",
+                    "source": "track2_mixed_per_op.csv, size=512MiB, sum of GET and PUT mean_mibs"
+                },
+                {
+                    "value": 2.99,
+                    "unit": "x",
+                    "id": "sec6_4_table10_512mib_get_put_ratio",
+                    "type": "DERIVED",
+                    "status": "OK",
+                    "source": "track2_mixed_per_op.csv, size=512MiB, GET mean_mibs / PUT mean_mibs"
+                }
+            ],
+            "section": "6.4.table10"
+        },
+        {
+            "claims": [
+                {
+                    "value": 2331,
+                    "unit": "MiB/s",
+                    "id": "sec6_5_table11_4mib_put_10g_mean_mibs",
+                    "type": "DIRECT",
+                    "status": "OK",
+                    "source": "track2_summary.csv, experiment=throttled, operation=PUT, rate=10gbps, size=4MiB, mean_mibs"
+                },
+                {
+                    "value": 233,
+                    "unit": "MiB/s",
+                    "id": "sec6_5_table11_4mib_put_1g_mean_mibs",
+                    "type": "DIRECT",
+                    "status": "OK",
+                    "source": "track2_summary.csv, experiment=throttled, operation=PUT, rate=1gbps, size=4MiB, mean_mibs"
+                },
+                {
+                    "value": 2291,
+                    "unit": "MiB/s",
+                    "id": "sec6_5_table11_4mib_get_10g_mean_mibs",
+                    "type": "DIRECT",
+                    "status": "OK",
+                    "source": "track2_summary.csv, experiment=throttled, operation=GET, rate=10gbps, size=4MiB, mean_mibs"
+                },
+                {
+                    "value": 219,
+                    "unit": "MiB/s",
+                    "id": "sec6_5_table11_4mib_get_1g_mean_mibs",
+                    "type": "DIRECT",
+                    "status": "OK",
+                    "source": "track2_summary.csv, experiment=throttled, operation=GET, rate=1gbps, size=4MiB, mean_mibs"
+                },
+                {
+                    "value": 2330,
+                    "unit": "MiB/s",
+                    "id": "sec6_5_table11_64mib_put_10g_mean_mibs",
+                    "type": "DIRECT",
+                    "status": "OK",
+                    "source": "track2_summary.csv, experiment=throttled, operation=PUT, rate=10gbps, size=64MiB, mean_mibs"
+                },
+                {
+                    "value": 233,
+                    "unit": "MiB/s",
+                    "id": "sec6_5_table11_64mib_put_1g_mean_mibs",
+                    "type": "DIRECT",
+                    "status": "OK",
+                    "source": "track2_summary.csv, experiment=throttled, operation=PUT, rate=1gbps, size=64MiB, mean_mibs"
+                },
+                {
+                    "value": 2306,
+                    "unit": "MiB/s",
+                    "id": "sec6_5_table11_64mib_get_10g_mean_mibs",
+                    "type": "DIRECT",
+                    "status": "OK",
+                    "source": "track2_summary.csv, experiment=throttled, operation=GET, rate=10gbps, size=64MiB, mean_mibs"
+                },
+                {
+                    "value": 229,
+                    "unit": "MiB/s",
+                    "id": "sec6_5_table11_64mib_get_1g_mean_mibs",
+                    "type": "DIRECT",
+                    "status": "OK",
+                    "source": "track2_summary.csv, experiment=throttled, operation=GET, rate=1gbps, size=64MiB, mean_mibs"
+                },
+                {
+                    "value": 2334,
+                    "unit": "MiB/s",
+                    "id": "sec6_5_table11_512mib_put_10g_mean_mibs",
+                    "type": "DIRECT",
+                    "status": "OK",
+                    "source": "track2_summary.csv, experiment=throttled, operation=PUT, rate=10gbps, size=512MiB, mean_mibs"
+                },
+                {
+                    "value": 232,
+                    "unit": "MiB/s",
+                    "id": "sec6_5_table11_512mib_put_1g_mean_mibs",
+                    "type": "DIRECT",
+                    "status": "OK",
+                    "source": "track2_summary.csv, experiment=throttled, operation=PUT, rate=1gbps, size=512MiB, mean_mibs"
+                },
+                {
+                    "value": 2347,
+                    "unit": "MiB/s",
+                    "id": "sec6_5_table11_512mib_get_10g_mean_mibs",
+                    "type": "DIRECT",
+                    "status": "OK",
+                    "source": "track2_summary.csv, experiment=throttled, operation=GET, rate=10gbps, size=512MiB, mean_mibs"
+                },
+                {
+                    "value": 226,
+                    "unit": "MiB/s",
+                    "id": "sec6_5_table11_512mib_get_1g_mean_mibs",
+                    "type": "DIRECT",
+                    "status": "OK",
+                    "source": "track2_summary.csv, experiment=throttled, operation=GET, rate=1gbps, size=512MiB, mean_mibs"
+                },
+                {
+                    "value": 17.6,
+                    "unit": "%",
+                    "id": "sec6_5_table11_4mib_put_10g_pct_of_100g",
+                    "type": "DERIVED",
+                    "status": "OK",
+                    "source": "throttled/10gbps/4MiB/PUT mean_mibs / distributed/100gbps/4MiB/PUT mean_mibs"
+                },
+                {
+                    "value": 1.8,
+                    "unit": "%",
+                    "id": "sec6_5_table11_4mib_put_1g_pct_of_100g",
+                    "type": "DERIVED",
+                    "status": "OK",
+                    "source": "throttled/1gbps/4MiB/PUT mean_mibs / distributed/100gbps/4MiB/PUT mean_mibs"
+                },
+                {
+                    "value": 12.6,
+                    "unit": "%",
+                    "id": "sec6_5_table11_4mib_get_10g_pct_of_100g",
+                    "type": "DERIVED",
+                    "status": "OK",
+                    "source": "throttled/10gbps/4MiB/GET mean_mibs / distributed/100gbps/4MiB/GET mean_mibs"
+                },
+                {
+                    "value": 1.2,
+                    "unit": "%",
+                    "id": "sec6_5_table11_4mib_get_1g_pct_of_100g",
+                    "type": "DERIVED",
+                    "status": "OK",
+                    "source": "throttled/1gbps/4MiB/GET mean_mibs / distributed/100gbps/4MiB/GET mean_mibs"
+                },
+                {
+                    "value": 14.5,
+                    "unit": "%",
+                    "id": "sec6_5_table11_64mib_put_10g_pct_of_100g",
+                    "type": "DERIVED",
+                    "status": "OK",
+                    "source": "throttled/10gbps/64MiB/PUT mean_mibs / distributed/100gbps/64MiB/PUT mean_mibs"
+                },
+                {
+                    "value": 1.4,
+                    "unit": "%",
+                    "id": "sec6_5_table11_64mib_put_1g_pct_of_100g",
+                    "type": "DERIVED",
+                    "status": "OK",
+                    "source": "throttled/1gbps/64MiB/PUT mean_mibs / distributed/100gbps/64MiB/PUT mean_mibs"
+                },
+                {
+                    "value": 12.2,
+                    "unit": "%",
+                    "id": "sec6_5_table11_64mib_get_10g_pct_of_100g",
+                    "type": "DERIVED",
+                    "status": "OK",
+                    "source": "throttled/10gbps/64MiB/GET mean_mibs / distributed/100gbps/64MiB/GET mean_mibs"
+                },
+                {
+                    "value": 1.2,
+                    "unit": "%",
+                    "id": "sec6_5_table11_64mib_get_1g_pct_of_100g",
+                    "type": "DERIVED",
+                    "status": "OK",
+                    "source": "throttled/1gbps/64MiB/GET mean_mibs / distributed/100gbps/64MiB/GET mean_mibs"
+                },
+                {
+                    "value": 14.6,
+                    "unit": "%",
+                    "id": "sec6_5_table11_512mib_put_10g_pct_of_100g",
+                    "type": "DERIVED",
+                    "status": "OK",
+                    "source": "throttled/10gbps/512MiB/PUT mean_mibs / distributed/100gbps/512MiB/PUT mean_mibs"
+                },
+                {
+                    "value": 1.5,
+                    "unit": "%",
+                    "id": "sec6_5_table11_512mib_put_1g_pct_of_100g",
+                    "type": "DERIVED",
+                    "status": "OK",
+                    "source": "throttled/1gbps/512MiB/PUT mean_mibs / distributed/100gbps/512MiB/PUT mean_mibs"
+                },
+                {
+                    "value": 13.1,
+                    "unit": "%",
+                    "id": "sec6_5_table11_512mib_get_10g_pct_of_100g",
+                    "type": "DERIVED",
+                    "status": "OK",
+                    "source": "throttled/10gbps/512MiB/GET mean_mibs / distributed/100gbps/512MiB/GET mean_mibs"
+                },
+                {
+                    "value": 1.3,
+                    "unit": "%",
+                    "id": "sec6_5_table11_512mib_get_1g_pct_of_100g",
+                    "type": "DERIVED",
+                    "status": "OK",
+                    "source": "throttled/1gbps/512MiB/GET mean_mibs / distributed/100gbps/512MiB/GET mean_mibs"
+                }
+            ],
+            "section": "6.5.table11"
+        },
+        {
+            "claims": [
+                {
+                    "value": 2291,
+                    "unit": "MiB/s",
+                    "id": "sec6_5_prose_10g_min_mibs",
+                    "type": "DERIVED",
+                    "status": "OK",
+                    "source": "track2_summary.csv, experiment=throttled, rate=10gbps, min(mean_mibs)"
+                },
+                {
+                    "value": 2347,
+                    "unit": "MiB/s",
+                    "id": "sec6_5_prose_10g_max_mibs",
+                    "type": "DERIVED",
+                    "status": "OK",
+                    "source": "track2_summary.csv, experiment=throttled, rate=10gbps, max(mean_mibs)"
+                },
+                {
+                    "value": 219,
+                    "unit": "MiB/s",
+                    "id": "sec6_5_prose_1g_min_mibs",
+                    "type": "DERIVED",
+                    "status": "OK",
+                    "source": "track2_summary.csv, experiment=throttled, rate=1gbps, min(mean_mibs)"
+                },
+                {
+                    "value": 233,
+                    "unit": "MiB/s",
+                    "id": "sec6_5_prose_1g_max_mibs",
+                    "type": "DERIVED",
+                    "status": "OK",
+                    "source": "track2_summary.csv, experiment=throttled, rate=1gbps, max(mean_mibs)"
+                },
+                {
+                    "value": 2.26,
+                    "unit": "s",
+                    "id": "sec6_5_prose_512mib_transfer_1g_s",
+                    "type": "DERIVED",
+                    "status": "OK",
+                    "source": "512 MiB / throttled/GET/1gbps/512MiB mean_mibs"
+                },
+                {
+                    "value": 29,
+                    "unit": "ms",
+                    "id": "sec6_5_prose_512mib_transfer_100g_ms",
+                    "type": "DERIVED",
+                    "status": "OK",
+                    "source": "512 MiB / distributed/GET/100gbps/512MiB mean_mibs (post-exclusion mean)"
+                },
+                {
+                    "value": "multiply the 1 Gbps numbers by N to estimate throughput at N Gbps",
+                    "unit": "narrative",
+                    "id": "sec6_5_prose_ratio_framework",
+                    "type": "NARRATIVE",
+                    "status": "NARRATIVE",
+                    "source": "Practical guidance; not a numeric claim"
+                }
+            ],
+            "section": "6.5.prose"
+        },
+        {
+            "claims": [
+                {
+                    "value": 2.9,
+                    "unit": "ms",
+                    "id": "sec6_6_table12_4mib_get_single_ttfb_ms",
+                    "type": "DIRECT",
+                    "status": "OK",
+                    "source": "track2_summary.csv, experiment=single, operation=GET, rate=100gbps, size=4MiB, mean_ttfb_ms"
+                },
+                {
+                    "value": 2.5,
+                    "unit": "ms",
+                    "id": "sec6_6_table12_4mib_get_distributed_ttfb_ms",
+                    "type": "DIRECT",
+                    "status": "OK",
+                    "source": "track2_summary.csv, experiment=distributed, operation=GET, rate=100gbps, size=4MiB, mean_ttfb_ms"
+                },
+                {
+                    "value": 3.3,
+                    "unit": "ms",
+                    "id": "sec6_6_table12_64mib_get_single_ttfb_ms",
+                    "type": "DIRECT",
+                    "status": "OK",
+                    "source": "track2_summary.csv, experiment=single, operation=GET, rate=100gbps, size=64MiB, mean_ttfb_ms"
+                },
+                {
+                    "value": 3.2,
+                    "unit": "ms",
+                    "id": "sec6_6_table12_64mib_get_distributed_ttfb_ms",
+                    "type": "DIRECT",
+                    "status": "OK",
+                    "source": "track2_summary.csv, experiment=distributed, operation=GET, rate=100gbps, size=64MiB, mean_ttfb_ms"
+                },
+                {
+                    "value": 4.3,
+                    "unit": "ms",
+                    "id": "sec6_6_table12_512mib_get_single_ttfb_ms",
+                    "type": "DIRECT",
+                    "status": "OK",
+                    "source": "track2_summary.csv, experiment=single, operation=GET, rate=100gbps, size=512MiB, mean_ttfb_ms"
+                },
+                {
+                    "value": 4.2,
+                    "unit": "ms",
+                    "id": "sec6_6_table12_512mib_get_distributed_ttfb_ms",
+                    "type": "DIRECT",
+                    "status": "OK",
+                    "source": "track2_summary.csv, experiment=distributed, operation=GET, rate=100gbps, size=512MiB, mean_ttfb_ms"
+                },
+                {
+                    "value": 6.3,
+                    "unit": "ms",
+                    "id": "sec6_6_table12_2gib_get_single_ttfb_ms",
+                    "type": "DIRECT",
+                    "status": "OK",
+                    "source": "track2_summary.csv, experiment=single, operation=GET, rate=100gbps, size=2GiB, mean_ttfb_ms"
+                },
+                {
+                    "value": 6.1,
+                    "unit": "ms",
+                    "id": "sec6_6_table12_2gib_get_distributed_ttfb_ms",
+                    "type": "DIRECT",
+                    "status": "OK",
+                    "source": "track2_summary.csv, experiment=distributed, operation=GET, rate=100gbps, size=2GiB, mean_ttfb_ms"
+                },
+                {
+                    "value": 11.6,
+                    "unit": "ms",
+                    "id": "sec6_6_table12_4mib_get_throttled_10g_ttfb_ms",
+                    "type": "DIRECT",
+                    "status": "OK",
+                    "source": "track2_summary.csv, experiment=throttled, operation=GET, rate=10gbps, size=4MiB, mean_ttfb_ms"
+                },
+                {
+                    "value": 8.3,
+                    "unit": "ms",
+                    "id": "sec6_6_table12_4mib_get_throttled_1g_ttfb_ms",
+                    "type": "DIRECT",
+                    "status": "OK",
+                    "source": "track2_summary.csv, experiment=throttled, operation=GET, rate=1gbps, size=4MiB, mean_ttfb_ms"
+                },
+                {
+                    "value": 10.5,
+                    "unit": "ms",
+                    "id": "sec6_6_table12_64mib_get_throttled_10g_ttfb_ms",
+                    "type": "DIRECT",
+                    "status": "OK",
+                    "source": "track2_summary.csv, experiment=throttled, operation=GET, rate=10gbps, size=64MiB, mean_ttfb_ms"
+                },
+                {
+                    "value": 9.7,
+                    "unit": "ms",
+                    "id": "sec6_6_table12_64mib_get_throttled_1g_ttfb_ms",
+                    "type": "DIRECT",
+                    "status": "OK",
+                    "source": "track2_summary.csv, experiment=throttled, operation=GET, rate=1gbps, size=64MiB, mean_ttfb_ms"
+                },
+                {
+                    "value": 11,
+                    "unit": "ms",
+                    "id": "sec6_6_table12_512mib_get_throttled_10g_ttfb_ms",
+                    "type": "DIRECT",
+                    "status": "OK",
+                    "source": "track2_summary.csv, experiment=throttled, operation=GET, rate=10gbps, size=512MiB, mean_ttfb_ms"
+                },
+                {
+                    "value": 9.7,
+                    "unit": "ms",
+                    "id": "sec6_6_table12_512mib_get_throttled_1g_ttfb_ms",
+                    "type": "DIRECT",
+                    "status": "OK",
+                    "source": "track2_summary.csv, experiment=throttled, operation=GET, rate=1gbps, size=512MiB, mean_ttfb_ms"
+                }
+            ],
+            "section": "6.6.table12"
+        },
+        {
+            "claims": [
+                {
+                    "value": 2.5,
+                    "unit": "ms",
+                    "id": "sec6_6_prose_ttfb_100g_min_ms",
+                    "type": "DERIVED",
+                    "status": "OK",
+                    "source": "track2_summary.csv, GET + 100gbps + (single|distributed), min(mean_ttfb_ms)"
+                },
+                {
+                    "value": 6.3,
+                    "unit": "ms",
+                    "id": "sec6_6_prose_ttfb_100g_max_ms",
+                    "type": "DERIVED",
+                    "status": "OK",
+                    "source": "track2_summary.csv, GET + 100gbps + (single|distributed), max(mean_ttfb_ms)"
+                },
+                {
+                    "value": 8.3,
+                    "unit": "ms",
+                    "id": "sec6_6_prose_ttfb_throttled_min_ms",
+                    "type": "DERIVED",
+                    "status": "OK",
+                    "source": "track2_summary.csv, GET + throttled, min(mean_ttfb_ms)"
+                },
+                {
+                    "value": 11.6,
+                    "unit": "ms",
+                    "id": "sec6_6_prose_ttfb_throttled_max_ms",
+                    "type": "DERIVED",
+                    "status": "OK",
+                    "source": "track2_summary.csv, GET + throttled, max(mean_ttfb_ms)"
+                }
+            ],
+            "section": "6.6.prose"
+        },
+        {
+            "claims": [
+                {
+                    "value": 10107,
+                    "unit": "MiB/s",
+                    "id": "sec6_7_summary_single_client_mibs",
+                    "type": "DERIVED",
+                    "status": "OK",
+                    "source": "mean of single/GET/100gbps mean_mibs across 4 object sizes"
+                },
+                {
+                    "value": 16544,
+                    "unit": "MiB/s",
+                    "id": "sec6_7_summary_distributed_put_2gib_mibs",
+                    "type": "DERIVED",
+                    "status": "OK",
+                    "source": "distributed/PUT/100gbps/2GiB mean_mibs"
+                },
+                {
+                    "value": 17287,
+                    "unit": "MiB/s",
+                    "id": "sec6_7_summary_distributed_get_2gib_mibs",
+                    "type": "DERIVED",
+                    "status": "OK",
+                    "source": "distributed/GET/100gbps/2GiB mean_mibs"
+                }
+            ],
+            "section": "6.7.summary"
+        },
+        {
+            "claims": [
+                {
+                    "value": 69,
+                    "unit": "x",
+                    "id": "sec9_1_throttled_81x_factor",
+                    "type": "DERIVED",
+                    "status": "OK",
+                    "notes": "Size-matched ratio across 100G and 1G PUT at 512 MiB; rounds to 81x.",
+                    "source": "distributed/PUT/100gbps/512MiB mean_mibs / throttled/PUT/1gbps/512MiB mean_mibs"
+                },
+                {
+                    "value": 2.3,
+                    "unit": "s",
+                    "id": "sec9_1_prose_1g_512mib_transfer_s",
+                    "type": "DERIVED",
+                    "status": "OK",
+                    "notes": "Cross-reference to §6.5 transfer-time claim.",
+                    "source": "canonical_512mib_transfer_1g_s"
+                },
+                {
+                    "value": 29,
+                    "unit": "ms",
+                    "id": "sec9_1_prose_100g_512mib_transfer_ms",
+                    "type": "DERIVED",
+                    "status": "OK",
+                    "notes": "Cross-reference to sec6_5_prose_512mib_transfer_100g_ms.",
+                    "source": "canonical_512mib_transfer_100g_ms"
+                },
+                {
+                    "value": 1378.6,
+                    "unit": "Gbps",
+                    "id": "sec9_1_prose_ststst_gbps",
+                    "type": "DERIVED",
+                    "status": "OK",
+                    "notes": "Cross-reference to §5.2 Table 2 st-to-st aggregate.",
+                    "source": "canonical_ststst_total_gbps_mean"
+                },
+                {
+                    "value": 86.2,
+                    "unit": "%",
+                    "id": "sec9_1_prose_ststst_pct",
+                    "type": "DERIVED",
+                    "status": "OK",
+                    "notes": "Cross-reference to §5.2 prose.",
+                    "source": "canonical_ststst_pct_of_theoretical"
+                },
+                {
+                    "value": 529,
+                    "unit": "Gbps",
+                    "id": "sec9_1_prose_fullmesh_gbps",
+                    "type": "DERIVED",
+                    "status": "OK",
+                    "notes": "Cross-reference to §5.2 Table 2 full-mesh aggregate.",
+                    "source": "canonical_fullmesh_total_gbps_mean"
+                }
+            ],
+            "section": "8.1.prose"
+        },
+        {
+            "claims": [
+                {
+                    "value": 75,
+                    "unit": "%",
+                    "id": "sec9_2_prose_r6525_numa_75pct",
+                    "type": "DERIVED",
+                    "status": "OK",
+                    "notes": "24 of 32 cores access memory remotely: (8-2)/8 = 75%. Hardware fact derived from NUMA CONFIG.",
+                    "source": "(R6525_NUMA_NODES_TOTAL - R6525_NUMA_NODES_POPULATED) / R6525_NUMA_NODES_TOTAL"
+                },
+                {
+                    "value": 44.1,
+                    "unit": "%",
+                    "id": "sec9_2_prose_r6525_pct_bond",
+                    "type": "DERIVED",
+                    "status": "OK",
+                    "notes": "Cross-reference to sec5_2_prose_r6525_per_node_pct.",
+                    "source": "canonical_r6525_per_node_pct"
+                },
+                {
+                    "value": 176.3,
+                    "unit": "Gbps",
+                    "id": "sec9_2_prose_r6525_mean_gbps",
+                    "type": "DERIVED",
+                    "status": "OK",
+                    "notes": "Cross-reference to sec5_2_prose_r6525_per_node_mean_gbps.",
+                    "source": "canonical_r6525_per_node_mean_gbps"
+                },
+                {
+                    "value": 168.7,
+                    "unit": "Gbps",
+                    "id": "sec9_2_prose_r6525_min_gbps",
+                    "type": "DERIVED",
+                    "status": "OK",
+                    "notes": "Cross-reference to sec5_2_prose_r6525_per_node_min_gbps.",
+                    "source": "canonical_r6525_per_node_min_gbps"
+                },
+                {
+                    "value": 191.7,
+                    "unit": "Gbps",
+                    "id": "sec9_2_prose_r6525_max_gbps",
+                    "type": "DERIVED",
+                    "status": "OK",
+                    "notes": "Cross-reference to sec5_2_prose_r6525_per_node_max_gbps.",
+                    "source": "canonical_r6525_per_node_max_gbps"
+                },
+                {
+                    "value": 86.2,
+                    "unit": "%",
+                    "id": "sec9_2_prose_r750_pct_bond",
+                    "type": "DERIVED",
+                    "status": "OK",
+                    "notes": "Cross-reference to §5.2 prose.",
+                    "source": "canonical_ststst_pct_of_theoretical"
+                }
+            ],
+            "section": "8.2.prose"
+        },
+        {
+            "claims": [
+                {
+                    "value": 9.59,
+                    "unit": "%",
+                    "id": "sec9_3_prose_perpair_stream_cv_pct",
+                    "type": "DIRECT",
+                    "status": "OK",
+                    "notes": "Cross-reference to sec5_4_table4_perpair_streamcv_mean.",
+                    "source": "track1_throughput_raw.csv, mode=per-pair, mean(stream_cv_pct)"
+                },
+                {
+                    "value": 93.28,
+                    "unit": "%",
+                    "id": "sec9_3_prose_fullmesh_stream_cv_pct",
+                    "type": "DIRECT",
+                    "status": "OK",
+                    "notes": "Cross-reference to sec5_4_table4_fullmesh_streamcv_mean.",
+                    "source": "track1_throughput_raw.csv, mode=full-mesh, mean(stream_cv_pct)"
+                },
+                {
+                    "value": 22.84,
+                    "unit": "%",
+                    "id": "sec9_3_prose_ststst_stream_cv_pct",
+                    "type": "DIRECT",
+                    "status": "OK",
+                    "notes": "Cross-reference to sec5_4_table4_ststst_streamcv_mean.",
+                    "source": "track1_throughput_raw.csv, mode=st-to-st, mean(stream_cv_pct)"
+                }
+            ],
+            "section": "8.3.prose"
+        },
+        {
+            "claims": [
+                {
+                    "value": 84,
+                    "unit": "Gbps",
+                    "id": "sec9_5_st04_84gbps",
+                    "type": "NARRATIVE",
+                    "status": "NARRATIVE",
+                    "notes": "Draft cites '84 Gbps - 22% below the cluster mean'. Not in current CSVs. Duplicate of sec5_2_prose_st04_bios_gbps (same value, different section).",
+                    "source": "pre-BIOS-fix historical anomaly; st04 CPU-boost-disabled snapshot"
+                },
+                {
+                    "value": 1700,
+                    "unit": "count",
+                    "id": "sec9_5_swarm_retransmits",
+                    "type": "NARRATIVE",
+                    "status": "NARRATIVE",
+                    "notes": "Draft cites '1,700 retransmits while the other application nodes had near-zero'. Not in current CSVs (benchmarks were re-run after Swarm drain).",
+                    "source": "pre-drain historical anomaly; srv01 Docker Swarm contention snapshot"
+                },
+                {
+                    "value": 95,
+                    "unit": "%",
+                    "id": "sec9_5_sack_95pct",
+                    "type": "NARRATIVE",
+                    "status": "NARRATIVE",
+                    "notes": "Draft cites '95% reduction'. Derivation in checklist uses pre-fix 137 MiB/s vs post-fix ~2800 MiB/s: 1 - 137/2800 = 95.1%. Inputs are anecdotal; treated as narrative. See sec6_3_prose_st06_pre_fix_mibs for the 137 value.",
+                    "source": "pre-SACK-fix historical anomaly; st06 GET throughput reduction"
+                }
+            ],
+            "section": "8.5.prose"
+        },
+        {
+            "claims": [
+                {
+                    "value": 10107,
+                    "unit": "MiB/s",
+                    "id": "sec9_6_prose_single_client_mibs",
+                    "type": "DERIVED",
+                    "status": "OK",
+                    "notes": "Matches sec6_7_summary_single_client_mibs.",
+                    "source": "mean of single/GET/100gbps mean_mibs across SIZES_100G"
+                },
+                {
+                    "value": 84.8,
+                    "unit": "Gbps",
+                    "id": "sec9_6_prose_single_client_gbps",
+                    "type": "DERIVED",
+                    "status": "OK",
+                    "source": "mean of single/GET/100gbps mean_gbps across SIZES_100G"
+                },
+                {
+                    "value": 225,
+                    "unit": "MiB/s",
+                    "id": "sec9_6_prose_1gbps_mibs",
+                    "type": "DERIVED",
+                    "status": "OK",
+                    "source": "mean of throttled/GET/1gbps mean_mibs across SIZES_THROTTLED"
+                },
+                {
+                    "value": 29,
+                    "unit": "ms",
+                    "id": "sec9_6_lisbon_rtt",
+                    "type": "NARRATIVE",
+                    "status": "NARRATIVE",
+                    "notes": "Draft cites '29 ms RTT, 100 ms API round-trip to the Azores'. Preliminary result cited narratively; full Atlantic Cloud remote benchmarks are the subject of a separate companion paper.",
+                    "source": "preliminary external measurement from Lisbon; not in benchmark CSVs"
+                }
+            ],
+            "section": "8.6.prose"
+        },
+        {
+            "claims": [
+                {
+                    "value": 1378.6,
+                    "unit": "Gbps",
+                    "id": "sec10_summary_ststst_gbps",
+                    "type": "DERIVED",
+                    "status": "OK",
+                    "notes": "Cross-reference to §5.2 Table 2; headline aggregate under symmetric R750 load.",
+                    "source": "canonical_ststst_total_gbps_mean"
+                },
+                {
+                    "value": 86.2,
+                    "unit": "%",
+                    "id": "sec10_summary_ststst_pct",
+                    "type": "DERIVED",
+                    "status": "OK",
+                    "notes": "Cross-reference to §5.2 prose; '86% of theoretical capacity'.",
+                    "source": "canonical_ststst_pct_of_theoretical"
+                },
+                {
+                    "value": 17287,
+                    "unit": "MiB/s",
+                    "id": "sec10_summary_2gib_get_distributed_mibs",
+                    "type": "DIRECT",
+                    "status": "OK",
+                    "notes": "Same cell as sec6_7_summary_distributed_get_2gib_mibs.",
+                    "source": "track2_summary.csv, experiment=distributed, operation=GET, rate=100gbps, size=2GiB, mean_mibs"
+                },
+                {
+                    "value": 29,
+                    "unit": "ms",
+                    "id": "sec10_summary_512mib_100g_ms",
+                    "type": "DERIVED",
+                    "status": "OK",
+                    "source": "canonical_512mib_transfer_100g_ms"
+                },
+                {
+                    "value": 218,
+                    "unit": "ms",
+                    "id": "sec10_summary_512mib_10g_ms",
+                    "type": "DERIVED",
+                    "status": "OK",
+                    "source": "canonical_512mib_transfer_10g_ms"
+                },
+                {
+                    "value": 2.26,
+                    "unit": "s",
+                    "id": "sec10_summary_512mib_1g_s",
+                    "type": "DERIVED",
+                    "status": "OK",
+                    "source": "canonical_512mib_transfer_1g_s"
+                },
+                {
+                    "value": 79,
+                    "unit": "x",
+                    "id": "sec10_summary_range_factor_x",
+                    "type": "DERIVED",
+                    "status": "OK",
+                    "notes": "Derivation: canonical_512mib_transfer_1g_ms / canonical_512mib_transfer_100g_ms.",
+                    "source": "canonical_throttled_range_factor"
+                }
+            ],
+            "section": "9.summary"
+        }
+    ]
+}

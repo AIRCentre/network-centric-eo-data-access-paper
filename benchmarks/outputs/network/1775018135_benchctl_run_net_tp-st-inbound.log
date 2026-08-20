@@ -1,0 +1,758 @@
+=== Throughput Benchmark - Storage-Inbound (3 parallel per storage) ===
+Duration: 120s per run
+Parallel streams: 8
+Repetitions: 3
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/st-inbound
+
+App servers: srv01
+srv02
+srv03
+Storage targets: st01
+st02
+st03
+st04
+st05
+st06
+st07
+st08
+
+  st01 -> 192.168.11.21
+  st02 -> 192.168.11.22
+  st03 -> 192.168.11.23
+  st04 -> 192.168.11.24
+  st05 -> 192.168.11.25
+  st06 -> 192.168.11.26
+  st07 -> 192.168.11.27
+  st08 -> 192.168.11.28
+
+=== Running storage-inbound throughput tests ===
+Each storage runs 3 parallel iperf3 tests (to all apps)
+
+=== Repetition 1/3 ===
+=== Initialization ===
+Rep: 1
+Meta: srv01-srv03_st01
+Metric: tp
+Qualifier: st-inbound
+Epoch: 1775018135
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/st-inbound
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/st-inbound/1775018135_tp_st-inbound_rep1_srv01-srv03_st01_snapshot.csv
+Done.
+  Launched: srv01 -> st01
+  Launched: srv02 -> st01
+  Launched: srv03 -> st01
+  Waiting for storage st01 to complete...
+
+=== Initialization ===
+Rep: 1
+Meta: srv01-srv03_st02
+Metric: tp
+Qualifier: st-inbound
+Epoch: 1775018320
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/st-inbound
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/st-inbound/1775018320_tp_st-inbound_rep1_srv01-srv03_st02_snapshot.csv
+Done.
+  Launched: srv01 -> st02
+  Launched: srv02 -> st02
+  Launched: srv03 -> st02
+  Waiting for storage st02 to complete...
+
+=== Initialization ===
+Rep: 1
+Meta: srv01-srv03_st03
+Metric: tp
+Qualifier: st-inbound
+Epoch: 1775018506
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/st-inbound
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/st-inbound/1775018506_tp_st-inbound_rep1_srv01-srv03_st03_snapshot.csv
+Done.
+  Launched: srv01 -> st03
+  Launched: srv02 -> st03
+  Launched: srv03 -> st03
+  Waiting for storage st03 to complete...
+
+=== Initialization ===
+Rep: 1
+Meta: srv01-srv03_st04
+Metric: tp
+Qualifier: st-inbound
+Epoch: 1775018691
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/st-inbound
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/st-inbound/1775018691_tp_st-inbound_rep1_srv01-srv03_st04_snapshot.csv
+Done.
+  Launched: srv01 -> st04
+  Launched: srv02 -> st04
+  Launched: srv03 -> st04
+  Waiting for storage st04 to complete...
+
+=== Initialization ===
+Rep: 1
+Meta: srv01-srv03_st05
+Metric: tp
+Qualifier: st-inbound
+Epoch: 1775018877
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/st-inbound
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/st-inbound/1775018877_tp_st-inbound_rep1_srv01-srv03_st05_snapshot.csv
+Done.
+  Launched: srv01 -> st05
+  Launched: srv02 -> st05
+  Launched: srv03 -> st05
+  Waiting for storage st05 to complete...
+
+=== Initialization ===
+Rep: 1
+Meta: srv01-srv03_st06
+Metric: tp
+Qualifier: st-inbound
+Epoch: 1775019062
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/st-inbound
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/st-inbound/1775019062_tp_st-inbound_rep1_srv01-srv03_st06_snapshot.csv
+Done.
+  Launched: srv01 -> st06
+  Launched: srv02 -> st06
+  Launched: srv03 -> st06
+  Waiting for storage st06 to complete...
+
+=== Initialization ===
+Rep: 1
+Meta: srv01-srv03_st07
+Metric: tp
+Qualifier: st-inbound
+Epoch: 1775019247
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/st-inbound
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/st-inbound/1775019247_tp_st-inbound_rep1_srv01-srv03_st07_snapshot.csv
+Done.
+  Launched: srv01 -> st07
+  Launched: srv02 -> st07
+  Launched: srv03 -> st07
+  Waiting for storage st07 to complete...
+
+=== Initialization ===
+Rep: 1
+Meta: srv01-srv03_st08
+Metric: tp
+Qualifier: st-inbound
+Epoch: 1775019433
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/st-inbound
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/st-inbound/1775019433_tp_st-inbound_rep1_srv01-srv03_st08_snapshot.csv
+Done.
+  Launched: srv01 -> st08
+  Launched: srv02 -> st08
+  Launched: srv03 -> st08
+  Waiting for storage st08 to complete...
+
+  Repetition 1 complete
+=== Repetition 2/3 ===
+=== Initialization ===
+Rep: 2
+Meta: srv01-srv03_st01
+Metric: tp
+Qualifier: st-inbound
+Epoch: 1775019618
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/st-inbound
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/st-inbound/1775019618_tp_st-inbound_rep2_srv01-srv03_st01_snapshot.csv
+Done.
+  Launched: srv01 -> st01
+  Launched: srv02 -> st01
+  Launched: srv03 -> st01
+  Waiting for storage st01 to complete...
+
+=== Initialization ===
+Rep: 2
+Meta: srv01-srv03_st02
+Metric: tp
+Qualifier: st-inbound
+Epoch: 1775019804
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/st-inbound
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/st-inbound/1775019804_tp_st-inbound_rep2_srv01-srv03_st02_snapshot.csv
+Done.
+  Launched: srv01 -> st02
+  Launched: srv02 -> st02
+  Launched: srv03 -> st02
+  Waiting for storage st02 to complete...
+
+=== Initialization ===
+Rep: 2
+Meta: srv01-srv03_st03
+Metric: tp
+Qualifier: st-inbound
+Epoch: 1775019989
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/st-inbound
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/st-inbound/1775019989_tp_st-inbound_rep2_srv01-srv03_st03_snapshot.csv
+Done.
+  Launched: srv01 -> st03
+  Launched: srv02 -> st03
+  Launched: srv03 -> st03
+  Waiting for storage st03 to complete...
+
+=== Initialization ===
+Rep: 2
+Meta: srv01-srv03_st04
+Metric: tp
+Qualifier: st-inbound
+Epoch: 1775020174
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/st-inbound
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/st-inbound/1775020174_tp_st-inbound_rep2_srv01-srv03_st04_snapshot.csv
+Done.
+  Launched: srv01 -> st04
+  Launched: srv02 -> st04
+  Launched: srv03 -> st04
+  Waiting for storage st04 to complete...
+
+=== Initialization ===
+Rep: 2
+Meta: srv01-srv03_st05
+Metric: tp
+Qualifier: st-inbound
+Epoch: 1775020360
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/st-inbound
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/st-inbound/1775020360_tp_st-inbound_rep2_srv01-srv03_st05_snapshot.csv
+Done.
+  Launched: srv01 -> st05
+  Launched: srv02 -> st05
+  Launched: srv03 -> st05
+  Waiting for storage st05 to complete...
+
+=== Initialization ===
+Rep: 2
+Meta: srv01-srv03_st06
+Metric: tp
+Qualifier: st-inbound
+Epoch: 1775020545
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/st-inbound
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/st-inbound/1775020545_tp_st-inbound_rep2_srv01-srv03_st06_snapshot.csv
+Done.
+  Launched: srv01 -> st06
+  Launched: srv02 -> st06
+  Launched: srv03 -> st06
+  Waiting for storage st06 to complete...
+
+=== Initialization ===
+Rep: 2
+Meta: srv01-srv03_st07
+Metric: tp
+Qualifier: st-inbound
+Epoch: 1775020731
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/st-inbound
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/st-inbound/1775020731_tp_st-inbound_rep2_srv01-srv03_st07_snapshot.csv
+Done.
+  Launched: srv01 -> st07
+  Launched: srv02 -> st07
+  Launched: srv03 -> st07
+  Waiting for storage st07 to complete...
+
+=== Initialization ===
+Rep: 2
+Meta: srv01-srv03_st08
+Metric: tp
+Qualifier: st-inbound
+Epoch: 1775020916
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/st-inbound
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/st-inbound/1775020916_tp_st-inbound_rep2_srv01-srv03_st08_snapshot.csv
+Done.
+  Launched: srv01 -> st08
+  Launched: srv02 -> st08
+  Launched: srv03 -> st08
+  Waiting for storage st08 to complete...
+
+  Repetition 2 complete
+=== Repetition 3/3 ===
+=== Initialization ===
+Rep: 3
+Meta: srv01-srv03_st01
+Metric: tp
+Qualifier: st-inbound
+Epoch: 1775021102
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/st-inbound
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/st-inbound/1775021102_tp_st-inbound_rep3_srv01-srv03_st01_snapshot.csv
+Done.
+  Launched: srv01 -> st01
+  Launched: srv02 -> st01
+  Launched: srv03 -> st01
+  Waiting for storage st01 to complete...
+
+=== Initialization ===
+Rep: 3
+Meta: srv01-srv03_st02
+Metric: tp
+Qualifier: st-inbound
+Epoch: 1775021287
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/st-inbound
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/st-inbound/1775021287_tp_st-inbound_rep3_srv01-srv03_st02_snapshot.csv
+Done.
+  Launched: srv01 -> st02
+  Launched: srv02 -> st02
+  Launched: srv03 -> st02
+  Waiting for storage st02 to complete...
+
+=== Initialization ===
+Rep: 3
+Meta: srv01-srv03_st03
+Metric: tp
+Qualifier: st-inbound
+Epoch: 1775021472
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/st-inbound
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/st-inbound/1775021472_tp_st-inbound_rep3_srv01-srv03_st03_snapshot.csv
+Done.
+  Launched: srv01 -> st03
+  Launched: srv02 -> st03
+  Launched: srv03 -> st03
+  Waiting for storage st03 to complete...
+
+=== Initialization ===
+Rep: 3
+Meta: srv01-srv03_st04
+Metric: tp
+Qualifier: st-inbound
+Epoch: 1775021658
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/st-inbound
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/st-inbound/1775021658_tp_st-inbound_rep3_srv01-srv03_st04_snapshot.csv
+Done.
+  Launched: srv01 -> st04
+  Launched: srv02 -> st04
+  Launched: srv03 -> st04
+  Waiting for storage st04 to complete...
+
+=== Initialization ===
+Rep: 3
+Meta: srv01-srv03_st05
+Metric: tp
+Qualifier: st-inbound
+Epoch: 1775021843
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/st-inbound
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/st-inbound/1775021843_tp_st-inbound_rep3_srv01-srv03_st05_snapshot.csv
+Done.
+  Launched: srv01 -> st05
+  Launched: srv02 -> st05
+  Launched: srv03 -> st05
+  Waiting for storage st05 to complete...
+
+=== Initialization ===
+Rep: 3
+Meta: srv01-srv03_st06
+Metric: tp
+Qualifier: st-inbound
+Epoch: 1775022029
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/st-inbound
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/st-inbound/1775022029_tp_st-inbound_rep3_srv01-srv03_st06_snapshot.csv
+Done.
+  Launched: srv01 -> st06
+  Launched: srv02 -> st06
+  Launched: srv03 -> st06
+  Waiting for storage st06 to complete...
+
+=== Initialization ===
+Rep: 3
+Meta: srv01-srv03_st07
+Metric: tp
+Qualifier: st-inbound
+Epoch: 1775022214
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/st-inbound
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/st-inbound/1775022214_tp_st-inbound_rep3_srv01-srv03_st07_snapshot.csv
+Done.
+  Launched: srv01 -> st07
+  Launched: srv02 -> st07
+  Launched: srv03 -> st07
+  Waiting for storage st07 to complete...
+
+=== Initialization ===
+Rep: 3
+Meta: srv01-srv03_st08
+Metric: tp
+Qualifier: st-inbound
+Epoch: 1775022399
+Output directory: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/st-inbound
+=== Data Collection ===
+Waiting 60 seconds for system to settle...
+Collecting system metrics from all servers (parallel)...
+  Collecting from: st01
+  Collecting from: st02
+  Collecting from: st03
+  Collecting from: st04
+  Collecting from: st05
+  Collecting from: st06
+  Collecting from: st07
+  Collecting from: st08
+  Collecting from: srv01
+  Collecting from: srv02
+  Collecting from: srv03
+Waiting for all metric collections to complete...
+=== Complete ===
+Output: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/st-inbound/1775022399_tp_st-inbound_rep3_srv01-srv03_st08_snapshot.csv
+Done.
+  Launched: srv01 -> st08
+  Launched: srv02 -> st08
+  Launched: srv03 -> st08
+  Waiting for storage st08 to complete...
+
+  Repetition 3 complete
+=== Storage-Inbound Throughput Complete ===
+Results saved to: /home/user/AIRCentre/repos/datacenter-benchmarks-for-publication/benchmarks/outputs/network/throughput/st-inbound

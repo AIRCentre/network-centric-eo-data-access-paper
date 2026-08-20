@@ -1,0 +1,23 @@
+{
+    "test": "network_baseline",
+    "timestamp_utc": "2026-04-18T14:03:56Z",
+    "epoch": 1776520947,
+    "target": "eo-catalog.ac-az1.aircentre.org",
+    "ping": {
+        "count": 20,
+        "timeout_s": 5,
+        "rtt_min_ms": 197.518,
+        "rtt_avg_ms": 253.595,
+        "rtt_max_ms": 579.612,
+        "rtt_stddev_ms": 84.535,
+        "packet_loss": "0%"
+    },
+    "traceroute": {
+        "hops": 9,
+        "raw": "traceroute to eo-catalog.ac-az1.aircentre.org (194.210.4.227), 15 hops max, 60 byte packets\n 1  LAPTOP-K0GDBV3G.mshome.net (172.24.160.1)  0.289 ms  0.463 ms  0.407 ms\n 2  192.168.0.1 (192.168.0.1)  7.356 ms  7.310 ms  7.284 ms\n 3  10.10.181.2 (10.10.181.2)  104.059 ms  100.388 ms  104.010 ms\n 4  10.10.246.121 (10.10.246.121)  100.150 ms  104.835 ms 10.10.246.125 (10.10.246.125)  99.768 ms\n 5  10.206.125.1 (10.206.125.1)  99.260 ms  99.226 ms  99.202 ms\n 6  10.206.125.14 (10.206.125.14)  103.945 ms 10.206.125.13 (10.206.125.13)  101.371 ms  100.841 ms\n 7  102.89.89.1 (102.89.89.1)  95.594 ms  119.523 ms  119.995 ms\n 8  102.89.88.2 (102.89.88.2)  119.954 ms  2205.541 ms  2205.503 ms\n 9  * * 102.89.59.10 (102.89.59.10)  2205.432 ms\n10  105.177.13.7 (105.177.13.7)  5146.046 ms 41.181.247.208 (41.181.247.208)  5146.210 ms 105.177.13.7 (105.177.13.7)  5398.704 ms\n11  41.181.244.166 (41.181.244.166)  5398.127 ms 41.181.244.177 (41.181.244.177)  7161.214 ms  7154.461 ms\n12  41.181.244.162 (41.181.244.162)  5144.321 ms * *\n13  41.181.244.171 (41.181.244.171)  3464.540 ms 100ge0-59.core1.lis1.he.net (184.104.195.98)  3462.850 ms  210.339 ms\n14  Router6.Lisboa.fccn.pt (193.136.250.10)  217.405 ms  259.014 ms e0-3.core1.lon3.he.net (184.104.205.252)  210.154 ms\n15  Router30.Lisboa.fccn.pt (194.210.6.104)  252.624 ms 100ge0-59.core1.lis1.he.net (184.104.195.98)  229.476 ms Router60.Lisboa.fccn.pt (194.210.6.204)  249.242 ms\n"
+    },
+    "bandwidth_probe": {
+        "url": "https://eo-catalog.ac-az1.aircentre.org/api/v1",
+        "samples": [{"rep":1,"dns_s":0.012759,"connect_s":0.258532,"ttfb_s":0.897163,"total_s":0.897271,"speed_bytes_s":861,"size_bytes":773},{"rep":2,"dns_s":0.006010,"connect_s":0.216246,"ttfb_s":0.823938,"total_s":0.828618,"speed_bytes_s":932,"size_bytes":773},{"rep":3,"dns_s":0.006324,"connect_s":0.214566,"ttfb_s":0.696080,"total_s":0.696683,"speed_bytes_s":1109,"size_bytes":773},{"rep":4,"dns_s":0.006900,"connect_s":0.232760,"ttfb_s":0.780348,"total_s":0.783554,"speed_bytes_s":986,"size_bytes":773},{"rep":5,"dns_s":0.009485,"connect_s":0.272928,"ttfb_s":0.787352,"total_s":0.791829,"speed_bytes_s":976,"size_bytes":773}]
+    }
+}

@@ -1,0 +1,23 @@
+{
+    "test": "network_baseline",
+    "timestamp_utc": "2026-04-24T15:17:17Z",
+    "epoch": 1777043811,
+    "target": "eo-catalog.ac-az1.aircentre.org",
+    "ping": {
+        "count": 20,
+        "timeout_s": 5,
+        "rtt_min_ms": 66.246,
+        "rtt_avg_ms": 66.395,
+        "rtt_max_ms": 66.787,
+        "rtt_stddev_ms": 0.125,
+        "packet_loss": "0%"
+    },
+    "traceroute": {
+        "hops": 9,
+        "raw": "traceroute to eo-catalog.ac-az1.aircentre.org (194.210.4.227), 15 hops max, 60 byte packets\n 1  66.249.94.174 (66.249.94.174)  1.249 ms  1.215 ms 74.125.253.11 (74.125.253.11)  1.340 ms\n 2  * 192.178.107.28 (192.178.107.28)  1.277 ms  1.265 ms\n 3  * fccn-ias-geant-gw.rt1.por.pt.geant.net (83.97.88.44)  40.169 ms *\n 4  fccn-ias-fccn.rt1.por.pt.geant.net (83.97.88.45)  40.889 ms fccn-ias-geant-gw.rt1.por.pt.geant.net (83.97.88.44)  40.130 ms fccn-ias-fccn.rt1.por.pt.geant.net (83.97.88.45)  40.772 ms\n 5  fccn-ias-fccn.rt1.por.pt.geant.net (83.97.88.45)  40.760 ms Router40.Porto.fccn.pt (194.210.7.202)  44.088 ms  43.983 ms\n 6  Router40.Porto.fccn.pt (194.210.7.202)  43.972 ms  44.201 ms Router60.Lisboa.fccn.pt (193.136.1.10)  44.263 ms\n 7  Router63.Lisboa.fccn.pt (194.210.6.213)  44.017 ms Router60.Lisboa.fccn.pt (193.136.1.10)  43.983 ms Router63.Lisboa.fccn.pt (194.210.6.213)  43.955 ms\n 8  * Router33.Lisboa.fccn.pt (194.210.6.211)  44.107 ms *\n 9  * * *\n10  * * *\n11  * * *\n12  * * *\n13  * * *\n14  * * *\n15  * * *\n"
+    },
+    "bandwidth_probe": {
+        "url": "https://eo-catalog.ac-az1.aircentre.org/api/v1",
+        "samples": [{"rep":1,"dns_s":0.001885,"connect_s":0.069398,"ttfb_s":0.215008,"total_s":0.215115,"speed_bytes_s":3593,"size_bytes":773},{"rep":2,"dns_s":0.001815,"connect_s":0.068694,"ttfb_s":0.213147,"total_s":0.213252,"speed_bytes_s":3624,"size_bytes":773},{"rep":3,"dns_s":0.001529,"connect_s":0.068323,"ttfb_s":0.212834,"total_s":0.212946,"speed_bytes_s":3630,"size_bytes":773},{"rep":4,"dns_s":0.001790,"connect_s":0.068836,"ttfb_s":0.213999,"total_s":0.214102,"speed_bytes_s":3610,"size_bytes":773},{"rep":5,"dns_s":0.001457,"connect_s":0.068452,"ttfb_s":0.212680,"total_s":0.212781,"speed_bytes_s":3632,"size_bytes":773}]
+    }
+}

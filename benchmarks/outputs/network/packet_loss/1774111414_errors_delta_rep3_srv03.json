@@ -1,0 +1,12 @@
+{
+  "host": "srv03",
+  "repetition": 3,
+  "timestamp_epoch": 1774111414,
+  "rx_errors_delta": 0,
+  "tx_errors_delta": 0,
+  "rx_drops_delta": 0,
+  "tx_drops_delta": 0,
+  "rx_packets": 166578183,
+  "tx_packets": 725080197,
+  "loss_pct": 0
+}
